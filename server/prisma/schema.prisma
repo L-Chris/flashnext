@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Deck {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String   @default("")
+  createdAt   DateTime @default(now()) @map("created_at")
+  cards       Card[]
+
+  @@map("decks")
+}
+
+model Card {
+  id        Int      @id @default(autoincrement())
+  deckId    Int      @map("deck_id")
+  front     String
+  back      String
+  ease      Float    @default(2.5)
+  interval  Int      @default(0)
+  reps      Int      @default(0)
+  due       DateTime @default(now())
+  createdAt DateTime @default(now()) @map("created_at")
+  deck      Deck     @relation(fields: [deckId], references: [id], onDelete: Cascade)
+
+  @@index([deckId])
+  @@index([due])
+  @@map("cards")
+}

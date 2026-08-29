@@ -1,0 +1,14 @@
+services:
+  flashnext:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - flashnext-data:/app/data
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=file:/app/data/flashnext.db
+    restart: unless-stopped
+
+volumes:
+  flashnext-data:

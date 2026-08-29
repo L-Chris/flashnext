@@ -1,0 +1,38 @@
+import { Service } from 'typedi'
+import { prisma } from 'app/shared/prisma'
+
+@Service()
+export class CardRepository {
+  listByDeck(deckId: number) {
+    return prisma.card.findMany({
+      where: { deckId },
+      orderBy: { createdAt: 'desc' },
+    })
+  }
+
+  listDue(deckId: number) {
+    return prisma.card.findMany({
+      where: { deckId, due: { lte: new Date() } },
+      orderBy: { due: 'asc' },
+    })
+  }
+
+  findById(id: number) {
+    return prisma.card.findUnique({ where: { id } })
+  }
+
+  create(deckId: number, front: string, back: string) {
+    return prisma.card.create({ data: { deckId, front, back } })
+  }
+
+  remove(id: number) {
+    return prisma.card.delete({ where: { id } })
+  }
+
+  updateScheduling(id: number, ease: number, interval: number, reps: number, due: Date) {
+    return prisma.card.update({
+      where: { id },
+      data: { ease, interval, reps, due },
+    })
+  }
+}

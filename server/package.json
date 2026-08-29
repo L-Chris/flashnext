@@ -1,0 +1,38 @@
+{
+  "name": "flashnext-server",
+  "version": "0.1.0",
+  "description": "FlashNext backend - spaced repetition service (Koa + TypeScript)",
+  "main": "app.ts",
+  "scripts": {
+    "dev": "tsx watch app.ts",
+    "typecheck": "tsc --noEmit",
+    "prod:build": "node ./build.js",
+    "prod:start": "cross-env NODE_ENV=production NODE_OPTIONS=--enable-source-maps node ./dist/index.js",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push"
+  },
+  "dependencies": {
+    "@koa/cors": "^5.0.0",
+    "@prisma/client": "^5.22.0",
+    "class-transformer": "0.5.1",
+    "class-validator": "0.14.0",
+    "cross-env": "^7.0.3",
+    "koa": "^2.13.4",
+    "koa-bodyparser": "^4.3.0",
+    "koa-logger": "^3.2.1",
+    "prisma": "^5.22.0",
+    "reflect-metadata": "^0.1.13",
+    "routing-controllers": "0.10.4",
+    "typedi": "^0.10.0"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.4",
+    "@types/koa-bodyparser": "^4.3.5",
+    "@types/koa-logger": "^3.1.5",
+    "@types/node": "^22.19.19",
+    "esbuild": "^0.24.0",
+    "esbuild-node-externals": "^1.4.1",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

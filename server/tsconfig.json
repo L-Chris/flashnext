@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "moduleResolution": "Node16",
+    "module": "Node16",
+    "outDir": "./dist",
+    "lib": ["ESNext"],
+    "removeComments": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "useUnknownInCatchVariables": false,
+    "noImplicitAny": false,
+    "esModuleInterop": true,
+    "preserveConstEnums": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "configs/*": ["./configs/*"],
+      "app/*": ["./app/*"]
+    }
+  },
+  "compileOnSave": false,
+  "include": ["app/**/*", "configs/**/*", "**/*.ts"],
+  "files": ["app.ts"],
+  "exclude": ["node_modules", "dist"]
+}
