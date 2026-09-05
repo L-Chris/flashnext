@@ -91,7 +91,8 @@ model Card {
 数据来源（不入库，需自行下载到 `server/scripts/data/`）：
 
 - 排名：`mahavivo/english-wordlists` → `COCA_20000.txt`（行号即 COCA 排名）
-- 音标/中文释义：`skywind3000/ECDICT` → `ecdict.csv`（66MB）
+- 中文释义：`skywind3000/ECDICT` → `ecdict.csv`（66MB），并过滤 `[计]`/`[医]` 等领域标签义项
+- 美式 KK 音标：`Alexir/CMUdict` → `cmudict-0.7b`（ARPAbet 转 KK，缺失时回退 ECDICT 英式）
 - 释义兜底：`mahavivo/english-wordlists` → `COCA_with_translation.txt`
 
 导入（幂等，可重复执行）：
