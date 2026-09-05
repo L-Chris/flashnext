@@ -75,11 +75,23 @@ export default function ReviewView({ deck, onExit }: Props) {
 
       <div className="mb-4 flex min-h-52 flex-col items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900 p-8 text-center">
         <p className="text-2xl font-medium">{current.front}</p>
-        {revealed && (
-          <p className="mt-4 whitespace-pre-line text-left text-xl text-emerald-400">
-            {current.back}
-          </p>
-        )}
+        {revealed &&
+          (() => {
+            const lines = current.back.split('\n')
+            const hasPhonetic = lines[0]?.startsWith('/')
+            const phonetic = hasPhonetic ? lines[0] : ''
+            const meanings = (hasPhonetic ? lines.slice(1) : lines).join('\n')
+            return (
+              <div className="mt-4 text-xl text-emerald-400">
+                {phonetic && <p className="text-center">{phonetic}</p>}
+                {meanings && (
+                  <p className={`whitespace-pre-line text-left ${phonetic ? 'mt-5' : ''}`}>
+                    {meanings}
+                  </p>
+                )}
+              </div>
+            )
+          })()}
       </div>
 
       {!revealed ? (
