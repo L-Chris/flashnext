@@ -102,13 +102,27 @@ cd server
 node scripts/import-words.js 5000
 ```
 
+## 单卡组与多标签体系
+
+所有单词卡片集中于唯一卡组「英语单词」；分级/考试体系作为**标签**挂在单词上
+（`word_tags` 表：scheme + level + label），体系元数据在
+`server/app/modules/words/infrastructure/tag.registry.ts` 注册，新增体系无需改表。
+
+已注册体系：
+
+- `coca`：L1-L5（由 COCA 排名换算）
+- `cet`：CET-4 / CET-6（`node scripts/import-cet.js` 导入词表标签）
+
 词库 API：
 
 | 方法 | 路径 | 说明 |
 |---|---|---|
-| GET | `/api/words/bands` | 分级统计（词条数/已生成卡片数） |
-| GET | `/api/words?band=1&page=1` | 分页浏览词库 |
-| POST | `/api/words/decks/from-band` | `{ band: 1 }` 生成卡组+卡片（幂等） |
+| GET | `/api/words/tags` | 标签体系注册表 + 各体系 tagged 词数 |
+| GET | `/api/words/coverage?scheme=coca` | 每级覆盖度：词数/已建卡/已学/待复习/覆盖率 + 未收录行 |
+| POST | `/api/words/cards/ensure` | `{ scheme?, level? }` 单卡组补建缺卡单词并同步旧卡内容（幂等） |
+
+历史迁移：`node scripts/migrate-single-deck.js`（旧按级卡组 → 单卡组，同词多卡合并、
+日志改指向、band 列 → coca 标签）。
 
 ## FSRS 参数自优化
 
@@ -127,6 +141,30 @@ node scripts/import-words.js 5000
 | POST | `/api/fsrs/optimize` | 触发优化，返回前后损失 |
 
 测试数据：`node scripts/seed-review-logs.js` 可模拟复习历史。
+
+## Anki 记忆记录导入
+
+通过 AnkiConnect（需 Anki 运行中）导入复习历史与记忆状态：
+
+```bash
+cd server
+node scripts/import-anki.js "1-考研-英语单词"   # 牌组名可省略，默认此值
+```
+
+流程：
+
+1. 遍历目标牌组全部子牌组（`cardReviews` 仅精确匹配牌组名），合并 revlog
+   （行格式 `[时间戳ms, cid, usn, ease, ivl, lastIvl, factor, 耗时, type]`，
+   ease 1-4 即 FSRS rating；过滤 ease=0 撤销与 type=3 过滤牌组）
+2. 笔记字段按名提取（单词/voca/正面、音标/Symbol、解释/Chn/背面，加密字段跳过）
+   匹配词库（大小写不敏感）；**有复习历史的未匹配词自动建 Word（rank 空、无 coca 标签）+ 卡片**
+   （无历史的库外词跳过），全部进入单卡组「英语单词」
+3. 有复习历史但尚无卡片的词，也在单卡组补建卡片，保证历史不丢
+4. 复习日志写入规范卡（每词最早创建的卡片），供参数优化训练
+5. 用当前 `w` 重放历史，重建 stability/difficulty/state/due 等记忆状态，
+   同步到该词的所有卡片
+
+配套脚本：`reset-memory.js`（清空记忆记录）、`cleanup-anki-import.js`（回滚导入）。
 
 ## 本地开发
 

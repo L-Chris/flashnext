@@ -6,6 +6,24 @@ export interface Deck {
   dueCount: number
 }
 
+export interface WordTag {
+  id?: number
+  wordId?: number
+  scheme: string
+  level: number
+  label: string
+}
+
+export interface Word {
+  id: number
+  headword: string
+  rank: number | null
+  pos: string
+  phonetic: string
+  translation: string
+  tags: WordTag[]
+}
+
 export interface Card {
   id: number
   deckId: number
@@ -22,6 +40,7 @@ export interface Card {
   due: string
   lastReview: string | null
   createdAt: string
+  word?: { id: number; headword: string; tags: WordTag[] } | null
 }
 
 export interface ApiResponse<T> {
@@ -31,33 +50,31 @@ export interface ApiResponse<T> {
 
 export type Rating = 1 | 2 | 3 | 4
 
-export interface BandStat {
-  band: number
+export interface SchemeLevel {
+  level: number
   label: string
-  range: string
-  description: string
-  wordCount: number
+  description?: string
+}
+
+export interface SchemeInfo {
+  scheme: string
+  name: string
+  levels: SchemeLevel[]
+  taggedCount: number
+}
+
+export interface CoverageRow {
+  level: number | null
+  label: string
+  description?: string
+  wordTotal: number
   cardCount: number
+  studiedCount: number
+  dueCount: number
+  coverage: number
 }
 
-export interface Word {
-  id: number
-  headword: string
-  rank: number
-  band: number
-  pos: string
-  phonetic: string
-  translation: string
-}
-
-export interface WordPage {
-  words: Word[]
-  total: number
-  page: number
-  pageSize: number
-}
-
-export interface FromBandResult {
+export interface EnsureResult {
   deck: Deck
   created: number
   synced: number

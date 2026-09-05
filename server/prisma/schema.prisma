@@ -37,17 +37,29 @@ model FsrsParam {
 }
 
 model Word {
-  id          Int     @id @default(autoincrement())
-  headword    String  @unique
-  rank        Int     @unique
-  band        Int
-  pos         String  @default("")
-  phonetic    String  @default("")
-  translation String  @default("")
+  id          Int       @id @default(autoincrement())
+  headword    String    @unique
+  rank        Int?      @unique
+  pos         String    @default("")
+  phonetic    String    @default("")
+  translation String    @default("")
   cards       Card[]
+  tags        WordTag[]
 
-  @@index([band])
   @@map("words")
+}
+
+model WordTag {
+  id     Int    @id @default(autoincrement())
+  wordId Int    @map("word_id")
+  scheme String
+  level  Int
+  label  String
+  word   Word   @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  @@unique([wordId, scheme, level])
+  @@index([scheme, level])
+  @@map("word_tags")
 }
 
 model Card {

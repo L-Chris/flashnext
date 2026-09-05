@@ -1,37 +1,58 @@
 import { useCallback, useEffect, useState } from 'react'
 import { api } from '../api/client'
-import type { BandStat } from '../types'
+import type { CoverageRow, SchemeInfo } from '../types'
+
+const pct = (v: number) => `${(v * 100).toFixed(1)}%`
 
 export default function WordsView() {
-  const [bands, setBands] = useState<BandStat[]>([])
+  const [schemes, setSchemes] = useState<SchemeInfo[]>([])
+  const [scheme, setScheme] = useState('')
+  const [rows, setRows] = useState<CoverageRow[]>([])
   const [loading, setLoading] = useState(true)
-  const [generating, setGenerating] = useState<number | null>(null)
+  const [busy, setBusy] = useState<string | null>(null)
   const [message, setMessage] = useState('')
 
-  const loadBands = useCallback(async () => {
-    setBands(await api.listBands())
+  const loadSchemes = useCallback(async () => {
+    const list = await api.listSchemes()
+    setSchemes(list)
+    setScheme(prev => (prev && list.some(s => s.scheme === prev) ? prev : list[0]?.scheme ?? ''))
+    return list
+  }, [])
+
+  const loadCoverage = useCallback(async (s: string) => {
+    if (!s) return
+    setRows(await api.getCoverage(s))
     setLoading(false)
   }, [])
 
   useEffect(() => {
-    loadBands()
-  }, [loadBands])
+    loadSchemes()
+  }, [loadSchemes])
 
-  const handleGenerate = async (band: BandStat) => {
-    setGenerating(band.band)
+  useEffect(() => {
+    setLoading(true)
+    loadCoverage(scheme)
+  }, [scheme, loadCoverage])
+
+  const handleEnsure = async (level?: number) => {
+    const key = level === undefined ? 'all' : String(level)
+    setBusy(key)
     setMessage('')
     try {
-      const result = await api.createDeckFromBand(band.band)
+      const result = await api.ensureCards(level === undefined ? undefined : scheme, level)
       setMessage(
         result.created > 0
-          ? `已生成卡组「${result.deck.name}」，新增 ${result.created} 张卡片，去牌组库开始复习吧`
+          ? `已补建 ${result.created} 张卡片到「${result.deck.name}」` +
+              (result.synced > 0 ? `，同步 ${result.synced} 张` : '')
           : result.synced > 0
-            ? `「${result.deck.name}」已同步 ${result.synced} 张卡片内容`
-            : `「${result.deck.name}」已是最新，无需更新`,
+            ? `已同步 ${result.synced} 张卡片内容`
+            : '卡片已是最新',
       )
-      await loadBands()
+      await loadCoverage(scheme)
+    } catch (error: any) {
+      setMessage(error?.message || '操作失败')
     } finally {
-      setGenerating(null)
+      setBusy(null)
     }
   }
 
@@ -41,9 +62,31 @@ export default function WordsView() {
 
   return (
     <div>
-      <p className="mb-4 text-sm text-zinc-500">
-        COCA（美国当代英语语料库）Top 5000 词库，按使用频率分级
-      </p>
+      <div className="mb-4 flex items-center justify-between">
+        <div className="flex gap-1 rounded-lg border border-zinc-200 bg-white p-1 dark:border-zinc-800 dark:bg-zinc-900">
+          {schemes.map(s => (
+            <button
+              key={s.scheme}
+              onClick={() => setScheme(s.scheme)}
+              className={`rounded-md px-4 py-1.5 text-sm font-medium transition-colors ${
+                scheme === s.scheme
+                  ? 'bg-indigo-600 text-white'
+                  : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
+              }`}
+            >
+              {s.name}
+              <span className="ml-1 text-xs opacity-70">{s.taggedCount}</span>
+            </button>
+          ))}
+        </div>
+        <button
+          disabled={busy !== null}
+          onClick={() => handleEnsure(undefined)}
+          className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 disabled:opacity-50"
+        >
+          {busy === 'all' ? '补建中...' : '补建全部缺卡'}
+        </button>
+      </div>
 
       {message && (
         <p className="mb-4 rounded-lg border border-emerald-300 bg-emerald-50 px-4 py-3 text-sm text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
@@ -52,41 +95,45 @@ export default function WordsView() {
       )}
 
       <ul className="space-y-3">
-        {bands.map(band => {
-          const full = band.cardCount >= band.wordCount && band.wordCount > 0
+        {rows.map(row => {
+          const key = row.level === null ? 'none' : String(row.level)
+          const full = row.wordTotal > 0 && row.cardCount >= row.wordTotal
           return (
             <li
-              key={band.band}
-              className="flex items-center justify-between rounded-lg border border-zinc-200 bg-white px-4 py-4 dark:border-zinc-800 dark:bg-zinc-900"
+              key={key}
+              className="rounded-lg border border-zinc-200 bg-white px-4 py-4 dark:border-zinc-800 dark:bg-zinc-900"
             >
-              <div>
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="font-semibold">{band.label}</span>
-                  <span className="rounded bg-zinc-100 px-1.5 py-0.5 text-xs text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
-                    排名 {band.range}
-                  </span>
-                </div>
-                <p className="mt-1 text-xs text-zinc-500">{band.description}</p>
-                <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
-                  {band.wordCount} 词
-                  {band.cardCount > 0 && (
-                    <span className="ml-2 text-indigo-600 dark:text-indigo-300">
-                      已生成 {band.cardCount} 张卡片
-                    </span>
+                  <span className="font-semibold">{row.label}</span>
+                  {row.description && (
+                    <span className="text-xs text-zinc-500">{row.description}</span>
                   )}
-                </p>
+                </div>
+                <button
+                  disabled={busy !== null || full || row.wordTotal === 0 || row.level === null}
+                  onClick={() => handleEnsure(row.level ?? undefined)}
+                  className={`shrink-0 rounded-lg px-4 py-1.5 text-sm font-medium disabled:opacity-50 ${
+                    full
+                      ? 'cursor-default bg-zinc-200 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-500'
+                      : 'bg-indigo-600 text-white hover:bg-indigo-500'
+                  }`}
+                >
+                  {busy === key ? '补建中...' : full ? '已建全' : '补建本级'}
+                </button>
               </div>
-              <button
-                disabled={generating !== null || full}
-                onClick={() => handleGenerate(band)}
-                className={`shrink-0 rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-50 ${
-                  full
-                    ? 'cursor-default bg-zinc-200 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-500'
-                    : 'bg-indigo-600 text-white hover:bg-indigo-500'
-                }`}
-              >
-                {generating === band.band ? '生成中...' : full ? '已生成' : '生成卡组'}
-              </button>
+
+              <div className="mt-3 h-2 overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800">
+                <div
+                  className="h-full rounded-full bg-indigo-500 transition-all"
+                  style={{ width: pct(row.coverage) }}
+                />
+              </div>
+
+              <p className="mt-2 text-xs text-zinc-500">
+                卡片 {row.cardCount}/{row.wordTotal}（{pct(row.coverage)}） · 已学{' '}
+                {row.studiedCount} · 待复习 {row.dueCount}
+              </p>
             </li>
           )
         })}

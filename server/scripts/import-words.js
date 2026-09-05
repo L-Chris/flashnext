@@ -209,23 +209,24 @@ const main = async () => {
   const cmudict = collectCmudict(headwords)
 
   let kkMiss = 0
-  const rows = headwords.map(({ headword, rank }) => {
-    const key = headword.toLowerCase()
-    const ec = ecdict.get(key)
-    const translation = cleanTranslation(
-      (ec?.translation || fallback.get(key) || '').replace(/\\n/g, '\n'),
-    )
-    const kk = arpabetToKK(cmudict.get(key) || '')
-    if (!kk) kkMiss++
-    return {
-      headword,
-      rank,
-      band: bandOf(rank),
-      pos: extractPos(translation),
-      phonetic: kk || ec?.phonetic || '',
-      translation,
-    }
-  })
+  const rows = headwords
+    .map(({ headword, rank }) => {
+      const key = headword.toLowerCase()
+      const ec = ecdict.get(key)
+      const translation = cleanTranslation(
+        (ec?.translation || fallback.get(key) || '').replace(/\\n/g, '\n'),
+      )
+      const kk = arpabetToKK(cmudict.get(key) || '')
+      if (!kk) kkMiss++
+      return {
+        headword,
+        rank,
+        pos: extractPos(translation),
+        phonetic: kk || ec?.phonetic || '',
+        translation,
+      }
+    })
+    .filter(row => /^[\p{L}]+(?:[-'’][\p{L}]+)*$/u.test(row.headword))
 
   const noTranslation = rows.filter(r => !r.translation).length
   console.log(`missing translation: ${noTranslation}, missing KK phonetic: ${kkMiss}`)
@@ -247,6 +248,31 @@ const main = async () => {
 
   const total = await prisma.word.count()
   console.log(`done. words in database: ${total}`)
+
+  console.log('syncing coca tags...')
+  const COCA_LABELS = {
+    1: 'L1 核心高频',
+    2: 'L2 常用',
+    3: 'L3 进阶',
+    4: 'L4 扩展',
+    5: 'L5 学术',
+  }
+  const wordsWithRank = await prisma.word.findMany({
+    where: { rank: { not: null } },
+    select: { id: true, rank: true, tags: { where: { scheme: 'coca' }, select: { id: true } } },
+  })
+  const tagRows = wordsWithRank
+    .filter(w => w.tags.length === 0)
+    .map(w => ({
+      wordId: w.id,
+      scheme: 'coca',
+      level: bandOf(w.rank),
+      label: COCA_LABELS[bandOf(w.rank)],
+    }))
+  for (let i = 0; i < tagRows.length; i += 1000) {
+    await prisma.wordTag.createMany({ data: tagRows.slice(i, i + 1000) })
+  }
+  console.log(`coca tags created: ${tagRows.length}`)
   await prisma.$disconnect()
 }
 

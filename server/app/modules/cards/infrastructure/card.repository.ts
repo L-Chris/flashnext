@@ -7,6 +7,7 @@ export class CardRepository {
     return prisma.card.findMany({
       where: { deckId },
       orderBy: { createdAt: 'desc' },
+      include: { word: { include: { tags: true } } },
     })
   }
 

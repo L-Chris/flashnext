@@ -6,7 +6,7 @@ import createServer from 'configs/application'
 module.exports = (async (): Promise<Server> => {
   try {
     const app = await createServer()
-    return app.listen(PORT, () => {
+    return app.listen(PORT, '0.0.0.0', () => {
       console.log(`FlashNext server listening on ${PORT}, in ${ENV_LABEL} mode.`)
     })
   } catch (e) {

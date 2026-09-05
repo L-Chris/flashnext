@@ -1,13 +1,13 @@
 import type {
   ApiResponse,
-  BandStat,
   Card,
+  CoverageRow,
   Deck,
-  FromBandResult,
+  EnsureResult,
   FsrsStatus,
   OptimizeResult,
   Rating,
-  WordPage,
+  SchemeInfo,
 } from '../types'
 
 const request = async <T>(url: string, options: RequestInit = {}): Promise<T> => {
@@ -48,15 +48,14 @@ export const api = {
       body: JSON.stringify({ rating }),
     }),
 
-  listBands: () => request<BandStat[]>('/api/words/bands'),
+  listSchemes: () => request<SchemeInfo[]>('/api/words/tags'),
 
-  listWords: (band: number, page = 1, pageSize = 50) =>
-    request<WordPage>(`/api/words?band=${band}&page=${page}&pageSize=${pageSize}`),
+  getCoverage: (scheme: string) => request<CoverageRow[]>(`/api/words/coverage?scheme=${scheme}`),
 
-  createDeckFromBand: (band: number) =>
-    request<FromBandResult>('/api/words/decks/from-band', {
+  ensureCards: (scheme?: string, level?: number) =>
+    request<EnsureResult>('/api/words/cards/ensure', {
       method: 'POST',
-      body: JSON.stringify({ band }),
+      body: JSON.stringify({ scheme, level }),
     }),
 
   getFsrsStatus: () => request<FsrsStatus>('/api/fsrs/params'),

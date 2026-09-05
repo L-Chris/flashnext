@@ -1,47 +1,92 @@
 import { Service } from 'typedi'
 import { prisma } from 'app/shared/prisma'
 
-export interface BandMeta {
-  band: number
-  label: string
-  range: string
-  description: string
-}
-
-export const BANDS: BandMeta[] = [
-  { band: 1, label: 'L1 · 核心高频', range: '1-1000', description: '覆盖日常文本约 75%' },
-  { band: 2, label: 'L2 · 常用', range: '1001-3000', description: '累计覆盖约 85%' },
-  { band: 3, label: 'L3 · 进阶', range: '3001-5000', description: '累计覆盖约 90%' },
-  { band: 4, label: 'L4 · 扩展', range: '5001-10000', description: '六级/雅思水平' },
-  { band: 5, label: 'L5 · 学术', range: '10001-20000', description: '托福/GRE 方向' },
-]
+const tagFilter = (scheme: string, level?: number) => ({
+  scheme,
+  ...(level === undefined ? {} : { level }),
+})
 
 @Service()
 export class WordRepository {
-  countByBand(band: number) {
-    return prisma.word.count({ where: { band } })
+  countTagged(scheme: string, level?: number) {
+    return prisma.word.count({ where: { tags: { some: tagFilter(scheme, level) } } })
   }
 
-  countCardsByBand(band: number) {
-    return prisma.card.count({ where: { word: { band } } })
-  }
-
-  listByBand(band: number, skip: number, take: number) {
-    return prisma.word.findMany({
-      where: { band },
-      orderBy: { rank: 'asc' },
-      skip,
-      take,
+  countTaggedWithCard(scheme: string, level?: number) {
+    return prisma.word.count({
+      where: { tags: { some: tagFilter(scheme, level) }, cards: { some: {} } },
     })
   }
 
-  findWordsWithoutCardInDeck(deckId: number, band: number) {
+  countTaggedStudied(scheme: string, level?: number) {
+    return prisma.word.count({
+      where: {
+        tags: { some: tagFilter(scheme, level) },
+        cards: { some: { reps: { gt: 0 } } },
+      },
+    })
+  }
+
+  countTaggedDue(scheme: string, level?: number) {
+    return prisma.word.count({
+      where: {
+        tags: { some: tagFilter(scheme, level) },
+        cards: { some: { due: { lte: new Date() } } },
+      },
+    })
+  }
+
+  countUntagged(scheme: string) {
+    return prisma.word.count({ where: { tags: { none: { scheme } } } })
+  }
+
+  countUntaggedWithCard(scheme: string) {
+    return prisma.word.count({
+      where: { tags: { none: { scheme } }, cards: { some: {} } },
+    })
+  }
+
+  countUntaggedStudied(scheme: string) {
+    return prisma.word.count({
+      where: { tags: { none: { scheme } }, cards: { some: { reps: { gt: 0 } } } },
+    })
+  }
+
+  countUntaggedDue(scheme: string) {
+    return prisma.word.count({
+      where: { tags: { none: { scheme } }, cards: { some: { due: { lte: new Date() } } } },
+    })
+  }
+
+  findTaggedWithoutCard(scheme: string, level?: number) {
     return prisma.word.findMany({
       where: {
-        band,
-        NOT: { cards: { some: { deckId } } },
+        tags: { some: tagFilter(scheme, level) },
+        NOT: { cards: { some: {} } },
       },
-      orderBy: { rank: 'asc' },
+      orderBy: { rank: { sort: 'asc', nulls: 'last' } },
     })
+  }
+
+  findAllWithoutCard() {
+    return prisma.word.findMany({
+      where: { NOT: { cards: { some: {} } } },
+      orderBy: { rank: { sort: 'asc', nulls: 'last' } },
+    })
+  }
+
+  listExistingTags(scheme: string) {
+    return prisma.wordTag.findMany({
+      where: { scheme },
+      select: { wordId: true, level: true },
+    })
+  }
+
+  createTags(rows: { wordId: number; scheme: string; level: number; label: string }[]) {
+    return prisma.wordTag.createMany({ data: rows })
+  }
+
+  findWordsByHeadwords(headwords: string[]) {
+    return prisma.word.findMany({ where: { headword: { in: headwords } } })
   }
 }

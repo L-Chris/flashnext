@@ -85,7 +85,7 @@ export default function App() {
             tab === 'words' ? 'bg-indigo-600 text-white' : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
           }`}
         >
-          COCA 词库
+          词库
         </button>
       </nav>
 
