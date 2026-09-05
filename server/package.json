@@ -4,7 +4,7 @@
   "description": "FlashNext backend - spaced repetition service (Koa + TypeScript)",
   "main": "app.ts",
   "scripts": {
-    "dev": "tsx watch app.ts",
+    "dev": "node scripts/dev-runner.js",
     "typecheck": "tsc --noEmit",
     "prod:build": "node ./build.js",
     "prod:start": "cross-env NODE_ENV=production NODE_OPTIONS=--enable-source-maps node ./dist/index.js",
@@ -32,7 +32,6 @@
     "@types/node": "^22.19.19",
     "esbuild": "^0.24.0",
     "esbuild-node-externals": "^1.4.1",
-    "tsx": "^4.19.0",
     "typescript": "^5.6.0"
   }
 }
