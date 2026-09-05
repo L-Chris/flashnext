@@ -3,5 +3,6 @@ dist/
 .build-ts/
 server/data/
 server/.env
+server/scripts/data/
 *.log
 .DS_Store

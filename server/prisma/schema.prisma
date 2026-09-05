@@ -17,9 +17,24 @@ model Deck {
   @@map("decks")
 }
 
+model Word {
+  id          Int     @id @default(autoincrement())
+  headword    String  @unique
+  rank        Int     @unique
+  band        Int
+  pos         String  @default("")
+  phonetic    String  @default("")
+  translation String  @default("")
+  cards       Card[]
+
+  @@index([band])
+  @@map("words")
+}
+
 model Card {
   id        Int      @id @default(autoincrement())
   deckId    Int      @map("deck_id")
+  wordId    Int?     @map("word_id")
   front     String
   back      String
   ease      Float    @default(2.5)
@@ -28,8 +43,10 @@ model Card {
   due       DateTime @default(now())
   createdAt DateTime @default(now()) @map("created_at")
   deck      Deck     @relation(fields: [deckId], references: [id], onDelete: Cascade)
+  word      Word?    @relation(fields: [wordId], references: [id], onDelete: SetNull)
 
   @@index([deckId])
   @@index([due])
+  @@index([wordId])
   @@map("cards")
 }

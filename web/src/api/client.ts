@@ -1,4 +1,4 @@
-import type { ApiResponse, Card, Deck, Grade } from '../types'
+import type { ApiResponse, BandStat, Card, Deck, FromBandResult, Grade, WordPage } from '../types'
 
 const request = async <T>(url: string, options: RequestInit = {}): Promise<T> => {
   const res = await fetch(url, {
@@ -36,5 +36,16 @@ export const api = {
     request<Card>(`/api/cards/${id}/review`, {
       method: 'POST',
       body: JSON.stringify({ grade }),
+    }),
+
+  listBands: () => request<BandStat[]>('/api/words/bands'),
+
+  listWords: (band: number, page = 1, pageSize = 50) =>
+    request<WordPage>(`/api/words?band=${band}&page=${page}&pageSize=${pageSize}`),
+
+  createDeckFromBand: (band: number) =>
+    request<FromBandResult>('/api/words/decks/from-band', {
+      method: 'POST',
+      body: JSON.stringify({ band }),
     }),
 }

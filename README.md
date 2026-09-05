@@ -78,6 +78,37 @@ model Card {
 
 统一响应格式：`{ message: 'ok', data: ... }`
 
+## COCA 分级词库
+
+内置 COCA Top 5000 英语词库，按使用频率分级，可一键生成学习卡组。
+
+| 等级 | COCA 排名 | 名称 | 词条数 |
+|---|---|---|---|
+| L1 | 1-1000 | 核心高频 | 1000 |
+| L2 | 1001-3000 | 常用 | 2000 |
+| L3 | 3001-5000 | 进阶 | 2000 |
+
+数据来源（不入库，需自行下载到 `server/scripts/data/`）：
+
+- 排名：`mahavivo/english-wordlists` → `COCA_20000.txt`（行号即 COCA 排名）
+- 音标/中文释义：`skywind3000/ECDICT` → `ecdict.csv`（66MB）
+- 释义兜底：`mahavivo/english-wordlists` → `COCA_with_translation.txt`
+
+导入（幂等，可重复执行）：
+
+```bash
+cd server
+node scripts/import-words.js 5000
+```
+
+词库 API：
+
+| 方法 | 路径 | 说明 |
+|---|---|---|
+| GET | `/api/words/bands` | 分级统计（词条数/已生成卡片数） |
+| GET | `/api/words?band=1&page=1` | 分页浏览词库 |
+| POST | `/api/words/decks/from-band` | `{ band: 1 }` 生成卡组+卡片（幂等） |
+
 ## 本地开发
 
 ```bash
