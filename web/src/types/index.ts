@@ -9,12 +9,18 @@ export interface Deck {
 export interface Card {
   id: number
   deckId: number
+  wordId: number | null
   front: string
   back: string
-  ease: number
-  interval: number
+  stability: number
+  difficulty: number
+  state: number
   reps: number
+  lapses: number
+  learningSteps: number
+  interval: number
   due: string
+  lastReview: string | null
   createdAt: string
 }
 
@@ -23,7 +29,7 @@ export interface ApiResponse<T> {
   data: T
 }
 
-export type Grade = 0 | 1 | 2 | 3 | 4 | 5
+export type Rating = 1 | 2 | 3 | 4
 
 export interface BandStat {
   band: number
@@ -55,4 +61,19 @@ export interface FromBandResult {
   deck: Deck
   created: number
   synced: number
+}
+
+export interface FsrsStatus {
+  w: number[]
+  updatedAt: string | null
+  reviewCount: number
+  minReviews: number
+}
+
+export interface OptimizeResult {
+  w: number[]
+  lossBefore: number
+  lossAfter: number
+  trainingReviews: number
+  cards: number
 }

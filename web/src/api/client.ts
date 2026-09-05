@@ -1,4 +1,14 @@
-import type { ApiResponse, BandStat, Card, Deck, FromBandResult, Grade, WordPage } from '../types'
+import type {
+  ApiResponse,
+  BandStat,
+  Card,
+  Deck,
+  FromBandResult,
+  FsrsStatus,
+  OptimizeResult,
+  Rating,
+  WordPage,
+} from '../types'
 
 const request = async <T>(url: string, options: RequestInit = {}): Promise<T> => {
   const res = await fetch(url, {
@@ -32,10 +42,10 @@ export const api = {
 
   deleteCard: (id: number) => request<boolean>(`/api/cards/${id}`, { method: 'DELETE' }),
 
-  reviewCard: (id: number, grade: Grade) =>
+  reviewCard: (id: number, rating: Rating) =>
     request<Card>(`/api/cards/${id}/review`, {
       method: 'POST',
-      body: JSON.stringify({ grade }),
+      body: JSON.stringify({ rating }),
     }),
 
   listBands: () => request<BandStat[]>('/api/words/bands'),
@@ -48,4 +58,8 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ band }),
     }),
+
+  getFsrsStatus: () => request<FsrsStatus>('/api/fsrs/params'),
+
+  optimizeFsrs: () => request<OptimizeResult>('/api/fsrs/optimize', { method: 'POST' }),
 }

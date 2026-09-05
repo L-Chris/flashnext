@@ -1,7 +1,6 @@
 import { Get, Post, Delete, JsonController, Body, Param, HttpError } from 'routing-controllers'
 import { Service } from 'typedi'
 import { CardService } from 'app/modules/cards/application/card.service'
-import { Grade } from 'app/modules/cards/application/sm2.algorithm'
 
 class CreateCardBody {
   front: string
@@ -9,7 +8,7 @@ class CreateCardBody {
 }
 
 class ReviewCardBody {
-  grade: number
+  rating: number
 }
 
 @JsonController('/decks/:deckId/cards')
@@ -50,8 +49,11 @@ export class CardController {
 
   @Post('/:id/review')
   async review(@Param('id') id: number, @Body() body: ReviewCardBody) {
-    if (body.grade < 0 || body.grade > 5) throw new HttpError(400, 'grade must be 0-5')
-    const data = await this.cardService.reviewCard(Number(id), body.grade as Grade)
+    const rating = Number(body.rating)
+    if (rating < 1 || rating > 4) {
+      throw new HttpError(400, 'rating must be 1-4')
+    }
+    const data = await this.cardService.reviewCard(Number(id), rating as 1 | 2 | 3 | 4)
     if (!data) throw new HttpError(404, 'card not found')
     return { data }
   }

@@ -10,7 +10,7 @@
 |---|---|
 | 后端 | Koa + routing-controllers + typedi + Prisma (SQLite) + TypeScript |
 | 前端 | React 19 + TypeScript + Vite + Tailwind CSS v4 |
-| 算法 | SM-2 间隔重复 |
+| 算法 | FSRS（ts-fsrs，同 Anki 现行算法） |
 | 容器 | node:25-alpine 多阶段构建 |
 
 后端架构参考 `mishu-service`：Koa + routing-controllers 装饰器路由、typedi 依赖注入、controllers → modules(application/infrastructure) 分层、esbuild 打包。
@@ -38,7 +38,7 @@ flashnext/
 │       ├── controllers/       # deck.controller / card.controller
 │       └── modules/
 │           ├── decks/         # application(deck.service) + infrastructure(deck.repository)
-│           └── cards/         # card.service + card.repository + sm2.algorithm
+│           └── cards/         # card.service + card.repository + fsrs.scheduler
 └── web/                       # 前端
     ├── vite.config.ts         # dev 时 /api 代理到 :3000
     └── src/
@@ -55,11 +55,11 @@ model Deck {
 }
 
 model Card {
-  id, deckId, front, back,
-  ease     Float  @default(2.5)   # SM-2 难度系数
-  interval Int    @default(0)     # 复习间隔（天）
-  reps     Int    @default(0)     # 连续答对次数
-  due      DateTime               # 下次到期时间
+  id, deckId, wordId?, front, back,
+  stability  Float  @default(0)   # FSRS 记忆稳定性（天）
+  difficulty Float  @default(0)   # FSRS 难度
+  state      Int    @default(0)   # 0 New / 1 Learning / 2 Review / 3 Relearning
+  reps, lapses, learningSteps, interval, due, lastReview
 }
 ```
 
@@ -74,7 +74,7 @@ model Card {
 | GET | `/api/decks/:id/cards/due` | 到期卡片队列 |
 | POST | `/api/decks/:id/cards` | 添加卡片 |
 | DELETE | `/api/cards/:id` | 删除卡片 |
-| POST | `/api/cards/:id/review` | 复习评分 `{ grade: 0-5 }` |
+| POST | `/api/cards/:id/review` | 复习评分 `{ rating: 1-4 }`（Again/Hard/Good/Easy） |
 
 统一响应格式：`{ message: 'ok', data: ... }`
 
@@ -109,6 +109,24 @@ node scripts/import-words.js 5000
 | GET | `/api/words/bands` | 分级统计（词条数/已生成卡片数） |
 | GET | `/api/words?band=1&page=1` | 分页浏览词库 |
 | POST | `/api/words/decks/from-band` | `{ band: 1 }` 生成卡组+卡片（幂等） |
+
+## FSRS 参数自优化
+
+同 Anki 机制：基于自己的复习记录训练 FSRS 权重 `w`。
+
+1. 每次评分写入 `review_logs`（cardId / rating / reviewAt）
+2. 优化时按卡片重放复习序列：用候选 `w` 通过 ts-fsrs 重算每次复习前的 stability，
+   对处于 Review 态的复习用遗忘曲线 `R(t, S)` 预测回忆概率，与真实结果（是否 Again）
+   计算交叉熵损失（加 L2 正则防止偏离默认值）
+3. 坐标下降搜索 `w`（clipParameters 约束边界），需 ≥1000 条复习日志
+4. 结果存入 `fsrs_params`，调度器自动切换新参数
+
+| 方法 | 路径 | 说明 |
+|---|---|---|
+| GET | `/api/fsrs/params` | 当前 w / 日志数 / 优化时间 |
+| POST | `/api/fsrs/optimize` | 触发优化，返回前后损失 |
+
+测试数据：`node scripts/seed-review-logs.js` 可模拟复习历史。
 
 ## 本地开发
 

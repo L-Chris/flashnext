@@ -46,7 +46,7 @@ export default function WordsView() {
       </p>
 
       {message && (
-        <p className="mb-4 rounded-lg border border-emerald-800 bg-emerald-950 px-4 py-3 text-sm text-emerald-300">
+        <p className="mb-4 rounded-lg border border-emerald-300 bg-emerald-50 px-4 py-3 text-sm text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
           {message}
         </p>
       )}
@@ -57,20 +57,22 @@ export default function WordsView() {
           return (
             <li
               key={band.band}
-              className="flex items-center justify-between rounded-lg border border-zinc-800 bg-zinc-900 px-4 py-4"
+              className="flex items-center justify-between rounded-lg border border-zinc-200 bg-white px-4 py-4 dark:border-zinc-800 dark:bg-zinc-900"
             >
               <div>
                 <div className="flex items-center gap-2">
                   <span className="font-semibold">{band.label}</span>
-                  <span className="rounded bg-zinc-800 px-1.5 py-0.5 text-xs text-zinc-400">
+                  <span className="rounded bg-zinc-100 px-1.5 py-0.5 text-xs text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
                     排名 {band.range}
                   </span>
                 </div>
                 <p className="mt-1 text-xs text-zinc-500">{band.description}</p>
-                <p className="mt-1 text-xs text-zinc-400">
+                <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
                   {band.wordCount} 词
                   {band.cardCount > 0 && (
-                    <span className="ml-2 text-indigo-300">已生成 {band.cardCount} 张卡片</span>
+                    <span className="ml-2 text-indigo-600 dark:text-indigo-300">
+                      已生成 {band.cardCount} 张卡片
+                    </span>
                   )}
                 </p>
               </div>
@@ -79,8 +81,8 @@ export default function WordsView() {
                 onClick={() => handleGenerate(band)}
                 className={`shrink-0 rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-50 ${
                   full
-                    ? 'cursor-default bg-zinc-800 text-zinc-500'
-                    : 'bg-indigo-600 hover:bg-indigo-500'
+                    ? 'cursor-default bg-zinc-200 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-500'
+                    : 'bg-indigo-600 text-white hover:bg-indigo-500'
                 }`}
               >
                 {generating === band.band ? '生成中...' : full ? '已生成' : '生成卡组'}

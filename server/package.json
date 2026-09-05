@@ -23,6 +23,7 @@
     "prisma": "^5.22.0",
     "reflect-metadata": "^0.1.13",
     "routing-controllers": "0.10.4",
+    "ts-fsrs": "^5.4.2",
     "typedi": "^0.10.0"
   },
   "devDependencies": {

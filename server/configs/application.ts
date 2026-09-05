@@ -5,10 +5,14 @@ import { routingConfigs } from './routing.options'
 import { useMiddlewares } from './koa.middlewares'
 import { useKoaServer, useContainer } from 'routing-controllers'
 import { prisma } from 'app/shared/prisma'
+import { warmupFSRS } from 'app/modules/cards/application/fsrs.scheduler'
 
 const createServer = async (): Promise<Koa> => {
   await prisma.$connect()
   console.log('init: prisma connected')
+
+  await warmupFSRS()
+  console.log('init: fsrs module loaded')
 
   const koa: Koa = new Koa({ proxy: true })
 

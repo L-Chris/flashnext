@@ -17,6 +17,25 @@ model Deck {
   @@map("decks")
 }
 
+model ReviewLog {
+  id       Int      @id @default(autoincrement())
+  cardId   Int      @map("card_id")
+  rating   Int
+  reviewAt DateTime @default(now()) @map("review_at")
+
+  @@index([cardId])
+  @@index([reviewAt])
+  @@map("review_logs")
+}
+
+model FsrsParam {
+  id        Int      @id @default(1)
+  w         String
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  @@map("fsrs_params")
+}
+
 model Word {
   id          Int     @id @default(autoincrement())
   headword    String  @unique
@@ -32,18 +51,23 @@ model Word {
 }
 
 model Card {
-  id        Int      @id @default(autoincrement())
-  deckId    Int      @map("deck_id")
-  wordId    Int?     @map("word_id")
-  front     String
-  back      String
-  ease      Float    @default(2.5)
-  interval  Int      @default(0)
-  reps      Int      @default(0)
-  due       DateTime @default(now())
-  createdAt DateTime @default(now()) @map("created_at")
-  deck      Deck     @relation(fields: [deckId], references: [id], onDelete: Cascade)
-  word      Word?    @relation(fields: [wordId], references: [id], onDelete: SetNull)
+  id            Int       @id @default(autoincrement())
+  deckId        Int       @map("deck_id")
+  wordId        Int?      @map("word_id")
+  front         String
+  back          String
+  stability     Float     @default(0)
+  difficulty    Float     @default(0)
+  state         Int       @default(0)
+  reps          Int       @default(0)
+  lapses        Int       @default(0)
+  learningSteps Int       @default(0) @map("learning_steps")
+  interval      Int       @default(0)
+  due           DateTime  @default(now())
+  lastReview    DateTime? @map("last_review")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  deck          Deck      @relation(fields: [deckId], references: [id], onDelete: Cascade)
+  word          Word?     @relation(fields: [wordId], references: [id], onDelete: SetNull)
 
   @@index([deckId])
   @@index([due])

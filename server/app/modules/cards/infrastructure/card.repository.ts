@@ -29,10 +29,20 @@ export class CardRepository {
     return prisma.card.delete({ where: { id } })
   }
 
-  updateScheduling(id: number, ease: number, interval: number, reps: number, due: Date) {
-    return prisma.card.update({
-      where: { id },
-      data: { ease, interval, reps, due },
-    })
+  updateScheduling(
+    id: number,
+    data: {
+      stability: number
+      difficulty: number
+      state: number
+      reps: number
+      lapses: number
+      learningSteps: number
+      interval: number
+      due: Date
+      lastReview: Date
+    },
+  ) {
+    return prisma.card.update({ where: { id }, data })
   }
 }
