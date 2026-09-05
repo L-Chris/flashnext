@@ -1,14 +1,23 @@
 services:
   flashnext:
     build: .
+    container_name: flashnext
     ports:
-      - "3000:3000"
+      - "${FLASHNEXT_PORT:-3000}:3000"
     volumes:
-      - flashnext-data:/app/data
+      - ./server/data:/app/data
     environment:
       - NODE_ENV=production
       - DATABASE_URL=file:/app/data/flashnext.db
     restart: unless-stopped
-
-volumes:
-  flashnext-data:
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3000/api/decks"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
