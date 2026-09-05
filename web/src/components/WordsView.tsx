@@ -25,7 +25,9 @@ export default function WordsView() {
       setMessage(
         result.created > 0
           ? `已生成卡组「${result.deck.name}」，新增 ${result.created} 张卡片，去牌组库开始复习吧`
-          : `「${result.deck.name}」已是最新，无需新增卡片`,
+          : result.synced > 0
+            ? `「${result.deck.name}」已同步 ${result.synced} 张卡片内容`
+            : `「${result.deck.name}」已是最新，无需更新`,
       )
       await loadBands()
     } finally {

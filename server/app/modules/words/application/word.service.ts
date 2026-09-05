@@ -45,19 +45,49 @@ export class WordService {
     const deck = existing || (await this.deckRepository.create(name, meta.description ?? ''))
 
     const words = await this.wordRepository.findWordsWithoutCardInDeck(deck.id, band)
-    if (words.length === 0) {
-      return { deck, created: 0 }
+    if (words.length > 0) {
+      await prisma.card.createMany({
+        data: words.map(w => ({
+          deckId: deck.id,
+          wordId: w.id,
+          front: w.headword,
+          back: cardBack(w.phonetic, w.translation),
+        })),
+      })
     }
 
-    await prisma.card.createMany({
-      data: words.map(w => ({
-        deckId: deck.id,
-        wordId: w.id,
-        front: w.headword,
-        back: cardBack(w.phonetic, w.translation),
-      })),
+    const synced = await this.syncDeckCards(deck.id)
+
+    return { deck, created: words.length, synced }
+  }
+
+  private async syncDeckCards(deckId: number) {
+    const cards = await prisma.card.findMany({
+      where: { deckId, wordId: { not: null } },
+      include: { word: true },
     })
 
-    return { deck, created: words.length }
+    const stale = cards.filter(
+      c =>
+        c.word &&
+        (c.front !== c.word.headword ||
+          c.back !== cardBack(c.word.phonetic, c.word.translation)),
+    )
+
+    if (stale.length > 0) {
+      await prisma.$transaction(
+        stale.map(c =>
+          prisma.card.update({
+            where: { id: c.id },
+            data: {
+              front: c.word!.headword,
+              back: cardBack(c.word!.phonetic, c.word!.translation),
+            },
+          }),
+        ),
+      )
+    }
+
+    return stale.length
   }
 }

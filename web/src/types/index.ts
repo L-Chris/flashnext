@@ -54,4 +54,5 @@ export interface WordPage {
 export interface FromBandResult {
   deck: Deck
   created: number
+  synced: number
 }
