@@ -76,7 +76,9 @@ export default function ReviewView({ deck, onExit }: Props) {
       <div className="mb-4 flex min-h-52 flex-col items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900 p-8 text-center">
         <p className="text-2xl font-medium">{current.front}</p>
         {revealed && (
-          <p className="mt-4 whitespace-pre-line text-xl text-emerald-400">{current.back}</p>
+          <p className="mt-4 whitespace-pre-line text-left text-xl text-emerald-400">
+            {current.back}
+          </p>
         )}
       </div>
 
