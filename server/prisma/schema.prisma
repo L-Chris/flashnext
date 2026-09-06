@@ -7,6 +7,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Profile {
+  id        Int      @id @default(autoincrement())
+  name      String   @default("Default")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  states    PersonalKnowledgeState[]
+
+  @@map("profiles")
+}
+
+model KnowledgeEntity {
+  id           Int      @id @default(autoincrement())
+  kind         String
+  canonicalKey String   @unique @map("canonical_key")
+  title        String
+  summary      String   @default("")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+  words        Word[]
+  states       PersonalKnowledgeState[]
+
+  @@index([kind])
+  @@map("knowledge_entities")
+}
+
+model PersonalKnowledgeState {
+  id             Int      @id @default(autoincrement())
+  profileId      Int      @map("profile_id")
+  entityId       Int      @map("entity_id")
+  memoryPolicy   String   @default("NONE") @map("memory_policy")
+  status         String   @default("UNKNOWN")
+  confidence     Float    @default(0)
+  firstSeenAt    DateTime? @map("first_seen_at")
+  lastEvidenceAt DateTime? @map("last_evidence_at")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+  profile        Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  entity         KnowledgeEntity @relation(fields: [entityId], references: [id], onDelete: Cascade)
+
+  @@unique([profileId, entityId])
+  @@index([profileId, status])
+  @@index([entityId])
+  @@map("personal_knowledge_states")
+}
+
 model Deck {
   id          Int      @id @default(autoincrement())
   name        String
@@ -49,11 +94,13 @@ model FsrsParam {
 
 model Word {
   id          Int       @id @default(autoincrement())
+  knowledgeEntityId Int? @unique @map("knowledge_entity_id")
   headword    String    @unique
   rank        Int?      @unique
   pos         String    @default("")
   phonetic    String    @default("")
   translation String    @default("")
+  knowledgeEntity KnowledgeEntity? @relation(fields: [knowledgeEntityId], references: [id], onDelete: SetNull)
   cards       Card[]
   tags        WordTag[]
 

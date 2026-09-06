@@ -2,7 +2,100 @@
 
 > **本项目由 Qwen3.8 Max 开发**
 
-下一代间隔重复记忆工具（Anki 替代）。
+面向 AI 时代的个人认知数据库（Personal Cognitive Database）与记忆系统。
+
+FlashNext 不再只把数据建模为「牌组 → 卡片 → 复习」，而是记录**用户知道什么、掌握到什么程度、为什么认为掌握，以及是否需要继续维护记忆**。闪卡和 FSRS 是其中一种记忆机制，而不是整个知识模型本身。
+
+当前第一阶段以英语词汇为主要落地领域：在保留完整 Anki/FSRS 式复习能力的同时，引入统一知识实体和个人知识状态，并提供面向阅读器、Agent、MCP 等外部系统的语义化查询接口。后续计划扩展数学知识、阅读记录、技能与其他结构化知识。
+
+## 核心架构
+
+FlashNext 将知识本身、用户状态和记忆机制分离：
+
+```text
+Knowledge Entity
+知识是什么
+      │
+      ▼
+Personal Knowledge State
+用户与这个知识的关系
+      │
+      ├───────────────┐
+      ▼               ▼
+Evidence          Memory Policy
+为什么这样判断      如何维护
+                      │
+             ┌────────┼────────┐
+             ▼        ▼        ▼
+          PERMANENT  FSRS  ASSESSMENT
+                      │
+                      ▼
+                    Card
+                      │
+                      ▼
+                  ReviewLog
+```
+
+核心原则：
+
+- **Knowledge ≠ Card**：单词、数学概念、书籍等是知识/资源实体；卡片只是可选的学习表现形式。
+- **知识与个人状态分离**：`derive`、链式法则或某本书是客观实体；“我会不会”“我是否读过”属于个人状态。
+- **FSRS 只负责调度**：`Card`、`ReviewLog`、stability、difficulty 等继续作为记忆引擎的数据，不直接暴露为 Agent 的认知模型。
+- **Agent 消费语义状态**：外部系统查询 `KNOWN / LEARNING / UNKNOWN` 等状态，而不是理解 FSRS 内部字段。
+- **领域保持强类型**：统一实体层只提供身份和关联，不把 Word、Math、Book 全部塞进一个万能 JSON 表。
+- **渐进迁移**：现有 Word/Card/ReviewLog 数据保持兼容，新知识层可以逐步回填。
+
+当前已实现：
+
+```text
+Profile
+  │
+  └── PersonalKnowledgeState
+             │
+             ▼
+      KnowledgeEntity
+             │
+             ▼
+            Word
+             │
+             └── optional Card → FSRS → ReviewLog
+```
+
+后续领域规划：
+
+```text
+KnowledgeEntity
+├── Word                    # 已实现
+├── MathKnowledge           # 计划：概念/定理/公式/技巧 + prerequisite 关系
+├── Book                    # 计划：书籍实体 + ReadingRecord
+├── Skill                   # 计划
+└── Note / Fact             # 计划
+```
+
+### 个人知识状态
+
+`PersonalKnowledgeState` 描述用户和某个 `KnowledgeEntity` 的关系。
+
+当前词汇状态：
+
+| 状态 | 含义 |
+|---|---|
+| `UNKNOWN` | 未知或没有学习证据 |
+| `EXPOSED` | 已进入学习系统，但尚未形成有效复习记录 |
+| `LEARNING` | 学习 / 重学阶段 |
+| `KNOWN` | 已有稳定掌握证据 |
+| `MASTERED` | 高稳定度掌握 |
+
+记忆策略 `memoryPolicy` 用于把“知识状态”和“复习机制”解耦：
+
+| 策略 | 含义 |
+|---|---|
+| `NONE` | 只保存知识，不维护个人记忆状态 |
+| `PERMANENT` | 作为长期知识保存，不主动安排间隔重复 |
+| `FSRS` | 使用现有 Card + FSRS 调度维护 |
+| `ASSESSMENT` | 预留：通过测验、练习、Agent 对话等重新评估 |
+
+目前英语词汇使用 `FSRS`。未来数学知识可以默认使用 `PERMANENT` 或 `ASSESSMENT`，不需要为了进入第二大脑而强制生成闪卡。
 
 ## 技术栈
 
@@ -10,18 +103,21 @@
 |---|---|
 | 后端 | Koa + routing-controllers + typedi + Prisma (SQLite) + TypeScript |
 | 前端 | React 19 + TypeScript + Vite + Tailwind CSS v4 |
-| 算法 | FSRS-6 调度（ts-fsrs）+ fsrs-rs 官方参数训练（`@open-spaced-repetition/binding`，napi/WASI） |
+| 认知层 | KnowledgeEntity + PersonalKnowledgeState + Domain Models |
+| 记忆算法 | FSRS-6 调度（ts-fsrs）+ fsrs-rs 官方参数训练（`@open-spaced-repetition/binding`，napi/WASI） |
 | 容器 | node:25-alpine 多阶段构建 |
 
 后端架构参考 `mishu-service`：Koa + routing-controllers 装饰器路由、typedi 依赖注入、controllers → modules(application/infrastructure) 分层、esbuild 打包。
 
 ## 目录结构
 
-```
+```text
 flashnext/
 ├── Dockerfile                 # 多阶段构建（web → server → runtime）
 ├── docker-compose.yml
 ├── .dockerignore
+├── docs/
+│   └── cognitive-memory.md    # 认知层实现/迁移补充说明
 ├── server/                    # 后端
 │   ├── app.ts                 # 入口
 │   ├── build.js               # esbuild 打包（同 mishu-service）
@@ -33,15 +129,16 @@ flashnext/
 │   │   ├── routing.middlewares.ts  # CORS、错误中间件
 │   │   └── interceptors.ts    # 统一 { message, data } 响应
 │   ├── prisma/
-│   │   └── schema.prisma      # Deck / Card / Word / ReviewLog / FsrsParam
+│   │   └── schema.prisma      # Profile / Knowledge / Word / Deck / Card / ReviewLog / FsrsParam
 │   └── app/
-│       ├── controllers/       # deck / card / fsrs / word controller
+│       ├── controllers/       # deck / card / fsrs / word / knowledge controller
 │       ├── shared/
 │       │   ├── prisma.ts
 │       │   └── day-boundary.js    # 日切点 / learn-ahead 时间语义（后端与脚本共用）
 │       └── modules/
-│           ├── decks/         # deck.service + deck.repository
+│           ├── knowledge/     # 统一知识实体、个人知识状态、Agent 查询投影
 │           ├── words/         # word.service + tag.registry + word.repository
+│           ├── decks/         # deck.service + deck.repository
 │           ├── fsrs/
 │           │   ├── application/   # optimizer.service（fsrs-rs + 护栏）/ rebuild.service（全量重放）
 │           │   └── infrastructure/# fsrs.repository（revlog CSV / 参数 / 训练前置）
@@ -58,6 +155,53 @@ flashnext/
 ```
 
 ## 数据模型
+
+### 认知层
+
+```prisma
+model Profile {
+  id, name, createdAt, updatedAt,
+  knowledgeStates[]
+}
+
+model KnowledgeEntity {
+  id,
+  kind,            # word / future math_concept / book / skill ...
+  canonicalKey,    # 稳定唯一身份，如 en:word:derive
+  title,
+  summary,
+  states[],
+  word?
+}
+
+model PersonalKnowledgeState {
+  profileId,
+  entityId,
+  memoryPolicy,    # NONE / PERMANENT / FSRS / future ASSESSMENT
+  status,          # UNKNOWN / EXPOSED / LEARNING / KNOWN / MASTERED
+  confidence,      # 0..1，面向 Agent 的语义置信度
+  firstSeenAt,
+  lastEvidenceAt
+}
+
+model Word {
+  id,
+  knowledgeEntityId?,
+  headword,
+  rank,
+  pos,
+  phonetic,
+  translation,
+  tags[],
+  cards[]
+}
+```
+
+`KnowledgeEntity` 是统一身份层，不承载各领域全部字段。例如英语词汇详情仍保存在 `Word`，未来数学公式和前置知识保存在独立的数学表，书籍元数据保存在独立的 `Book` 表。
+
+`Word.knowledgeEntityId` 当前故意保持可空，使已有 SQLite 数据库可以先执行 `prisma db push`，再通过幂等同步逐步回填，不要求一次性迁移所有历史数据。
+
+### 记忆引擎
 
 ```prisma
 model Deck {
@@ -86,7 +230,57 @@ model FsrsParam {
 }
 ```
 
+这里 `Card / ReviewLog / FsrsParam` 仍然是 FSRS 调度的 source of truth；`PersonalKnowledgeState` 是供用户界面和 Agent 消费的语义投影，两者职责不同。
+
 ## API
+
+统一响应格式：`{ message: 'ok', data: ... }`。
+
+### 认知 / Agent API
+
+| 方法 | 路径 | 说明 |
+|---|---|---|
+| GET | `/api/knowledge/profile` | 默认 Profile + 已收录知识、已跟踪知识、已知知识统计 |
+| POST | `/api/knowledge/sync/words` | 幂等回填 Word → KnowledgeEntity，并将当前 Card/FSRS 状态投影到个人知识状态 |
+| POST | `/api/knowledge/vocabulary/check` | 批量查询单词的语义状态、置信度、记忆策略、词频排名和标签 |
+| GET | `/api/knowledge/vocabulary/profile` | 返回词汇库总量、已跟踪量、已掌握量和各语义状态统计 |
+
+词汇查询示例：
+
+```http
+POST /api/knowledge/vocabulary/check
+Content-Type: application/json
+
+{
+  "words": ["derive", "mitigate", "ephemeral"]
+}
+```
+
+外部 Agent 不需要理解 `stability`、`difficulty`、`state=2` 等调度内部实现，而可以得到类似：
+
+```json
+[
+  {
+    "headword": "derive",
+    "status": "KNOWN",
+    "confidence": 0.8,
+    "memoryPolicy": "FSRS",
+    "rank": 1234,
+    "tags": []
+  }
+]
+```
+
+这组接口是未来 MCP / Plugin / 阅读器集成的基础。长期计划继续增加：
+
+```text
+vocabulary_analyze_text(...)
+math_get_profile(...)
+books_has_read(...)
+knowledge_search(...)
+```
+
+### 闪卡 / 复习 API
 
 | 方法 | 路径 | 说明 |
 |---|---|---|
@@ -100,9 +294,24 @@ model FsrsParam {
 | POST | `/api/cards/:id/review` | 复习评分 `{ rating: 1-4, durationMs? }`（Again/Hard/Good/Easy） |
 | POST | `/api/cards/:id/undo` | 撤销该卡最近一次评分（按复习前快照精确回滚） |
 
-统一响应格式：`{ message: 'ok', data: ... }`
+## 英语词汇领域
 
-## COCA 分级词库
+英语词汇是当前第一个完整接入认知层的 Domain。
+
+数据关系：
+
+```text
+KnowledgeEntity(kind=word)
+        │
+        ├── PersonalKnowledgeState
+        │      └── UNKNOWN / EXPOSED / LEARNING / KNOWN / MASTERED
+        │
+        └── Word
+             ├── COCA / CET tags
+             └── Card → FSRS
+```
+
+### COCA 分级词库
 
 内置 COCA Top 5000 英语词库，按使用频率分级，可一键生成学习卡组。
 
@@ -126,7 +335,7 @@ cd server
 node scripts/import-words.js 5000
 ```
 
-## 单卡组与多标签体系
+### 单卡组与多标签体系
 
 所有单词卡片集中于唯一卡组「英语单词」；分级/考试体系作为**标签**挂在单词上
 （`word_tags` 表：scheme + level + label），体系元数据在
@@ -142,18 +351,99 @@ node scripts/import-words.js 5000
 | 方法 | 路径 | 说明 |
 |---|---|---|
 | GET | `/api/words/tags` | 标签体系注册表 + 各体系 tagged 词数 |
-| GET | `/api/words/coverage?scheme=coca` | 每级覆盖度：词数/已建卡/已学/待复习/覆盖率 + 未收录行 |
+| GET | `/api/words/coverage?scheme=coca` | 旧版卡片覆盖视图：词数/已建卡/已学/待复习/覆盖率 + 未收录行 |
 | POST | `/api/words/cards/ensure` | `{ scheme?, level? }` 单卡组补建缺卡单词并同步旧卡内容（幂等） |
+
+> `/api/words/coverage` 仍保持兼容，但它衡量的是**卡片覆盖**而不是新的**认知覆盖**。后续前端会逐步迁移到 `PersonalKnowledgeState` 的语义状态统计。
 
 历史迁移：`node scripts/migrate-single-deck.js`（旧按级卡组 → 单卡组，同词多卡合并、
 日志改指向、band 列 → coca 标签）。
+
+### 从现有词库建立认知层
+
+升级数据库后执行一次：
+
+```http
+POST /api/knowledge/sync/words
+```
+
+该操作幂等，会：
+
+1. 为每个 Word 创建或更新 `KnowledgeEntity(kind=word)`；
+2. 将 Word 链接到统一实体；
+3. 为默认 Profile（当前单用户模式固定 `id = 1`）创建/更新 `PersonalKnowledgeState`；
+4. 从最佳现有 Card/FSRS 状态投影为 Agent 友好的 `UNKNOWN / EXPOSED / LEARNING / KNOWN / MASTERED`。
+
+当前映射是第一版启发式语义投影，FSRS 调度数据本身不会被修改。后续计划在 review / undo 后即时刷新状态，并逐步引入更可靠的 evidence 模型。
+
+## 未来领域设计
+
+### 数学
+
+数学知识不会直接建模成传统 front/back Card，而计划采用强类型结构：
+
+```text
+MathKnowledge
+├── kind: CONCEPT / THEOREM / FORMULA / TECHNIQUE / PROBLEM_TYPE
+├── domain / subdomain
+├── definition
+├── intuition
+├── notation
+└── conditions
+
+KnowledgeRelation
+├── PREREQUISITE
+├── PART_OF
+├── RELATED_TO
+├── GENERALIZES
+├── SPECIAL_CASE_OF
+└── USED_BY
+```
+
+例如：
+
+```text
+函数 → 极限 → 导数 → 链式法则 → 多元微积分 → Jacobian
+```
+
+这样 Agent 可以判断解释某个主题时用户已经具备哪些前置知识，而不是只获得一个粗粒度的“本科数学水平”。数学知识可以默认 `PERMANENT`，未来再通过 `ASSESSMENT` 对理解、应用、推导能力进行细化。
+
+### 书籍与阅读
+
+书籍将作为资源/经历，而不是闪卡：
+
+```text
+Book
+└── ReadingRecord
+    ├── WANT_TO_READ
+    ├── READING
+    ├── READ
+    └── ABANDONED
+```
+
+“读过一本书”和“掌握书中的某个概念”会保持为两种独立事实，避免 Agent 因为阅读记录而过度推断能力。未来可以通过 `learned_from` 等关系把概念、摘录和书籍连接起来。
+
+### Evidence
+
+长期计划加入统一 Evidence 层，用于回答“系统为什么认为用户知道这个”：
+
+```text
+MANUAL     用户手动确认
+REVIEW     FSRS 复习记录
+QUIZ       测试结果
+IMPORT     Anki / 外部系统导入
+READING    阅读行为
+AGENT      Agent 推断（低信任，不应直接永久改写状态）
+```
+
+现有 `ReviewLog` 继续作为 FSRS 的原始复习证据，不需要搬入通用 Evidence 表。
 
 ## 调度时间语义（对齐 Anki）
 
 调度时间实现在 `server/app/shared/day-boundary.js`（后端与脚本共用同一份实现），
 与 fsrs-rs `convert.rs::convert_to_date` 的公式逐条等价（已用 4000 张随机卡历史做过对照验证）：
 
-```
+```text
 dayIndex(ms) = floor((ms + tz_offset_minutes*60_000 - ROLLOVER_HOUR*3_600_000) / 86_400_000)
 ```
 
@@ -240,6 +530,12 @@ node scripts/import-anki.js "1-考研-英语单词"   # 牌组名可省略，默
 
 配套脚本：`reset-memory.js`（清空记忆记录）、`cleanup-anki-import.js`（回滚导入）。
 
+导入/重建完成后，如需让认知层立即反映现有词汇状态，再执行一次：
+
+```http
+POST /api/knowledge/sync/words
+```
+
 ## 本地开发
 
 ```bash
@@ -253,6 +549,12 @@ npm run dev                  # http://localhost:3000
 cd web
 npm install
 npm run dev                  # http://localhost:5173（/api 代理到 :3000）
+```
+
+首次升级到认知层 schema 后，启动服务并执行一次：
+
+```http
+POST /api/knowledge/sync/words
 ```
 
 ## 容器化部署
@@ -272,3 +574,37 @@ docker compose up --build --detach   # 访问 http://localhost:9000
 ```
 
 单容器同时提供 API 和前端构建产物，SQLite 数据持久化在宿主目录 `server/data`（挂载到 `/app/data`），启动时自动执行 `prisma db push` 同步表结构。
+
+升级已有数据库后，`knowledgeEntityId` 可以保持为空，不会阻塞启动；通过 `/api/knowledge/sync/words` 可按需完成幂等回填。
+
+## Roadmap
+
+近期优先级：
+
+1. review / undo 后即时刷新词汇 `PersonalKnowledgeState`；
+2. 将 WordsView 从“卡片覆盖率”迁移为 `UNKNOWN / LEARNING / KNOWN / MASTERED` 认知覆盖；
+3. 增加文本词汇分析 API，供阅读器判断未知词和可读性；
+4. 增加数学 `MathKnowledge + KnowledgeRelation + MathMastery`；
+5. 增加 `Book + ReadingRecord`；
+6. 引入 Evidence 层；
+7. 增加 Agent read scopes，并提供 MCP / Plugin Adapter。
+
+最终目标不是做一个拥有更多 Card Type 的 Anki，而是维护可供人和 AI 长期使用的 **User Cognitive Profile**：
+
+```text
+Vocabulary Model
++
+Math Knowledge Graph
++
+Reading History
++
+Knowledge / Skill State
++
+Learning Evidence
+          │
+          ▼
+Personal Cognitive Database
+          │
+          ▼
+Reader / Agent / MCP / AI Assistant
+```
