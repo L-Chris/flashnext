@@ -1,6 +1,7 @@
 **/node_modules
 **/dist
 **/.build-ts
+.env
 server/data
 server/.env
 .git

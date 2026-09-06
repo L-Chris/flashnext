@@ -1,7 +1,9 @@
 node_modules/
 dist/
 .build-ts/
+.env
 server/data/
+server/data-backup/
 server/.env
 server/scripts/data/
 *.log

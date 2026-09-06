@@ -105,8 +105,6 @@ const cardBack = (phonetic, translation) => {
 }
 
 const main = async () => {
-  const { fsrs, generatorParameters, createEmptyCard } = await import('ts-fsrs')
-
   console.log(`fetching decks under "${DECK_ROOT}"...`)
   const allDecks = await invoke('deckNames')
   const inRoot = d => d === DECK_ROOT || d.startsWith(DECK_ROOT + '::')
@@ -152,13 +150,13 @@ const main = async () => {
   for (const deck of decks) {
     const reviews = await invoke('cardReviews', { deck, startID: 0 })
     for (const row of reviews) {
-      const [idMs, cid, , ease, , , , , type] = row
+      const [idMs, cid, , ease, , , , took, type] = row
       if (ease < 1 || ease > 4 || type === 3) continue
       const word = cidToWord.get(cid)
       if (!word) continue
       totalReviews++
       if (!logsByWord.has(word)) logsByWord.set(word, [])
-      logsByWord.get(word).push({ t: idMs, rating: ease })
+      logsByWord.get(word).push({ t: idMs, rating: ease, type, took })
     }
   }
   for (const logs of logsByWord.values()) logs.sort((a, b) => a.t - b.t)
@@ -255,53 +253,40 @@ const main = async () => {
     allByWordId.get(card.wordId).push(card.id)
   }
 
+  // Anki revlog type -> fsrs-rs review_state（0 new / 1 learning / 2 review / 3 relearning）
+  const stateOf = (log, index) => {
+    if (index === 0) return 0
+    if (log.type === 0) return 1
+    if (log.type === 2) return 3
+    return 2
+  }
+
   const logRows = []
   for (const [key, logs] of logsByWord) {
     const wordId = wordIdByKey.get(key)
     const cardId = canonicalByWordId.get(wordId)
     if (!cardId) continue
-    for (const log of logs) {
-      logRows.push({ cardId, rating: log.rating, reviewAt: new Date(log.t) })
-    }
+    logs.forEach((log, index) => {
+      logRows.push({
+        cardId,
+        rating: log.rating,
+        reviewAt: new Date(log.t),
+        state: stateOf(log, index),
+        durationMs: Math.max(0, Number(log.took) || 0),
+      })
+    })
   }
   for (const batch of chunk(logRows, 1000)) {
     await prisma.reviewLog.createMany({ data: batch })
   }
   console.log(`review logs written: ${logRows.length}`)
 
-  console.log('rebuilding memory state...')
-  const paramRow = await prisma.fsrsParam.findUnique({ where: { id: 1 } })
-  const w = paramRow ? JSON.parse(paramRow.w) : undefined
-  const scheduler = fsrs(generatorParameters(w ? { w } : {}))
-
-  let rebuilt = 0
-  for (const [key, logs] of logsByWord) {
-    const wordId = wordIdByKey.get(key)
-    const cardIds = allByWordId.get(wordId)
-    if (!cardIds || cardIds.length === 0) continue
-
-    let card = createEmptyCard(new Date(logs[0].t))
-    for (const log of logs) {
-      card = scheduler.repeat(card, new Date(log.t))[log.rating].card
-    }
-
-    await prisma.card.updateMany({
-      where: { id: { in: cardIds } },
-      data: {
-        stability: card.stability,
-        difficulty: card.difficulty,
-        state: card.state,
-        reps: card.reps,
-        lapses: card.lapses,
-        learningSteps: card.learning_steps,
-        interval: card.scheduled_days,
-        due: card.due,
-        lastReview: card.last_review ?? new Date(logs[logs.length - 1].t),
-      },
-    })
-    rebuilt++
-  }
-  console.log(`words with rebuilt state: ${rebuilt}`)
+  // 记忆状态不再由本脚本重放：统一交给服务端 POST /api/fsrs/rebuild，
+  // 那里使用与在线复习完全相同的调度实现（日切点对齐、learn-ahead、fuzz）。
+  console.log('review logs imported. next steps:')
+  console.log('  1) POST /api/fsrs/rebuild            重建记忆状态并回填 review_state')
+  console.log('  2) GET  /api/fsrs/rebuild            轮询进度与 due 预报')
+  console.log('  3) POST /api/fsrs/optimize           （可选）用 fsrs-rs 训练参数')
   console.log('done.')
   await prisma.$disconnect()
 }

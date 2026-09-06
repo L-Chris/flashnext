@@ -1,5 +1,6 @@
 import { Service } from 'typedi'
 import { prisma } from 'app/shared/prisma'
+import { dueVisibleWhere } from 'app/modules/cards/infrastructure/due-filter'
 
 const tagFilter = (scheme: string, level?: number) => ({
   scheme,
@@ -31,7 +32,7 @@ export class WordRepository {
     return prisma.word.count({
       where: {
         tags: { some: tagFilter(scheme, level) },
-        cards: { some: { due: { lte: new Date() } } },
+        cards: { some: { AND: [dueVisibleWhere()] } },
       },
     })
   }
@@ -54,7 +55,7 @@ export class WordRepository {
 
   countUntaggedDue(scheme: string) {
     return prisma.word.count({
-      where: { tags: { none: { scheme } }, cards: { some: { due: { lte: new Date() } } } },
+      where: { tags: { none: { scheme } }, cards: { some: { AND: [dueVisibleWhere()] } } },
     })
   }
 

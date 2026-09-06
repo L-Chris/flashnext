@@ -9,7 +9,19 @@ services:
     environment:
       - NODE_ENV=production
       - DATABASE_URL=file:/app/data/flashnext.db
+      - TZ=${TZ_NAME:-Asia/Shanghai}
+      - FLASHNEXT_TZ=${TZ_NAME:-Asia/Shanghai}
+      - FLASHNEXT_ROLLOVER_HOUR=${FLASHNEXT_ROLLOVER_HOUR:-4}
+      - FLASHNEXT_LEARN_AHEAD_MINUTES=${FLASHNEXT_LEARN_AHEAD_MINUTES:-20}
+      - FLASHNEXT_NEW_PER_DAY=${FLASHNEXT_NEW_PER_DAY:-20}
+      - FLASHNEXT_REVIEWS_PER_DAY=${FLASHNEXT_REVIEWS_PER_DAY:-200}
+      - FLASHNEXT_DESIRED_RETENTION=${FLASHNEXT_DESIRED_RETENTION:-0.9}
+      - FLASHNEXT_MAXIMUM_INTERVAL=${FLASHNEXT_MAXIMUM_INTERVAL:-36500}
+      - FLASHNEXT_OPTIMIZE_TIMEOUT_MS=${FLASHNEXT_OPTIMIZE_TIMEOUT_MS:-120000}
     restart: unless-stopped
+    networks:
+      - default
+      - base
     healthcheck:
       test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3000/api/decks"]
       interval: 30s
@@ -21,3 +33,8 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+
+networks:
+  base:
+    external: true
+    name: base_base

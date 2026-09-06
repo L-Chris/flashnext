@@ -3,10 +3,12 @@ import type {
   Card,
   CoverageRow,
   Deck,
+  DueQueue,
   EnsureResult,
   FsrsStatus,
-  OptimizeResult,
+  OptimizeJob,
   Rating,
+  RebuildJob,
   SchemeInfo,
 } from '../types'
 
@@ -32,7 +34,7 @@ export const api = {
 
   listCards: (deckId: number) => request<Card[]>(`/api/decks/${deckId}/cards`),
 
-  listDue: (deckId: number) => request<Card[]>(`/api/decks/${deckId}/cards/due`),
+  listDue: (deckId: number) => request<DueQueue>(`/api/decks/${deckId}/cards/due`),
 
   createCard: (deckId: number, front: string, back: string) =>
     request<Card>(`/api/decks/${deckId}/cards`, {
@@ -42,11 +44,13 @@ export const api = {
 
   deleteCard: (id: number) => request<boolean>(`/api/cards/${id}`, { method: 'DELETE' }),
 
-  reviewCard: (id: number, rating: Rating) =>
+  reviewCard: (id: number, rating: Rating, durationMs = 0) =>
     request<Card>(`/api/cards/${id}/review`, {
       method: 'POST',
-      body: JSON.stringify({ rating }),
+      body: JSON.stringify({ rating, durationMs }),
     }),
+
+  undoCard: (id: number) => request<Card>(`/api/cards/${id}/undo`, { method: 'POST' }),
 
   listSchemes: () => request<SchemeInfo[]>('/api/words/tags'),
 
@@ -60,5 +64,22 @@ export const api = {
 
   getFsrsStatus: () => request<FsrsStatus>('/api/fsrs/params'),
 
-  optimizeFsrs: () => request<OptimizeResult>('/api/fsrs/optimize', { method: 'POST' }),
+  setFsrsParams: (w?: number[]) =>
+    request<FsrsStatus>('/api/fsrs/params', { method: 'POST', body: JSON.stringify({ w }) }),
+
+  optimizeFsrs: (force = false, timeoutMs?: number) =>
+    request<{ started: boolean; reason?: string; job: OptimizeJob }>('/api/fsrs/optimize', {
+      method: 'POST',
+      body: JSON.stringify({ force, timeoutMs }),
+    }),
+
+  optimizeFsrsStatus: () => request<OptimizeJob>('/api/fsrs/optimize'),
+
+  rebuildFsrs: (dryRun = false) =>
+    request<{ started: boolean; reason?: string; job: RebuildJob }>('/api/fsrs/rebuild', {
+      method: 'POST',
+      body: JSON.stringify({ dryRun }),
+    }),
+
+  rebuildFsrsStatus: () => request<RebuildJob>('/api/fsrs/rebuild'),
 }

@@ -1,9 +1,34 @@
+export interface DueUsage {
+  newCount: number
+  reviewCount: number
+  newLimit: number
+  reviewLimit: number
+  newRemaining: number
+  reviewRemaining: number
+}
+
+export interface DueCounts {
+  intraday: number
+  review: number
+  fresh: number
+  queued?: number
+  hiddenByLimit: number
+}
+
 export interface Deck {
   id: number
   name: string
   description: string
   createdAt: string
   dueCount: number
+  counts?: DueCounts
+  usage?: DueUsage
+}
+
+export interface DueQueue {
+  cards: Card[]
+  usage: DueUsage
+  counts: DueCounts
 }
 
 export interface WordTag {
@@ -82,15 +107,63 @@ export interface EnsureResult {
 
 export interface FsrsStatus {
   w: number[]
+  source: string
   updatedAt: string | null
+  revlogMigratedAt: string | null
   reviewCount: number
   minReviews: number
+  timezone: string
+  rolloverHour: number
+}
+
+export interface FsrsAudit {
+  accepted: boolean
+  reasons: string[]
+  items: number
+  metrics: Record<string, { logLoss: number; rmseBins: number }>
+  newCardStability: Record<string, number>
+  pinned: string[]
 }
 
 export interface OptimizeResult {
+  saved: boolean
+  source?: string
+  forced: boolean
   w: number[]
-  lossBefore: number
-  lossAfter: number
-  trainingReviews: number
+  audit: FsrsAudit
+  rows: number
+  elapsedMs: number
+}
+
+export interface OptimizeJob {
+  running: boolean
+  startedAt: string | null
+  finishedAt: string | null
+  force: boolean
+  result: OptimizeResult | null
+  error: string | null
+}
+
+export interface RebuildResult {
   cards: number
+  logs: number
+  dryRun: boolean
+  elapsedMs: number
+  w: number[]
+  dueTodayBefore: number
+  dueTodayAfter: number
+  intervalPercentiles: Record<string, number>
+  maxDue: string
+  forecast: Array<{ day: string; due: number }>
+  stateHistogram: Record<string, number>
+}
+
+export interface RebuildJob {
+  running: boolean
+  startedAt: string | null
+  finishedAt: string | null
+  dryRun: boolean
+  progress: { cards: number; totalCards: number; logs: number; totalLogs: number }
+  result: RebuildResult | null
+  error: string | null
 }

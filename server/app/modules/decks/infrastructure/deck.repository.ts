@@ -1,5 +1,6 @@
 import { Service } from 'typedi'
 import { prisma } from 'app/shared/prisma'
+import { dueVisibleWhere } from 'app/modules/cards/infrastructure/due-filter'
 
 @Service()
 export class DeckRepository {
@@ -19,7 +20,7 @@ export class DeckRepository {
     return prisma.deck.delete({ where: { id } })
   }
 
-  countDue(id: number) {
-    return prisma.card.count({ where: { deckId: id, due: { lte: new Date() } } })
+  countDue(id: number, now: Date = new Date()) {
+    return prisma.card.count({ where: { deckId: id, AND: [dueVisibleWhere(now)] } })
   }
 }

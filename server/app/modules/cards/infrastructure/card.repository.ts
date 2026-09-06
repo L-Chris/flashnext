@@ -1,5 +1,17 @@
 import { Service } from 'typedi'
 import { prisma } from 'app/shared/prisma'
+import { dueVisibleWhere } from './due-filter'
+
+const CARD_FIELDS = {
+  id: true,
+  state: true,
+  interval: true,
+  due: true,
+  stability: true,
+  lastReview: true,
+  createdAt: true,
+  wordId: true,
+} as const
 
 @Service()
 export class CardRepository {
@@ -11,11 +23,27 @@ export class CardRepository {
     })
   }
 
-  listDue(deckId: number) {
+  // 只取排序/限额所需字段，避免把整张卡拉进内存排序
+  listDueCandidates(deckId: number, now: Date = new Date()) {
     return prisma.card.findMany({
-      where: { deckId, due: { lte: new Date() } },
-      orderBy: { due: 'asc' },
+      where: { deckId, AND: [dueVisibleWhere(now)] },
+      select: CARD_FIELDS,
     })
+  }
+
+  countDue(deckId: number, now: Date = new Date()) {
+    return prisma.card.count({ where: { deckId, AND: [dueVisibleWhere(now)] } })
+  }
+
+  listByIds(ids: number[]) {
+    return prisma.card.findMany({
+      where: { id: { in: ids } },
+      include: { word: { include: { tags: true } } },
+    })
+  }
+
+  listIds(deckId: number) {
+    return prisma.card.findMany({ where: { deckId }, select: { id: true } })
   }
 
   findById(id: number) {

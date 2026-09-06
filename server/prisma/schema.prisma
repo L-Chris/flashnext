@@ -18,10 +18,19 @@ model Deck {
 }
 
 model ReviewLog {
-  id       Int      @id @default(autoincrement())
-  cardId   Int      @map("card_id")
-  rating   Int
-  reviewAt DateTime @default(now()) @map("review_at")
+  id         Int      @id @default(autoincrement())
+  cardId     Int      @map("card_id")
+  rating     Int
+  reviewAt   DateTime @default(now()) @map("review_at")
+  state               Int       @default(0)
+  interval            Int       @default(0)
+  stability           Float     @default(0)
+  difficulty          Float     @default(0)
+  durationMs          Int       @default(0) @map("duration_ms")
+  repsBefore          Int       @default(0) @map("reps_before")
+  lapsesBefore        Int       @default(0) @map("lapses_before")
+  learningStepsBefore Int       @default(0) @map("learning_steps_before")
+  dueBefore           DateTime? @map("due_before")
 
   @@index([cardId])
   @@index([reviewAt])
@@ -29,9 +38,11 @@ model ReviewLog {
 }
 
 model FsrsParam {
-  id        Int      @id @default(1)
-  w         String
-  updatedAt DateTime @default(now()) @map("updated_at")
+  id                Int       @id @default(1)
+  w                 String
+  updatedAt         DateTime  @default(now()) @map("updated_at")
+  source            String    @default("legacy")
+  revlogMigratedAt  DateTime? @map("revlog_migrated_at")
 
   @@map("fsrs_params")
 }

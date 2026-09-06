@@ -1,6 +1,6 @@
-import { Fragment, useCallback, useEffect, useState } from 'react'
+import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { api } from '../api/client'
-import type { Card, Deck, Rating } from '../types'
+import type { Card, Deck, DueCounts, DueUsage, Rating } from '../types'
 
 interface Props {
   deck: Deck
@@ -19,22 +19,34 @@ export default function ReviewView({ deck, onExit }: Props) {
   const [loading, setLoading] = useState(true)
   const [revealed, setRevealed] = useState(false)
   const [grading, setGrading] = useState(false)
+  const [usage, setUsage] = useState<DueUsage | null>(null)
+  const [counts, setCounts] = useState<DueCounts | null>(null)
+  const [graded, setGraded] = useState<number[]>([])
+  const shownAt = useRef(Date.now())
 
   useEffect(() => {
-    api.listDue(deck.id).then(cards => {
-      setQueue(cards)
+    api.listDue(deck.id).then(data => {
+      setQueue(data.cards)
+      setUsage(data.usage)
+      setCounts(data.counts)
       setLoading(false)
     })
   }, [deck.id])
 
   const current = queue[0]
+  const currentId = current?.id
+
+  useEffect(() => {
+    shownAt.current = Date.now()
+  }, [currentId])
 
   const handleGrade = useCallback(
     async (rating: Rating) => {
       if (!current || grading) return
       setGrading(true)
       try {
-        await api.reviewCard(current.id, rating)
+        await api.reviewCard(current.id, rating, Date.now() - shownAt.current)
+        setGraded(prev => [current.id, ...prev])
         setQueue(prev => prev.slice(1))
         setRevealed(false)
       } finally {
@@ -43,6 +55,20 @@ export default function ReviewView({ deck, onExit }: Props) {
     },
     [current, grading],
   )
+
+  const handleUndo = useCallback(async () => {
+    const id = graded[0]
+    if (!id || grading) return
+    setGrading(true)
+    try {
+      const card = await api.undoCard(id)
+      setGraded(prev => prev.slice(1))
+      setQueue(prev => [card, ...prev])
+      setRevealed(false)
+    } finally {
+      setGrading(false)
+    }
+  }, [graded, grading])
 
   if (loading) {
     return <p className="text-center text-zinc-500">加载中...</p>
@@ -67,10 +93,35 @@ export default function ReviewView({ deck, onExit }: Props) {
   return (
     <div>
       <div className="mb-4 flex items-center justify-between text-sm text-zinc-500">
-        <span>剩余 {queue.length} 张</span>
-        <button onClick={onExit} className="hover:text-zinc-800 dark:hover:text-zinc-200">
-          退出复习
-        </button>
+        <span>
+          剩余 {queue.length} 张
+          {counts && (
+            <span className="ml-2 text-xs">
+              新 {counts.fresh} · 复习 {counts.review + counts.intraday}
+              {counts.hiddenByLimit > 0 && ` · 今日已达上限，隐藏 ${counts.hiddenByLimit}`}
+            </span>
+          )}
+          {usage && (
+            <span className="ml-2 text-xs">
+              今日已复习 {usage.reviewCount}/{usage.reviewLimit} · 新卡{' '}
+              {usage.newCount}/{usage.newLimit}
+            </span>
+          )}
+        </span>
+        <span className="flex items-center gap-3">
+          {graded.length > 0 && (
+            <button
+              disabled={grading}
+              onClick={handleUndo}
+              className="rounded-md border border-zinc-300 px-2 py-1 text-xs hover:bg-zinc-100 disabled:opacity-50 dark:border-zinc-700 dark:hover:bg-zinc-800"
+            >
+              撤销上次评分
+            </button>
+          )}
+          <button onClick={onExit} className="hover:text-zinc-800 dark:hover:text-zinc-200">
+            退出复习
+          </button>
+        </span>
       </div>
 
       <div className="mb-4 flex min-h-52 flex-col items-center justify-center rounded-xl border border-zinc-200 bg-white p-8 text-center dark:border-zinc-800 dark:bg-zinc-900">
