@@ -1,6 +1,6 @@
-import { Get, Post, Delete, JsonController, Body, Param, HttpError } from 'routing-controllers'
+import { Get, Post, Delete, JsonController, Body, Param, QueryParam, HttpError } from 'routing-controllers'
 import { Service } from 'typedi'
-import { CardService } from 'app/modules/cards/application/card.service'
+import { CardService, normalizeCardPageQuery } from 'app/modules/cards/application/card.service'
 
 class CreateCardBody {
   front: string
@@ -17,9 +17,19 @@ class ReviewCardBody {
 export class DeckCardController {
   constructor(private cardService: CardService) {}
 
+  /** 牌组详情表格：?sort=&dir=&page=&pageSize=，sort 白名单见 CARD_SORT_KEYS */
   @Get('/')
-  async list(@Param('deckId') deckId: number) {
-    const data = await this.cardService.listCards(Number(deckId))
+  async list(
+    @Param('deckId') deckId: number,
+    @QueryParam('sort') sort?: string,
+    @QueryParam('dir') dir?: string,
+    @QueryParam('page') page?: string,
+    @QueryParam('pageSize') pageSize?: string,
+  ) {
+    const data = await this.cardService.listCardsPaged(
+      Number(deckId),
+      normalizeCardPageQuery({ sort, dir, page, pageSize }),
+    )
     return { data }
   }
 

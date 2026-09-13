@@ -53,18 +53,12 @@ export default function App() {
   const tab = view.type === 'words' ? 'words' : 'decks'
 
   return (
-    <div className="mx-auto min-h-screen max-w-2xl px-4 py-10">
+    <div className="mx-auto min-h-screen max-w-[1000px] px-4 py-10">
       <header className="relative mb-6 text-center">
         <h1 className="text-3xl font-bold tracking-tight">
           Flash<span className="text-indigo-500 dark:text-indigo-400">Next</span>
         </h1>
         <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-500">下一代间隔重复记忆工具</p>
-        <button
-          onClick={() => setTheme(t => (t === 'dark' ? 'light' : 'dark'))}
-          className="absolute right-0 top-0 rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-xs text-zinc-600 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800"
-        >
-          {theme === 'dark' ? '浅色模式' : '深色模式'}
-        </button>
       </header>
 
       <nav className="mb-6 flex gap-1 rounded-lg border border-zinc-200 bg-white p-1 dark:border-zinc-800 dark:bg-zinc-900">
@@ -120,6 +114,15 @@ export default function App() {
           onExit={() => setView({ type: 'deck', deck: view.deck })}
         />
       )}
+
+      <button
+        onClick={() => setTheme(t => (t === 'dark' ? 'light' : 'dark'))}
+        title={theme === 'dark' ? '切换浅色模式' : '切换深色模式'}
+        aria-label="切换主题"
+        className="fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 bg-white text-lg shadow-lg hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900 dark:hover:bg-zinc-800"
+      >
+        {theme === 'dark' ? '☀' : '☾'}
+      </button>
     </div>
   )
 }

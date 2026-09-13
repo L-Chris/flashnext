@@ -35,6 +35,27 @@ export class CardRepository {
     return prisma.card.count({ where: { deckId, AND: [dueVisibleWhere(now)] } })
   }
 
+  // 排序/分页用的轻量行：不含释义全文与标签，word 只取 rank
+  listLightByDeck(deckId: number) {
+    return prisma.card.findMany({
+      where: { deckId },
+      select: {
+        id: true,
+        front: true,
+        state: true,
+        stability: true,
+        difficulty: true,
+        reps: true,
+        lapses: true,
+        interval: true,
+        due: true,
+        lastReview: true,
+        createdAt: true,
+        word: { select: { rank: true } },
+      },
+    })
+  }
+
   listByIds(ids: number[]) {
     return prisma.card.findMany({
       where: { id: { in: ids } },

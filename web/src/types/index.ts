@@ -65,7 +65,43 @@ export interface Card {
   due: string
   lastReview: string | null
   createdAt: string
-  word?: { id: number; headword: string; tags: WordTag[] } | null
+  word?: { id: number; headword: string; rank?: number | null; phonetic?: string; translation?: string; tags: WordTag[] } | null
+  retrievability?: number
+  overdueDays?: number
+  lapseRate?: number
+}
+
+export type CardSortKey =
+  | 'rank'
+  | 'stability'
+  | 'difficulty'
+  | 'retrievability'
+  | 'lapseRate'
+  | 'overdue'
+  | 'due'
+  | 'reps'
+  | 'lapses'
+  | 'lastReview'
+  | 'createdAt'
+  | 'state'
+  | 'interval'
+  | 'headword'
+
+export interface CardPageQuery {
+  sort: CardSortKey
+  dir: 'asc' | 'desc'
+  page: number
+  pageSize: number
+}
+
+export interface CardPage {
+  cards: Card[]
+  total: number
+  page: number
+  pageSize: number
+  pages: number
+  sort: CardSortKey
+  dir: 'asc' | 'desc'
 }
 
 export interface ApiResponse<T> {

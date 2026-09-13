@@ -1,6 +1,8 @@
 import type {
   ApiResponse,
   Card,
+  CardPage,
+  CardPageQuery,
   CoverageRow,
   Deck,
   DueQueue,
@@ -32,7 +34,15 @@ export const api = {
 
   deleteDeck: (id: number) => request<boolean>(`/api/decks/${id}`, { method: 'DELETE' }),
 
-  listCards: (deckId: number) => request<Card[]>(`/api/decks/${deckId}/cards`),
+  listCards: (deckId: number, query: Partial<CardPageQuery> = {}) => {
+    const params = new URLSearchParams()
+    if (query.sort) params.set('sort', query.sort)
+    if (query.dir) params.set('dir', query.dir)
+    if (query.page) params.set('page', String(query.page))
+    if (query.pageSize) params.set('pageSize', String(query.pageSize))
+    const qs = params.toString()
+    return request<CardPage>(`/api/decks/${deckId}/cards${qs ? `?${qs}` : ''}`)
+  },
 
   listDue: (deckId: number) => request<DueQueue>(`/api/decks/${deckId}/cards/due`),
 
