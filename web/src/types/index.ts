@@ -71,6 +71,27 @@ export interface Card {
   lapseRate?: number
 }
 
+export interface SynonymMember {
+  headword: string
+  zh: string
+}
+
+export interface SynonymGroup {
+  id: string
+  pos: string
+  posLabel: string
+  gloss: string
+  members: SynonymMember[]
+}
+
+export interface SynonymPage {
+  groups: SynonymGroup[]
+  total: number
+  page: number
+  pages: number
+  pageSize: number
+}
+
 export type CardSortKey =
   | 'rank'
   | 'stability'
@@ -92,6 +113,7 @@ export interface CardPageQuery {
   dir: 'asc' | 'desc'
   page: number
   pageSize: number
+  q?: string
 }
 
 export interface CardPage {
@@ -102,6 +124,7 @@ export interface CardPage {
   pages: number
   sort: CardSortKey
   dir: 'asc' | 'desc'
+  q: string
 }
 
 export interface ApiResponse<T> {
@@ -192,6 +215,11 @@ export interface RebuildResult {
   maxDue: string
   forecast: Array<{ day: string; due: number }>
   stateHistogram: Record<string, number>
+}
+
+export interface DailyLimits {
+  newPerDay: number
+  reviewPerDay: number
 }
 
 export interface RebuildJob {

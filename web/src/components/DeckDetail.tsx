@@ -33,11 +33,18 @@ const DEFAULT_DIR: Record<CardSortKey, 'asc' | 'desc'> = {
 
 export default function DeckDetail({ deck, onBack, onReview }: Props) {
   const [addOpen, setAddOpen] = useState(false)
+  const [search, setSearch] = useState('')
   const [colOpen, setColOpen] = useState(false)
   const [columns, setColumns] = useState(loadColumnVisibility)
   const [page, setPage] = useState<CardPage | null>(null)
   const [loading, setLoading] = useState(true)
-  const [query, setQuery] = useState({ sort: 'overdue' as CardSortKey, dir: 'desc' as 'asc' | 'desc', page: 1, pageSize: 50 })
+  const [query, setQuery] = useState({
+    sort: 'difficulty' as CardSortKey,
+    dir: 'desc' as 'asc' | 'desc',
+    page: 1,
+    pageSize: 50,
+    q: '',
+  })
 
   const load = useCallback(async () => {
     setLoading(true)
@@ -52,6 +59,14 @@ export default function DeckDetail({ deck, onBack, onReview }: Props) {
     load()
   }, [load])
 
+  // 搜索防抖：单次子串匹配，走服务端分页请求
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setQuery(q => (q.q === search.trim() ? q : { ...q, q: search.trim(), page: 1 }))
+    }, 300)
+    return () => window.clearTimeout(timer)
+  }, [search])
+
   const handleSort = (key: CardSortKey) => {
     setQuery(q =>
       q.sort === key
@@ -65,19 +80,29 @@ export default function DeckDetail({ deck, onBack, onReview }: Props) {
     await load()
   }
 
-  const handleDeleteCard = async (id: number) => {
-    await api.deleteCard(id)
-    await load()
-  }
-
   return (
     <div>
-      <div className="mb-4 flex items-center justify-between">
-        <button onClick={onBack} className="text-sm text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200">
-          &larr; 返回
-        </button>
+      <div className="mb-4 grid grid-cols-[1fr_auto_1fr] items-center gap-2">
+        <span className="flex items-center gap-2 justify-self-start">
+          <button
+            onClick={onBack}
+            title="返回"
+            aria-label="返回"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-zinc-300 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-800 dark:border-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+              <path d="M19 12H5m0 0l6 6m-6-6l6-6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <input
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="搜索词 / 释义"
+            className="w-32 rounded-lg border border-zinc-300 bg-white px-3 py-1.5 text-sm outline-none focus:border-indigo-500 dark:border-zinc-700 dark:bg-zinc-900 md:w-56"
+          />
+        </span>
         <h2 className="text-xl font-semibold">{deck.name}</h2>
-        <span className="flex gap-2">
+        <span className="flex gap-2 justify-self-end">
           <button
             onClick={() => setColOpen(true)}
             title="配置表格列"
@@ -126,7 +151,6 @@ export default function DeckDetail({ deck, onBack, onReview }: Props) {
           onSort={handleSort}
           onPage={p => setQuery(q => ({ ...q, page: p }))}
           onPageSize={size => setQuery(q => ({ ...q, pageSize: size, page: 1 }))}
-          onDelete={handleDeleteCard}
         />
       )}
     </div>

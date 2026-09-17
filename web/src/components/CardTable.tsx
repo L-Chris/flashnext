@@ -57,7 +57,7 @@ export const TABLE_COLUMNS: TableColumn[] = [
     label: '释义',
     defaultVisible: true,
     render: c => (
-      <span className="block max-w-56 truncate text-zinc-600 dark:text-zinc-400" title={c.word?.translation}>
+      <span className="block max-w-64 truncate text-zinc-600 dark:text-zinc-400" title={c.word?.translation}>
         {c.word?.translation}
       </span>
     ),
@@ -220,7 +220,6 @@ interface Props {
   onSort: (key: CardSortKey) => void
   onPage: (page: number) => void
   onPageSize: (size: number) => void
-  onDelete: (id: number) => void
 }
 
 const Th = ({
@@ -248,7 +247,7 @@ const Th = ({
   </th>
 )
 
-export default function CardTable({ page, loading, visible, onSort, onPage, onPageSize, onDelete }: Props) {
+export default function CardTable({ page, loading, visible, onSort, onPage, onPageSize }: Props) {
   const columns = TABLE_COLUMNS.filter(c => c.fixed || visible[c.key])
 
   if (!page.cards.length) {
@@ -275,26 +274,19 @@ export default function CardTable({ page, loading, visible, onSort, onPage, onPa
                   onClick={c.sortKey ? () => onSort(c.sortKey!) : undefined}
                 />
               ))}
-              <Th label="" />
             </tr>
           </thead>
           <tbody className={loading ? 'opacity-50' : ''}>
             {page.cards.map(card => (
               <tr key={card.id} className="border-b border-zinc-100 last:border-0 dark:border-zinc-800/60">
-                {columns.map(c => (
-                  <td key={c.key} className="whitespace-nowrap px-2 py-1.5">
+                {columns.map((c, i) => (
+                  <td
+                    key={c.key}
+                    className={`whitespace-nowrap px-2 py-1.5 ${i === columns.length - 1 ? 'w-full' : 'w-[1%]'}`}
+                  >
                     {c.render(card)}
                   </td>
                 ))}
-                <td className="px-2 py-1.5 text-right">
-                  <button
-                    onClick={() => onDelete(card.id)}
-                    className="text-zinc-400 hover:text-red-500 dark:text-zinc-600 dark:hover:text-red-400"
-                    aria-label="删除卡片"
-                  >
-                    &times;
-                  </button>
-                </td>
               </tr>
             ))}
           </tbody>

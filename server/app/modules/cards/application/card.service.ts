@@ -30,6 +30,7 @@ export interface CardPageQuery {
   dir: 'asc' | 'desc'
   page: number
   pageSize: number
+  q: string
 }
 
 const PAGE_SIZES = [20, 50, 100, 200]
@@ -39,14 +40,15 @@ export const normalizeCardPageQuery = (raw: {
   dir?: string
   page?: string
   pageSize?: string
+  q?: string
 }): CardPageQuery => {
   const sort = (CARD_SORT_KEYS as readonly string[]).includes(raw.sort || '')
     ? (raw.sort as CardSortKey)
-    : 'overdue'
+    : 'difficulty'
   const dir = raw.dir === 'asc' ? 'asc' : 'desc'
   const pageSize = PAGE_SIZES.includes(Number(raw.pageSize)) ? Number(raw.pageSize) : 50
   const page = Math.max(1, Number(raw.page) || 1)
-  return { sort, dir, page, pageSize }
+  return { sort, dir, page, pageSize, q: (raw.q || '').trim() }
 }
 
 export interface CardPageRow {
@@ -85,7 +87,8 @@ export class CardService {
    * R 用当前 w 的遗忘曲线；新卡/学习卡没有「保持率」语义，记为 1。
    */
   async listCardsPaged(deckId: number, query: CardPageQuery) {
-    const { sort, dir, page, pageSize } = query
+    const { sort, dir, page, pageSize, q } = query
+    const needle = q.toLowerCase()
     const [rows, w] = await Promise.all([
       this.cardRepository.listLightByDeck(deckId),
       this.optimizerService.getCurrentW(),
@@ -94,7 +97,15 @@ export class CardService {
     const now = new Date()
     const todayIdx = dayIndexOf(now)
 
-    const enriched: CardPageRow[] = rows.map(r => {
+    const matched = needle
+      ? rows.filter(
+          r =>
+            r.front.toLowerCase().includes(needle) ||
+            (r.word?.translation || '').toLowerCase().includes(needle),
+        )
+      : rows
+
+    const enriched: CardPageRow[] = matched.map(r => {
       const elapsed = r.lastReview ? Math.max(0, elapsedDaysBetween(r.lastReview, now)) : 0
       const retrievability =
         r.stability > 0 && r.lastReview ? forgetting_curve(w, elapsed, r.stability) : 1
@@ -161,7 +172,7 @@ export class CardService {
       .sort((a, b) => (order.get(a!.id) ?? 0) - (order.get(b!.id) ?? 0))
 
     void order
-    return { cards, total, page: safePage, pageSize, pages, sort, dir }
+    return { cards, total, page: safePage, pageSize, pages, sort, dir, q }
   }
 
   /** 复习队列（含日限额与 Anki 式排序），供 /cards/due 使用 */

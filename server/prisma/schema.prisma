@@ -92,6 +92,35 @@ model FsrsParam {
   @@map("fsrs_params")
 }
 
+model WordnetSynset {
+  id     String         @id
+  pos    String
+  gloss  String         @default("")
+  senses WordnetSense[]
+
+  @@map("wordnet_synsets")
+}
+
+model WordnetSense {
+  id       Int           @id @default(autoincrement())
+  synsetId String        @map("synset_id")
+  lemma    String
+  synset   WordnetSynset @relation(fields: [synsetId], references: [id], onDelete: Cascade)
+
+  @@unique([synsetId, lemma])
+  @@index([lemma])
+  @@map("wordnet_senses")
+}
+
+model AppSetting {
+  id           Int      @id @default(1)
+  newPerDay    Int      @default(20) @map("new_per_day")
+  reviewPerDay Int      @default(200) @map("review_per_day")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("app_settings")
+}
+
 model Word {
   id          Int       @id @default(autoincrement())
   knowledgeEntityId Int? @unique @map("knowledge_entity_id")

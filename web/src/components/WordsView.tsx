@@ -79,13 +79,6 @@ export default function WordsView() {
             </button>
           ))}
         </div>
-        <button
-          disabled={busy !== null}
-          onClick={() => handleEnsure(undefined)}
-          className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 disabled:opacity-50"
-        >
-          {busy === 'all' ? '补建中...' : '补建全部缺卡'}
-        </button>
       </div>
 
       {message && (

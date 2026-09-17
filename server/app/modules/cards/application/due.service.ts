@@ -10,7 +10,8 @@ import {
 import { FsrsRepository } from 'app/modules/fsrs/infrastructure/fsrs.repository'
 import { OptimizerService } from 'app/modules/fsrs/application/optimizer.service'
 import { elapsedDaysBetween } from 'app/shared/day-boundary'
-import { DESIRED_RETENTION, NEW_CARDS_PER_DAY, REVIEWS_PER_DAY } from 'configs/constants'
+import { DESIRED_RETENTION } from 'configs/constants'
+import { SettingsService } from 'app/modules/settings/application/settings.service'
 
 interface Bucket {
   id: number
@@ -23,6 +24,7 @@ export class DueService {
     private cardRepository: CardRepository,
     private fsrsRepository: FsrsRepository,
     private optimizerService: OptimizerService,
+    private settingsService: SettingsService,
   ) {}
 
   /** 今天已消耗的新卡数 / 复习数（以复习当时卡片状态为准，同 Anki） */
@@ -40,13 +42,14 @@ export class DueService {
       if (log.state === STATE_NEW) newCount += 1
       else if (log.state === STATE_REVIEW || log.state === STATE_RELEARNING) reviewCount += 1
     }
+    const limits = await this.settingsService.get()
     return {
       newCount,
       reviewCount,
-      newLimit: NEW_CARDS_PER_DAY,
-      reviewLimit: REVIEWS_PER_DAY,
-      newRemaining: Math.max(0, NEW_CARDS_PER_DAY - newCount),
-      reviewRemaining: Math.max(0, REVIEWS_PER_DAY - reviewCount),
+      newLimit: limits.newPerDay,
+      reviewLimit: limits.reviewPerDay,
+      newRemaining: Math.max(0, limits.newPerDay - newCount),
+      reviewRemaining: Math.max(0, limits.reviewPerDay - reviewCount),
     }
   }
 

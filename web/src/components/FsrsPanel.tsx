@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { api } from '../api/client'
-import type { FsrsStatus, OptimizeJob, OptimizeResult, RebuildJob } from '../types'
+import type { DailyLimits, FsrsStatus, OptimizeJob, OptimizeResult, RebuildJob } from '../types'
 
 const SOURCE_LABEL: Record<string, string> = {
   default: 'FSRS-6 官方默认',
@@ -17,12 +17,23 @@ export default function FsrsPanel() {
   const [optimize, setOptimize] = useState<OptimizeResult | null>(null)
   const [job, setJob] = useState<RebuildJob | null>(null)
   const [trainJob, setTrainJob] = useState<OptimizeJob | null>(null)
+  const [limits, setLimits] = useState<DailyLimits | null>(null)
+  const [limitDraft, setLimitDraft] = useState<DailyLimits | null>(null)
+  const [toast, setToast] = useState<string | null>(null)
+  const toastTimer = useRef<number | null>(null)
   const timer = useRef<number | null>(null)
   const trainTimer = useRef<number | null>(null)
 
   const load = useCallback(async () => {
-    setStatus(await api.getFsrsStatus())
-    setJob(await api.rebuildFsrsStatus())
+    const [nextStatus, nextJob, nextLimits] = await Promise.all([
+      api.getFsrsStatus(),
+      api.rebuildFsrsStatus(),
+      api.getSettings(),
+    ])
+    setStatus(nextStatus)
+    setJob(nextJob)
+    setLimits(nextLimits)
+    setLimitDraft(nextLimits)
   }, [])
 
   useEffect(() => {
@@ -98,13 +109,79 @@ export default function FsrsPanel() {
     }
   }
 
+  const showToast = (text: string) => {
+    setToast(text)
+    if (toastTimer.current) window.clearTimeout(toastTimer.current)
+    toastTimer.current = window.setTimeout(() => setToast(null), 2000)
+  }
+
+  const saveLimits = async () => {
+    if (!limitDraft) return
+    setRunning(true)
+    setMessage('')
+    try {
+      const next = await api.saveSettings({
+        newPerDay: Number(limitDraft.newPerDay),
+        reviewPerDay: Number(limitDraft.reviewPerDay),
+      })
+      setLimits(next)
+      setLimitDraft(next)
+      showToast('保存成功')
+      await load()
+    } catch (error: any) {
+      setMessage(error?.message || '保存失败')
+    } finally {
+      setRunning(false)
+    }
+  }
+
   if (!status) return null
 
   const ready = status.reviewCount >= status.minReviews
   const migrated = Boolean(status.revlogMigratedAt)
 
   return (
-    <section className="mt-8 rounded-lg border border-zinc-200 bg-white px-4 py-4 dark:border-zinc-800 dark:bg-zinc-900">
+    <div>
+      {toast && (
+        <div className="fixed left-1/2 top-6 z-[60] -translate-x-1/2 rounded-full bg-zinc-900/90 px-4 py-2 text-xs text-white shadow-lg dark:bg-zinc-100/90 dark:text-zinc-900">
+          {toast}
+        </div>
+      )}
+      {limits && limitDraft && (
+        <div className="mb-4 flex flex-wrap items-center gap-2 rounded-lg border border-zinc-200 px-3 py-2 text-xs dark:border-zinc-800">
+          <span className="font-medium">每日限额</span>
+          <label className="flex items-center gap-1">
+            新卡
+            <input
+              type="number"
+              min={0}
+              value={limitDraft.newPerDay}
+              onChange={e => setLimitDraft({ ...limitDraft, newPerDay: Number(e.target.value) })}
+              className="w-20 rounded border border-zinc-300 bg-white px-2 py-1 dark:border-zinc-700 dark:bg-zinc-900"
+            />
+            张/天
+          </label>
+          <label className="flex items-center gap-1">
+            复习
+            <input
+              type="number"
+              min={0}
+              value={limitDraft.reviewPerDay}
+              onChange={e => setLimitDraft({ ...limitDraft, reviewPerDay: Number(e.target.value) })}
+              className="w-20 rounded border border-zinc-300 bg-white px-2 py-1 dark:border-zinc-700 dark:bg-zinc-900"
+            />
+            张/天
+          </label>
+          <button
+            disabled={running || (limitDraft.newPerDay === limits.newPerDay && limitDraft.reviewPerDay === limits.reviewPerDay)}
+            onClick={saveLimits}
+            className="ml-auto rounded-md border border-zinc-300 px-3 py-1 hover:bg-zinc-100 disabled:opacity-50 dark:border-zinc-700 dark:hover:bg-zinc-800"
+          >
+            {running ? '保存中...' : '保存'}
+          </button>
+        </div>
+      )}
+
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <h3 className="text-sm font-semibold">FSRS 记忆参数</h3>
@@ -201,6 +278,6 @@ export default function FsrsPanel() {
           )}
         </div>
       )}
-    </section>
+    </div>
   )
 }

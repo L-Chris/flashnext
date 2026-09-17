@@ -51,7 +51,7 @@ export class CardRepository {
         due: true,
         lastReview: true,
         createdAt: true,
-        word: { select: { rank: true } },
+        word: { select: { rank: true, translation: true, phonetic: true } },
       },
     })
   }

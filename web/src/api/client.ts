@@ -4,6 +4,7 @@ import type {
   CardPage,
   CardPageQuery,
   CoverageRow,
+  DailyLimits,
   Deck,
   DueQueue,
   EnsureResult,
@@ -12,6 +13,7 @@ import type {
   Rating,
   RebuildJob,
   SchemeInfo,
+  SynonymPage,
 } from '../types'
 
 const request = async <T>(url: string, options: RequestInit = {}): Promise<T> => {
@@ -40,6 +42,7 @@ export const api = {
     if (query.dir) params.set('dir', query.dir)
     if (query.page) params.set('page', String(query.page))
     if (query.pageSize) params.set('pageSize', String(query.pageSize))
+    if (query.q) params.set('q', query.q)
     const qs = params.toString()
     return request<CardPage>(`/api/decks/${deckId}/cards${qs ? `?${qs}` : ''}`)
   },
@@ -92,4 +95,19 @@ export const api = {
     }),
 
   rebuildFsrsStatus: () => request<RebuildJob>('/api/fsrs/rebuild'),
+
+  listSynonymGroups: (query: { page?: number; pageSize?: number; q?: string; pos?: string } = {}) => {
+    const params = new URLSearchParams()
+    if (query.page) params.set('page', String(query.page))
+    if (query.pageSize) params.set('pageSize', String(query.pageSize))
+    if (query.q) params.set('q', query.q)
+    if (query.pos) params.set('pos', query.pos)
+    const qs = params.toString()
+    return request<SynonymPage>(`/api/synonyms/groups${qs ? `?${qs}` : ''}`)
+  },
+
+  getSettings: () => request<DailyLimits>('/api/settings'),
+
+  saveSettings: (limits: Partial<DailyLimits>) =>
+    request<DailyLimits>('/api/settings', { method: 'POST', body: JSON.stringify(limits) }),
 }
