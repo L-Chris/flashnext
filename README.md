@@ -345,6 +345,7 @@ node scripts/import-words.js 5000
 
 - `coca`：L1-L5（由 COCA 排名换算）
 - `cet`：CET-4 / CET-6（`node scripts/import-cet.js` 导入词表标签）
+- `ielts`：雅思教材词表（`node scripts/import-ielts.js` 导入《雅思词汇真经》社区转录词表，具体版次仍待核验）
 
 词库 API：
 

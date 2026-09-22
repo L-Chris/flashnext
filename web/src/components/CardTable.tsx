@@ -1,3 +1,7 @@
+import Pronunciations from './Pronunciations'
+import { Fragment, useState } from 'react'
+import SenseExamples from './SenseExamples'
+import IeltsUsages from './IeltsUsages'
 import type { Card, CardPage, CardSortKey } from '../types'
 
 export interface TableColumn {
@@ -20,6 +24,7 @@ const STATE_LABEL: Record<number, { label: string; className: string }> = {
 const TAG_COLORS: Record<string, string> = {
   coca: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300',
   cet: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300',
+  ielts: 'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300',
 }
 
 const rClass = (card: Card) => {
@@ -50,7 +55,7 @@ export const TABLE_COLUMNS: TableColumn[] = [
     key: 'phonetic',
     label: '音标',
     defaultVisible: false,
-    render: c => <span className="text-zinc-500 dark:text-zinc-400">{c.word?.phonetic ? `/${c.word.phonetic}/` : ''}</span>,
+    render: c => <span className="text-zinc-500 dark:text-zinc-400"><Pronunciations items={c.word?.pronunciations} fallback={c.word?.phonetic} compact /></span>,
   },
   {
     key: 'translation',
@@ -248,7 +253,17 @@ const Th = ({
 )
 
 export default function CardTable({ page, loading, visible, onSort, onPage, onPageSize }: Props) {
+  const [expanded, setExpanded] = useState<Set<number>>(new Set())
   const columns = TABLE_COLUMNS.filter(c => c.fixed || visible[c.key])
+
+  const toggle = (id: number) => {
+    setExpanded(prev => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  }
 
   if (!page.cards.length) {
     return (
@@ -278,16 +293,29 @@ export default function CardTable({ page, loading, visible, onSort, onPage, onPa
           </thead>
           <tbody className={loading ? 'opacity-50' : ''}>
             {page.cards.map(card => (
-              <tr key={card.id} className="border-b border-zinc-100 last:border-0 dark:border-zinc-800/60">
-                {columns.map((c, i) => (
-                  <td
-                    key={c.key}
-                    className={`whitespace-nowrap px-2 py-1.5 ${i === columns.length - 1 ? 'w-full' : 'w-[1%]'}`}
-                  >
-                    {c.render(card)}
-                  </td>
-                ))}
-              </tr>
+              <Fragment key={card.id}>
+                <tr
+                  onClick={() => toggle(card.id)}
+                  className="cursor-pointer border-b border-zinc-100 last:border-0 hover:bg-zinc-50 dark:border-zinc-800/60 dark:hover:bg-zinc-800/30"
+                >
+                  {columns.map((c, i) => (
+                    <td
+                      key={c.key}
+                      className={`whitespace-nowrap px-2 py-1.5 ${i === columns.length - 1 ? 'w-full' : 'w-[1%]'}`}
+                    >
+                      {c.render(card)}
+                    </td>
+                  ))}
+                </tr>
+                {expanded.has(card.id) && (card.word?.senses?.length || card.word?.ieltsUsages?.length) ? (
+                  <tr className="border-b border-zinc-100 bg-zinc-50/60 dark:border-zinc-800/60 dark:bg-zinc-800/20">
+                    <td colSpan={columns.length} className="px-4 py-3">
+                      <IeltsUsages usages={card.word?.ieltsUsages} />
+                      <SenseExamples senses={card.word?.senses} />
+                    </td>
+                  </tr>
+                ) : null}
+              </Fragment>
             ))}
           </tbody>
         </table>

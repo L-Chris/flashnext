@@ -114,12 +114,10 @@ export class WordService {
       include: { word: true },
     })
 
-    const stale = cards.filter(
-      c =>
-        c.word &&
-        (c.front !== c.word.headword ||
-          c.back !== cardBack(c.word.phonetic, c.word.translation)),
-    )
+    const stale = cards.filter(c => c.word && c.front === c.word.headword &&
+      c.word.phoneticLegacy !== null &&
+      c.back === cardBack(c.word.phoneticLegacy, c.word.translation) &&
+      c.back !== cardBack(c.word.phonetic, c.word.translation))
 
     if (stale.length > 0) {
       await prisma.$transaction(

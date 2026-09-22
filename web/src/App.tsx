@@ -9,10 +9,10 @@ import WordsView from './components/WordsView'
 import SynonymsView from './components/SynonymsView'
 import FsrsPanel from './components/FsrsPanel'
 
-type View =
+type Route =
   | { type: 'decks' }
-  | { type: 'deck'; deck: Deck }
-  | { type: 'review'; deck: Deck }
+  | { type: 'deck'; id: number }
+  | { type: 'review'; id: number }
   | { type: 'words' }
   | { type: 'synonyms' }
 
@@ -22,6 +22,26 @@ const initialTheme = (): Theme => {
   const stored = localStorage.getItem('flashnext-theme')
   if (stored === 'light' || stored === 'dark') return stored
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
+const hashOf = (route: Route): string => {
+  switch (route.type) {
+    case 'deck': return `#/deck/${route.id}`
+    case 'review': return `#/review/${route.id}`
+    case 'words': return '#/words'
+    case 'synonyms': return '#/synonyms'
+    default: return '#/decks'
+  }
+}
+
+const parseHash = (): Route => {
+  const [seg, param] = window.location.hash.replace(/^#\/?/, '').split('/')
+  const id = Number(param)
+  if (seg === 'deck' && Number.isFinite(id) && id > 0) return { type: 'deck', id }
+  if (seg === 'review' && Number.isFinite(id) && id > 0) return { type: 'review', id }
+  if (seg === 'words') return { type: 'words' }
+  if (seg === 'synonyms') return { type: 'synonyms' }
+  return { type: 'decks' }
 }
 
 const Logo = () => (
@@ -36,7 +56,7 @@ const Logo = () => (
 )
 
 export default function App() {
-  const [view, setView] = useState<View>({ type: 'decks' })
+  const [route, setRoute] = useState<Route>(parseHash)
   const [decks, setDecks] = useState<Deck[]>([])
   const [theme, setTheme] = useState<Theme>(initialTheme)
   const [deckAddOpen, setDeckAddOpen] = useState(false)
@@ -46,6 +66,18 @@ export default function App() {
     document.documentElement.classList.toggle('dark', theme === 'dark')
     localStorage.setItem('flashnext-theme', theme)
   }, [theme])
+
+  useEffect(() => {
+    const onHash = () => setRoute(parseHash())
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
+
+  const navigate = (next: Route) => {
+    const hash = hashOf(next)
+    if (window.location.hash === hash) setRoute(next)
+    else window.location.hash = hash
+  }
 
   const loadDecks = useCallback(async () => {
     setDecks(await api.listDecks())
@@ -65,27 +97,24 @@ export default function App() {
     await loadDecks()
   }
 
-  const tab = view.type === 'words' ? 'words' : view.type === 'synonyms' ? 'synonyms' : 'decks'
+  // 路由指向的牌组尚未加载或已删除时回落到牌组列表
+  const routeDeck =
+    route.type === 'deck' || route.type === 'review'
+      ? decks.find(d => d.id === route.id) ?? null
+      : null
+  useEffect(() => {
+    if ((route.type === 'deck' || route.type === 'review') && decks.length && !routeDeck) {
+      navigate({ type: 'decks' })
+    }
+  }, [route, decks, routeDeck])
+
+  const tab =
+    route.type === 'words' ? 'words' : route.type === 'synonyms' ? 'synonyms' : 'decks'
 
   const navItems: Array<{ key: 'decks' | 'words' | 'synonyms'; label: string; onClick: () => void }> = [
-    {
-      key: 'decks',
-      label: '牌组库',
-      onClick: () => {
-        setView({ type: 'decks' })
-        loadDecks()
-      },
-    },
-    {
-      key: 'words',
-      label: '词库',
-      onClick: () => setView({ type: 'words' }),
-    },
-    {
-      key: 'synonyms',
-      label: '同义词',
-      onClick: () => setView({ type: 'synonyms' }),
-    },
+    { key: 'decks', label: '牌组库', onClick: () => navigate({ type: 'decks' }) },
+    { key: 'words', label: '词库', onClick: () => navigate({ type: 'words' }) },
+    { key: 'synonyms', label: '同义词', onClick: () => navigate({ type: 'synonyms' }) },
   ]
 
   const navClass = (active: boolean) =>
@@ -143,11 +172,11 @@ export default function App() {
       {/* 主体 */}
       <main className="md:pl-56">
         <div className="w-full px-5 py-8 md:py-10">
-          {view.type === 'words' && <WordsView />}
+          {route.type === 'words' && <WordsView />}
 
-          {view.type === 'synonyms' && <SynonymsView />}
+          {route.type === 'synonyms' && <SynonymsView />}
 
-          {view.type === 'decks' && (
+          {route.type === 'decks' && (
             <>
               <div className="mb-4 flex items-center justify-between">
                 <h2 className="text-xl font-semibold">牌组库</h2>
@@ -159,29 +188,25 @@ export default function App() {
                     添加
                   </button>
                   <button
-                  onClick={() => setFsrsOpen(true)}
-                  title="FSRS 设置"
-                  aria-label="FSRS 设置"
-                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-300 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-800 dark:border-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1-1.55 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.55-1 1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34h.09a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87v.09a1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.55 1Z"
-                    />
-                  </svg>
+                    onClick={() => setFsrsOpen(true)}
+                    title="设置"
+                    aria-label="设置"
+                    className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-300 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-800 dark:border-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1-1.55 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.55-1 1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34h.09a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87v.09a1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.55 1Z"
+                      />
+                    </svg>
                   </button>
                 </span>
               </div>
               <DeckList
                 decks={decks}
-                onOpen={deck => setView({ type: 'deck', deck })}
+                onOpen={deck => navigate({ type: 'deck', id: deck.id })}
                 onDelete={handleDeleteDeck}
               />
               <DeckForm
@@ -215,34 +240,22 @@ export default function App() {
             </>
           )}
 
-          {view.type === 'deck' && (
+          {route.type === 'deck' && routeDeck && (
             <DeckDetail
-              deck={view.deck}
-              onBack={() => {
-                setView({ type: 'decks' })
-                loadDecks()
-              }}
-              onReview={() => setView({ type: 'review', deck: view.deck })}
+              deck={routeDeck}
+              onBack={() => navigate({ type: 'decks' })}
+              onReview={() => navigate({ type: 'review', id: routeDeck.id })}
             />
           )}
 
-          {view.type === 'review' && (
+          {route.type === 'review' && routeDeck && (
             <ReviewView
-              deck={view.deck}
-              onExit={() => setView({ type: 'deck', deck: view.deck })}
+              deck={routeDeck}
+              onExit={() => navigate({ type: 'deck', id: routeDeck.id })}
             />
           )}
         </div>
       </main>
-
-      <button
-        onClick={() => setTheme(t => (t === 'dark' ? 'light' : 'dark'))}
-        title={theme === 'dark' ? '切换浅色模式' : '切换深色模式'}
-        aria-label="切换主题"
-        className="fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 bg-white text-lg shadow-lg hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900 dark:hover:bg-zinc-800 md:hidden"
-      >
-        {theme === 'dark' ? '☀' : '☾'}
-      </button>
     </div>
   )
 }

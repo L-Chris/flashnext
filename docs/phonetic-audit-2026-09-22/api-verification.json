@@ -1,0 +1,92 @@
+{
+  "go": {
+    "default": "ɡəʊ",
+    "readings": [
+      [
+        "adj",
+        "ɡəʊ"
+      ],
+      [
+        "noun",
+        "ɡəʊ"
+      ],
+      [
+        "verb",
+        "ɡəʊ"
+      ]
+    ]
+  },
+  "read": {
+    "default": "riːd",
+    "readings": [
+      [
+        "verb",
+        "red"
+      ],
+      [
+        "verb",
+        "riːd"
+      ]
+    ]
+  },
+  "record": {
+    "default": "ˈrekɔːd",
+    "readings": [
+      [
+        "adj",
+        "ˈrekɔːd"
+      ],
+      [
+        "noun",
+        "ˈrekɔːd"
+      ],
+      [
+        "verb",
+        "rɪˈkɔːd"
+      ]
+    ]
+  },
+  "bow": {
+    "default": "bəʊ",
+    "readings": [
+      [
+        "noun",
+        "baʊ"
+      ],
+      [
+        "noun",
+        "bəʊ"
+      ],
+      [
+        "verb",
+        "baʊ"
+      ]
+    ]
+  },
+  "resume": {
+    "default": "rɪˈzjuːm",
+    "readings": [
+      [
+        "noun",
+        "ˈrezjuːmeɪ"
+      ],
+      [
+        "verb",
+        "rɪˈzjuːm"
+      ]
+    ]
+  },
+  "permit": {
+    "default": "ˈpɜːmɪt",
+    "readings": [
+      [
+        "noun",
+        "ˈpɜːmɪt"
+      ],
+      [
+        "verb",
+        "pəˈmɪt"
+      ]
+    ]
+  }
+}

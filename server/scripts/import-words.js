@@ -68,11 +68,11 @@ const collectCmudict = headwords => {
   const lines = fs.readFileSync(CMUDICT_FILE, 'utf8').split('\n')
   for (const line of lines) {
     if (!line || line.startsWith(';;;')) continue
-    const idx = line.indexOf('  ')
+    const idx = line.search(/\s/)
     if (idx < 0) continue
     const key = line.slice(0, idx).toLowerCase().replace(/\(\d+\)$/, '')
     if (!wanted.has(key) || map.has(key)) continue
-    map.set(key, line.slice(idx + 2))
+    map.set(key, line.slice(idx).trim())
   }
   return map
 }
@@ -205,8 +205,7 @@ const main = async () => {
   console.log('parsing COCA translation fallback...')
   const fallback = collectTranslations(headwords)
 
-  console.log('loading CMU pronouncing dictionary (KK)...')
-  const cmudict = collectCmudict(headwords)
+  // Keep new words explicitly legacy until prepare/import-pronunciations approves IPA.
 
   let kkMiss = 0
   const rows = headwords
@@ -216,20 +215,19 @@ const main = async () => {
       const translation = cleanTranslation(
         (ec?.translation || fallback.get(key) || '').replace(/\\n/g, '\n'),
       )
-      const kk = arpabetToKK(cmudict.get(key) || '')
-      if (!kk) kkMiss++
+      if (!ec?.phonetic) kkMiss++
       return {
         headword,
         rank,
         pos: extractPos(translation),
-        phonetic: kk || ec?.phonetic || '',
+        phonetic: ec?.phonetic || '', // Legacy candidate only; the pronunciation pipeline approves display IPA.
         translation,
       }
     })
     .filter(row => /^[\p{L}]+(?:[-'’][\p{L}]+)*$/u.test(row.headword))
 
   const noTranslation = rows.filter(r => !r.translation).length
-  console.log(`missing translation: ${noTranslation}, missing KK phonetic: ${kkMiss}`)
+  console.log(`missing translation: ${noTranslation}, missing legacy phonetic: ${kkMiss}`)
 
   console.log('writing to database...')
   const chunkSize = 250
@@ -239,7 +237,7 @@ const main = async () => {
       chunk.map(row =>
         prisma.word.upsert({
           where: { headword: row.headword },
-          update: row,
+          update: { headword: row.headword, rank: row.rank, pos: row.pos, translation: row.translation }, // Never overwrite an approved pronunciation.
           create: row,
         }),
       ),

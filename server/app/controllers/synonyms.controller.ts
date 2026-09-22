@@ -12,14 +12,16 @@ export class SynonymsController {
     @QueryParam('page') page?: string,
     @QueryParam('pageSize') pageSize?: string,
     @QueryParam('q') q?: string,
-    @QueryParam('pos') pos?: string,
+    @QueryParam('mode') mode?: string,
+    @QueryParam('hideRare') hideRare?: string,
   ) {
     const size = [20, 50, 100].includes(Number(pageSize)) ? Number(pageSize) : 50
     const data = await this.synonymsService.groups({
       page: Math.max(1, Number(page) || 1),
       pageSize: size,
       q: q || '',
-      pos: pos || '',
+      mode: mode || 'all',
+      hideRare: hideRare === '1' || hideRare === 'true',
     })
     return { data }
   }

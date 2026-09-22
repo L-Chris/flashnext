@@ -1,0 +1,1378 @@
+{
+  "file_bytes": 3245973435,
+  "sha256": "e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25",
+  "lines": 1492836,
+  "elapsed_seconds": 104.2,
+  "coverage": {
+    "all": {
+      "total": 18451,
+      "matched": 18305,
+      "pos": 18305,
+      "ipa": 16189,
+      "root_zh": 1814,
+      "gloss": 18303,
+      "any_zh": 12070,
+      "any_examples": 17225,
+      "candidate_sense": 17850,
+      "direct_example_candidate": 10843,
+      "sense_zh": 11409,
+      "candidate_sense_zh": 11250,
+      "same_sense_example_zh": 5567
+    },
+    "cards": {
+      "total": 8648,
+      "matched": 8633,
+      "pos": 8633,
+      "ipa": 8310,
+      "root_zh": 1329,
+      "gloss": 8633,
+      "any_zh": 6954,
+      "any_examples": 8463,
+      "candidate_sense": 8535,
+      "direct_example_candidate": 6399,
+      "sense_zh": 6565,
+      "candidate_sense_zh": 6477,
+      "same_sense_example_zh": 3920
+    },
+    "coca": {
+      "total": 17631,
+      "matched": 17501,
+      "pos": 17501,
+      "ipa": 15564,
+      "root_zh": 1789,
+      "gloss": 17499,
+      "any_zh": 11720,
+      "any_examples": 16515,
+      "candidate_sense": 17105,
+      "direct_example_candidate": 10585,
+      "sense_zh": 11078,
+      "candidate_sense_zh": 10933,
+      "same_sense_example_zh": 5489
+    },
+    "cet": {
+      "total": 5637,
+      "matched": 5637,
+      "pos": 5637,
+      "ipa": 5596,
+      "root_zh": 1117,
+      "gloss": 5637,
+      "any_zh": 5065,
+      "any_examples": 5596,
+      "candidate_sense": 5611,
+      "direct_example_candidate": 4739,
+      "sense_zh": 4781,
+      "candidate_sense_zh": 4732,
+      "same_sense_example_zh": 3166
+    },
+    "ielts": {
+      "total": 3628,
+      "matched": 3626,
+      "pos": 3626,
+      "ipa": 3571,
+      "root_zh": 651,
+      "gloss": 3626,
+      "any_zh": 3268,
+      "any_examples": 3573,
+      "candidate_sense": 3597,
+      "direct_example_candidate": 2875,
+      "sense_zh": 3088,
+      "candidate_sense_zh": 3050,
+      "same_sense_example_zh": 1855
+    },
+    "ielts_file": {
+      "total": 3630,
+      "matched": 3628,
+      "pos": 3628,
+      "ipa": 3576,
+      "root_zh": 648,
+      "gloss": 3628,
+      "any_zh": 3271,
+      "any_examples": 3576,
+      "candidate_sense": 3600,
+      "direct_example_candidate": 2878,
+      "sense_zh": 3093,
+      "candidate_sense_zh": 3054,
+      "same_sense_example_zh": 1856
+    }
+  },
+  "stats": {
+    "matched_senses": 118349
+  },
+  "missing_ielts": [
+    "fahrenheit",
+    "short-day"
+  ],
+  "ielts_case_only": {
+    "fahrenheit": [
+      "Fahrenheit"
+    ]
+  },
+  "samples": {
+    "El Nino": {
+      "current_word": null,
+      "current_senses": [],
+      "record_count": 1,
+      "pos": [
+        "name"
+      ],
+      "sense_count": 1,
+      "flags": [
+        "matched",
+        "pos",
+        "gloss"
+      ]
+    },
+    "El Niño": {
+      "current_word": null,
+      "current_senses": [],
+      "record_count": 1,
+      "pos": [
+        "name"
+      ],
+      "sense_count": 1,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "sense_zh",
+        "candidate_sense_zh"
+      ]
+    },
+    "Pacific": {
+      "current_word": null,
+      "current_senses": [],
+      "record_count": 3,
+      "pos": [
+        "adj",
+        "name",
+        "noun"
+      ],
+      "sense_count": 4,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "gloss",
+        "any_examples",
+        "candidate_sense"
+      ]
+    },
+    "address": {
+      "current_word": {
+        "id": 928,
+        "knowledge_entity_id": 928,
+        "headword": "address",
+        "rank": 928,
+        "pos": "n.",
+        "phonetic": "ˈæˌdrɛs",
+        "translation": "n. 住址, 演说, 举止, 灵巧, 求爱\nvt. 发表(演说或讲话), 对付, 写地址"
+      },
+      "current_senses": [
+        {
+          "id": 6268,
+          "word_id": 928,
+          "sense_idx": 1,
+          "gloss": "Direction.",
+          "examples": "[\"[H]e was thus agreeable, and I neither insensible of his Perfections, nor displeased at his Addresses to me […].\"]",
+          "zh": "[]"
+        },
+        {
+          "id": 6269,
+          "word_id": 928,
+          "sense_idx": 2,
+          "gloss": "Direction.",
+          "examples": "[\"a man of pleasing or insinuating address\"]",
+          "zh": "[]"
+        },
+        {
+          "id": 6270,
+          "word_id": 928,
+          "sense_idx": 5,
+          "gloss": "Direction.",
+          "examples": "[\"Mr. Gregson, who had listened to this address with considerable impatience, could contain himself no longer.\"]",
+          "zh": "[\"演说\"]"
+        }
+      ],
+      "record_count": 2,
+      "pos": [
+        "noun",
+        "verb"
+      ],
+      "sense_count": 29,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "direct_example_candidate",
+        "sense_zh",
+        "candidate_sense_zh",
+        "same_sense_example_zh"
+      ]
+    },
+    "apple": {
+      "current_word": {
+        "id": 2393,
+        "knowledge_entity_id": 2393,
+        "headword": "apple",
+        "rank": 2393,
+        "pos": "n.",
+        "phonetic": "ˈæpəl",
+        "translation": "n. 苹果, 家伙"
+      },
+      "current_senses": [
+        {
+          "id": 528,
+          "word_id": 2393,
+          "sense_idx": 1,
+          "gloss": "A common, firm, round fruit produced by a tree of the genus Malus.",
+          "examples": "[\"custard apple rose apple thorn apple\",\"The cross-bill will have seeds from the apple, or cone of the fir—the green-finch, seeds from the uplands, or door of barn, or rickyard.\"]",
+          "zh": "[]"
+        },
+        {
+          "id": 529,
+          "word_id": 2393,
+          "sense_idx": 2,
+          "gloss": "A common, firm, round fruit produced by a tree of the genus Malus.",
+          "examples": "[\"The arms of Upland were a golden apple, or globe, surrounded with a belt, in allusion to the monarchy.\",\"A peasant blouse that showed the tops of those lovely little apples.\"]",
+          "zh": "[]"
+        },
+        {
+          "id": 530,
+          "word_id": 2393,
+          "sense_idx": 3,
+          "gloss": "A common, firm, round fruit produced by a tree of the genus Malus.",
+          "examples": "[\"He looked with vague hope up and down the quay, a big apple bulging in his neck.\",\"The apple in his neck was hitting against his collar every time he drew breath and he tore at his collar nervously.\"]",
+          "zh": "[]"
+        }
+      ],
+      "record_count": 2,
+      "pos": [
+        "noun",
+        "verb"
+      ],
+      "sense_count": 24,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "root_zh",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "direct_example_candidate"
+      ]
+    },
+    "bank": {
+      "current_word": {
+        "id": 605,
+        "knowledge_entity_id": 605,
+        "headword": "bank",
+        "rank": 605,
+        "pos": "n.",
+        "phonetic": "ˈbæŋk",
+        "translation": "n. 银行, 堤, 岸"
+      },
+      "current_senses": [
+        {
+          "id": 521,
+          "word_id": 605,
+          "sense_idx": 3,
+          "gloss": "A fund from deposits or contributions, to be used in transacting business; a joint stock or capital.",
+          "examples": "[\"Let it be no bank or common stock, but every man be master of his own money.\"]",
+          "zh": "[]"
+        },
+        {
+          "id": 522,
+          "word_id": 605,
+          "sense_idx": 5,
+          "gloss": "Money; profit.",
+          "examples": "[\"Military dude was working for a drug dealer, right? and making good bank with it—he was making good money.\"]",
+          "zh": "[]"
+        },
+        {
+          "id": 523,
+          "word_id": 605,
+          "sense_idx": 7,
+          "gloss": "A safe and guaranteed place of storage for and retrieval of important items or goods.",
+          "examples": "[\"blood bank; data bank; sperm bank\"]",
+          "zh": "[]"
+        }
+      ],
+      "record_count": 7,
+      "pos": [
+        "noun",
+        "verb"
+      ],
+      "sense_count": 42,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "direct_example_candidate",
+        "sense_zh",
+        "candidate_sense_zh"
+      ]
+    },
+    "bow": {
+      "current_word": {
+        "id": 3600,
+        "knowledge_entity_id": 3599,
+        "headword": "bow",
+        "rank": 3600,
+        "pos": "n.",
+        "phonetic": "ˈbaʊ",
+        "translation": "n. 弓, 眼睛框\nv. 用弓拉琴, 弯成弓形\nn. 鞠躬, 屈服"
+      },
+      "current_senses": [
+        {
+          "id": 4813,
+          "word_id": 3600,
+          "sense_idx": 0,
+          "gloss": "A weapon made of a curved piece of wood or other flexible material whose ends are connected by a string, used for shooting arrows.",
+          "examples": "[\"Holonym: bow and arrow\"]",
+          "zh": "[\"弓\"]"
+        },
+        {
+          "id": 4814,
+          "word_id": 3600,
+          "sense_idx": 5,
+          "gloss": "Anything bent or curved, such as a rainbow.",
+          "examples": "[\"I do set my bow in the cloud.\"]",
+          "zh": "[]"
+        }
+      ],
+      "record_count": 11,
+      "pos": [
+        "intj",
+        "noun",
+        "verb"
+      ],
+      "sense_count": 30,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "root_zh",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "direct_example_candidate",
+        "sense_zh",
+        "candidate_sense_zh",
+        "same_sense_example_zh"
+      ]
+    },
+    "carbon dioxide": {
+      "current_word": {
+        "id": 48601,
+        "knowledge_entity_id": 73291,
+        "headword": "carbon dioxide",
+        "rank": null,
+        "pos": "",
+        "phonetic": "",
+        "translation": "二氧化碳\\n[化] 二氧化碳"
+      },
+      "current_senses": [],
+      "record_count": 1,
+      "pos": [
+        "noun"
+      ],
+      "sense_count": 1,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "sense_zh",
+        "candidate_sense_zh"
+      ]
+    },
+    "cricket": {
+      "current_word": {
+        "id": 27399,
+        "knowledge_entity_id": 7398,
+        "headword": "cricket",
+        "rank": 7399,
+        "pos": "n.",
+        "phonetic": "ˈkrɪkɪt",
+        "translation": "n. 蟋蟀, 板球"
+      },
+      "current_senses": [
+        {
+          "id": 6405,
+          "word_id": 27399,
+          "sense_idx": 1,
+          "gloss": "An act that is fair and sportsmanlike.",
+          "examples": "[\"Robbins went on, \\\"Henry wouldn't do anything that wasn't cricket. Me, I was raised in a river ward and I'm not bothered by niceties. […]\"]",
+          "zh": "[]"
+        }
+      ],
+      "record_count": 4,
+      "pos": [
+        "noun",
+        "verb"
+      ],
+      "sense_count": 10,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "root_zh",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "sense_zh",
+        "candidate_sense_zh"
+      ]
+    },
+    "crust": {
+      "current_word": {
+        "id": 4972,
+        "knowledge_entity_id": 4971,
+        "headword": "crust",
+        "rank": 4972,
+        "pos": "n.",
+        "phonetic": "ˈkrʌst",
+        "translation": "n. 外壳, 坚硬外皮, 面包皮\nvt. 盖以硬皮\nvi. 结硬皮"
+      },
+      "current_senses": [
+        {
+          "id": 5868,
+          "word_id": 4972,
+          "sense_idx": 2,
+          "gloss": "An outer layer composed of pastry",
+          "examples": "[\"Th' impenetrable crust thy teeth defies.\",\"They […] made the crust for the venison pasty.\"]",
+          "zh": "[]"
+        },
+        {
+          "id": 5869,
+          "word_id": 4972,
+          "sense_idx": 5,
+          "gloss": "The outermost layer of the lithosphere of the Earth.",
+          "examples": "[\"Holonyms: lithosphere < Earth\",\"The crust (a mere 1% of the Earth's volume) is made of lighter melt products from the mantle.\"]",
+          "zh": "[]"
+        },
+        {
+          "id": 5870,
+          "word_id": 4972,
+          "sense_idx": 6,
+          "gloss": "The outermost layer of the lithosphere of any terrestrial planet.",
+          "examples": "[\"Holonyms: lithosphere < planet\"]",
+          "zh": "[]"
+        }
+      ],
+      "record_count": 2,
+      "pos": [
+        "noun",
+        "verb"
+      ],
+      "sense_count": 14,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "root_zh",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "direct_example_candidate",
+        "sense_zh",
+        "candidate_sense_zh"
+      ]
+    },
+    "environment": {
+      "current_word": {
+        "id": 785,
+        "knowledge_entity_id": 785,
+        "headword": "environment",
+        "rank": 785,
+        "pos": "n.",
+        "phonetic": "ɪˈnvaɪrənmənt",
+        "translation": "n. 环境, 外界, 围绕"
+      },
+      "current_senses": [
+        {
+          "id": 2215,
+          "word_id": 785,
+          "sense_idx": 4,
+          "gloss": "The software or hardware existing on any particular computer system.",
+          "examples": "[\"That program uses the Microsoft Windows environment.\"]",
+          "zh": "[\"环境\"]"
+        }
+      ],
+      "record_count": 1,
+      "pos": [
+        "noun"
+      ],
+      "sense_count": 7,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "root_zh",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "direct_example_candidate",
+        "sense_zh",
+        "candidate_sense_zh",
+        "same_sense_example_zh"
+      ]
+    },
+    "hybridisation": {
+      "current_word": {
+        "id": 48617,
+        "knowledge_entity_id": 73307,
+        "headword": "hybridisation",
+        "rank": null,
+        "pos": "n.",
+        "phonetic": ",haibridai'zeiʃәn; -di'z-",
+        "translation": "n. <主英> = hybridization"
+      },
+      "current_senses": [],
+      "record_count": 1,
+      "pos": [
+        "noun"
+      ],
+      "sense_count": 1,
+      "flags": [
+        "matched",
+        "pos",
+        "gloss",
+        "any_examples"
+      ]
+    },
+    "hybridization": {
+      "current_word": null,
+      "current_senses": [],
+      "record_count": 1,
+      "pos": [
+        "noun"
+      ],
+      "sense_count": 4,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "root_zh",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense"
+      ]
+    },
+    "hydrosphere": {
+      "current_word": {
+        "id": 48599,
+        "knowledge_entity_id": 73289,
+        "headword": "hydrosphere",
+        "rank": null,
+        "pos": "n.",
+        "phonetic": "'haidrәsfiә",
+        "translation": "n. 水圈, 水界, 水气"
+      },
+      "current_senses": [],
+      "record_count": 1,
+      "pos": [
+        "noun"
+      ],
+      "sense_count": 1,
+      "flags": [
+        "matched",
+        "pos",
+        "gloss",
+        "any_zh",
+        "candidate_sense",
+        "sense_zh",
+        "candidate_sense_zh"
+      ]
+    },
+    "issue": {
+      "current_word": {
+        "id": 227,
+        "knowledge_entity_id": 227,
+        "headword": "issue",
+        "rank": 227,
+        "pos": "n.",
+        "phonetic": "ˈɪʃu",
+        "translation": "n. 发行, 问题, 后果, 流出, 出口, 争端\nvi. 发行, 流出, 造成...结果, 传下\nvt. 使流出, 放出, 发行, 发布, 发给"
+      },
+      "current_senses": [
+        {
+          "id": 11821,
+          "word_id": 227,
+          "sense_idx": 1,
+          "gloss": "The action or an instance of flowing or coming out, an outflow",
+          "examples": "[\"The technique minimizes the issue of blood from the incision.\",\"And behold, a woman which was diseased with an issue of blood twelue yeeres, came behinde him [Jesus], and touched the hemme of his garment.\"]",
+          "zh": "[]"
+        },
+        {
+          "id": 11822,
+          "word_id": 227,
+          "sense_idx": 2,
+          "gloss": "Someone or something that flows out or comes out",
+          "examples": "[\"For she doted upon their paramours, whose flesh is as the flesh of asses, and whose issue is like the issue of horses.\"]",
+          "zh": "[]"
+        },
+        {
+          "id": 11823,
+          "word_id": 227,
+          "sense_idx": 3,
+          "gloss": "Someone or something that flows out or comes out",
+          "examples": "[\"He died intestate and without issue, so the extended family have all lawyered up.\"]",
+          "zh": "[]"
+        }
+      ],
+      "record_count": 2,
+      "pos": [
+        "noun",
+        "verb"
+      ],
+      "sense_count": 46,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "root_zh",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "direct_example_candidate",
+        "sense_zh",
+        "candidate_sense_zh",
+        "same_sense_example_zh"
+      ]
+    },
+    "jeopardise": {
+      "current_word": {
+        "id": 48602,
+        "knowledge_entity_id": 73292,
+        "headword": "jeopardise",
+        "rank": null,
+        "pos": "vt.",
+        "phonetic": "",
+        "translation": "vt. 使受危险, 危及, 危害\\n[法] 使受危害, 使陷入危险, 危及"
+      },
+      "current_senses": [],
+      "record_count": 1,
+      "pos": [
+        "verb"
+      ],
+      "sense_count": 1,
+      "flags": [
+        "matched",
+        "pos",
+        "gloss",
+        "any_examples"
+      ]
+    },
+    "jeopardize": {
+      "current_word": {
+        "id": 27033,
+        "knowledge_entity_id": 7032,
+        "headword": "jeopardize",
+        "rank": 7033,
+        "pos": "vt.",
+        "phonetic": "ˈdʒɛpɚˌdaɪz",
+        "translation": "vt. 危害, 使受危困, 使陷危地"
+      },
+      "current_senses": [
+        {
+          "id": 16327,
+          "word_id": 27033,
+          "sense_idx": 0,
+          "gloss": "To put in jeopardy, to threaten.",
+          "examples": "[\"After having an affair with a junior, her chances of promotion were seriously jeopardized.\",\"This mission is too important for me to allow you to jeopardize it.\"]",
+          "zh": "[\"使受危险\",\"危害\",\"危及\"]"
+        }
+      ],
+      "record_count": 1,
+      "pos": [
+        "verb"
+      ],
+      "sense_count": 1,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "direct_example_candidate",
+        "sense_zh",
+        "candidate_sense_zh",
+        "same_sense_example_zh"
+      ]
+    },
+    "lithosphere": {
+      "current_word": {
+        "id": 48600,
+        "knowledge_entity_id": 73290,
+        "headword": "lithosphere",
+        "rank": null,
+        "pos": "n.",
+        "phonetic": "'liθәu.sfiә",
+        "translation": "n. 岩石圈, 陆界\\n[化] 岩石圈"
+      },
+      "current_senses": [],
+      "record_count": 1,
+      "pos": [
+        "noun"
+      ],
+      "sense_count": 2,
+      "flags": [
+        "matched",
+        "pos",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "sense_zh",
+        "candidate_sense_zh"
+      ]
+    },
+    "mantle": {
+      "current_word": {
+        "id": 28718,
+        "knowledge_entity_id": 8717,
+        "headword": "mantle",
+        "rank": 8718,
+        "pos": "n.",
+        "phonetic": "ˈmæntəl",
+        "translation": "n. 斗篷, 罩子, 披风\nvt. 罩住, 覆盖\nvi. 覆盖, 脸红"
+      },
+      "current_senses": [],
+      "record_count": 2,
+      "pos": [
+        "noun",
+        "verb"
+      ],
+      "sense_count": 20,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "direct_example_candidate",
+        "sense_zh",
+        "candidate_sense_zh"
+      ]
+    },
+    "mean": {
+      "current_word": {
+        "id": 143,
+        "knowledge_entity_id": 143,
+        "headword": "mean",
+        "rank": 143,
+        "pos": "a.",
+        "phonetic": "ˈmin",
+        "translation": "a. 低劣的, 卑贱的, 简陋的, 吝啬的, 惭愧的, 平均的, 中间的, 普通的\nvt. 意谓, 想要, 意欲, 预定\nvi. 用意, 有意义\nn. 平均数, 中间, 中庸"
+      },
+      "current_senses": [
+        {
+          "id": 16825,
+          "word_id": 143,
+          "sense_idx": 0,
+          "gloss": "To intend.",
+          "examples": "[\"I didn't mean to knock your tooth out.\",\"I mean to go to Arévalo in Spain this summer; I’ve been meaning to tell you for weeks, but I’ve just found the time.\"]",
+          "zh": "[]"
+        },
+        {
+          "id": 16826,
+          "word_id": 143,
+          "sense_idx": 1,
+          "gloss": "To intend.",
+          "examples": "[\"Don't be angry; she meant well.\"]",
+          "zh": "[]"
+        },
+        {
+          "id": 16827,
+          "word_id": 143,
+          "sense_idx": 2,
+          "gloss": "To intend.",
+          "examples": "[\"Actually this desk was meant for the subeditor.\",\"Man was not meant to question such things.\"]",
+          "zh": "[]"
+        }
+      ],
+      "record_count": 4,
+      "pos": [
+        "adj",
+        "noun",
+        "verb"
+      ],
+      "sense_count": 32,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "direct_example_candidate",
+        "sense_zh",
+        "candidate_sense_zh",
+        "same_sense_example_zh"
+      ]
+    },
+    "organisation": {
+      "current_word": {
+        "id": 48697,
+        "knowledge_entity_id": 73387,
+        "headword": "organisation",
+        "rank": null,
+        "pos": "n.",
+        "phonetic": ",ɔ: ^әnaizeiʃən; - ni'z-",
+        "translation": "n. 组织, 团体, 体制, 编制"
+      },
+      "current_senses": [],
+      "record_count": 1,
+      "pos": [
+        "noun"
+      ],
+      "sense_count": 1,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "gloss",
+        "any_examples",
+        "candidate_sense"
+      ]
+    },
+    "organise": {
+      "current_word": null,
+      "current_senses": [],
+      "record_count": 1,
+      "pos": [
+        "verb"
+      ],
+      "sense_count": 1,
+      "flags": [
+        "matched",
+        "pos",
+        "gloss",
+        "any_examples",
+        "candidate_sense"
+      ]
+    },
+    "organization": {
+      "current_word": {
+        "id": 550,
+        "knowledge_entity_id": 550,
+        "headword": "organization",
+        "rank": 550,
+        "pos": "n.",
+        "phonetic": "ˌɔrɡənəˈzeʃən",
+        "translation": "n. 组织, 结构, 团体, 体制"
+      },
+      "current_senses": [
+        {
+          "id": 9181,
+          "word_id": 550,
+          "sense_idx": 0,
+          "gloss": "The quality of being organized.",
+          "examples": "[\"This painting shows little organization at first glance, but little by little the structure becomes clear.\"]",
+          "zh": "[\"机构\"]"
+        },
+        {
+          "id": 9182,
+          "word_id": 550,
+          "sense_idx": 1,
+          "gloss": "The way in which something is organized, such as a book or an article.",
+          "examples": "[\"The organization of the book is as follows.\"]",
+          "zh": "[]"
+        },
+        {
+          "id": 9183,
+          "word_id": 550,
+          "sense_idx": 2,
+          "gloss": "A group of people or other legal entities with an explicit purpose and written rules.",
+          "examples": "[\"Compulsion is universal, and any organization that is not part of the state must be its enemy, thus the enemy of the proletariat.\"]",
+          "zh": "[\"组织\",\"机构\",\"集团\"]"
+        }
+      ],
+      "record_count": 1,
+      "pos": [
+        "noun"
+      ],
+      "sense_count": 5,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "direct_example_candidate",
+        "sense_zh",
+        "candidate_sense_zh",
+        "same_sense_example_zh"
+      ]
+    },
+    "pacific": {
+      "current_word": {
+        "id": 48606,
+        "knowledge_entity_id": 73296,
+        "headword": "pacific",
+        "rank": null,
+        "pos": "n.",
+        "phonetic": "pә'sifik",
+        "translation": "n. 太平洋\\na. 太平洋的, 太平洋沿岸的, 爱好和平的, 安静的, 平息的"
+      },
+      "current_senses": [],
+      "record_count": 1,
+      "pos": [
+        "adj"
+      ],
+      "sense_count": 2,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "gloss",
+        "any_examples",
+        "candidate_sense"
+      ]
+    },
+    "permit": {
+      "current_word": {
+        "id": 1884,
+        "knowledge_entity_id": 1884,
+        "headword": "permit",
+        "rank": 1884,
+        "pos": "n.",
+        "phonetic": "pɚˈmɪt",
+        "translation": "n. 许可证, 许可, 执照, 通行证\nvt. 允许, 容许, 可能, 使放手做\nvi. 容许, 给以机会, 提供可能"
+      },
+      "current_senses": [
+        {
+          "id": 12164,
+          "word_id": 1884,
+          "sense_idx": 1,
+          "gloss": "To allow (someone) to do something; to give permission to.",
+          "examples": "[\"He was ultimately cleared, but during that period, Mr. Ackman said, his lawyers would not permit him to defend himself publicly.\"]",
+          "zh": "[]"
+        },
+        {
+          "id": 12165,
+          "word_id": 1884,
+          "sense_idx": 2,
+          "gloss": "To allow for, to make something possible.",
+          "examples": "[\"What was left to say? Quite a lot, if only parliamentary time permitted.\",\"For snackage there's a 1950s-themed diner plus a barbie on the terrace, weather permitting.\"]",
+          "zh": "[]"
+        },
+        {
+          "id": 12166,
+          "word_id": 1884,
+          "sense_idx": 3,
+          "gloss": "To allow, to admit (of).",
+          "examples": "[\"\\\"You English are always so frivolous,\\\" said the Princess. \\\"In Russia we have too many troubles to permit of our being light-hearted.\\\"\",\"\\\"As an instrument of economic policy, incantation does not permit of minor doubts or scruples.\\\"\"]",
+          "zh": "[]"
+        }
+      ],
+      "record_count": 3,
+      "pos": [
+        "noun",
+        "verb"
+      ],
+      "sense_count": 11,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "root_zh",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "direct_example_candidate",
+        "sense_zh",
+        "candidate_sense_zh"
+      ]
+    },
+    "record": {
+      "current_word": {
+        "id": 474,
+        "knowledge_entity_id": 474,
+        "headword": "record",
+        "rank": 474,
+        "pos": "n.",
+        "phonetic": "rəˈkɔrd",
+        "translation": "n. 记录, 履历, 档案, 审判记录, 最高纪录, 唱片\nvt. 记录, 记载, 标明, 将...录音\nvi. 记录, 录音, 可被录音\na. 创纪录的"
+      },
+      "current_senses": [
+        {
+          "id": 9031,
+          "word_id": 474,
+          "sense_idx": 0,
+          "gloss": "An item of information put into a temporary or permanent physical medium.",
+          "examples": "[\"The person had a record of the interview so she could review her notes.\",\"The tourist's photographs and the tape of the police call provide a record of the crime.\"]",
+          "zh": "[\"纪录\",\"记录\"]"
+        },
+        {
+          "id": 9032,
+          "word_id": 474,
+          "sense_idx": 1,
+          "gloss": "Any instance of a physical medium on which information was put for the purpose of preserving it and making it available for future reference.",
+          "examples": "[\"We have no record of you making this payment to us.\",\"My remarks were struck from the record.\"]",
+          "zh": "[]"
+        },
+        {
+          "id": 9033,
+          "word_id": 474,
+          "sense_idx": 2,
+          "gloss": "Ellipsis of phonograph record (“a disc, usually made from vinyl, on which sound is recorded and may be replayed on a phonograph”).",
+          "examples": "[\"I still like records better than CDs.\",\"He's the record doctor / Tell him your woes / He'll reach in his bag / And he'll give you a dose\"]",
+          "zh": "[]"
+        }
+      ],
+      "record_count": 3,
+      "pos": [
+        "adj",
+        "noun",
+        "verb"
+      ],
+      "sense_count": 16,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "root_zh",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "direct_example_candidate",
+        "sense_zh",
+        "candidate_sense_zh",
+        "same_sense_example_zh"
+      ]
+    },
+    "resume": {
+      "current_word": {
+        "id": 3337,
+        "knowledge_entity_id": 3336,
+        "headword": "resume",
+        "rank": 3337,
+        "pos": "vt.",
+        "phonetic": "rɪˈzum",
+        "translation": "vt. 重新开始, 取回, 恢复\nvi. 再开始\nn. 摘要, 个人简历"
+      },
+      "current_senses": [
+        {
+          "id": 13934,
+          "word_id": 3337,
+          "sense_idx": 0,
+          "gloss": "To take back possession of (something)",
+          "examples": "[\"Ladies and gentlemen, please resume your seats.\",\"As to the advice you give, to resume my estate, I am determined not to litigate with my father, let what will be the consequence to myself.\"]",
+          "zh": "[]"
+        },
+        {
+          "id": 13935,
+          "word_id": 3337,
+          "sense_idx": 2,
+          "gloss": "To start (something) again that has been stopped or paused from the point at which it was stopped or paused; continue, carry on.",
+          "examples": "[\"We will resume this discussion tomorrow at nine.\"]",
+          "zh": "[\"恢复\",\"重新开始\"]"
+        },
+        {
+          "id": 13936,
+          "word_id": 3337,
+          "sense_idx": 3,
+          "gloss": "To start again after an interruption or pause.",
+          "examples": "[\"Normal service has resumed.\"]",
+          "zh": "[]"
+        }
+      ],
+      "record_count": 2,
+      "pos": [
+        "noun",
+        "verb"
+      ],
+      "sense_count": 6,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "direct_example_candidate",
+        "sense_zh",
+        "candidate_sense_zh",
+        "same_sense_example_zh"
+      ]
+    },
+    "run": {
+      "current_word": {
+        "id": 184,
+        "knowledge_entity_id": 184,
+        "headword": "run",
+        "rank": 184,
+        "pos": "n.",
+        "phonetic": "ˈrʌn",
+        "translation": "n. 跑, 赛跑, 奔跑, 奔跑的路程, 趋向, 流出, 运转时间, 连续\nvi. 跑, 奔跑, 跑步, 赛跑, 竞赛, 行驶, 运转, 进行, 蔓延\nvt. 使跑, 参赛, 追究, 驾驶, 开动, 管理, 经营, 使流出, 运行\na. 熔化的, 融化的, 浇铸的\nrun的过去式和过去分词"
+      },
+      "current_senses": [
+        {
+          "id": 2926,
+          "word_id": 184,
+          "sense_idx": 0,
+          "gloss": "To move swiftly.",
+          "examples": "[\"Run, and you might still catch the train!\",\"Through the open front door ran Jessamy, down the steps to where Kitto was sitting at the bottom with the pram beside him.\"]",
+          "zh": "[]"
+        },
+        {
+          "id": 2927,
+          "word_id": 184,
+          "sense_idx": 1,
+          "gloss": "To move swiftly.",
+          "examples": "[\"I have been running all over the building looking for him.\",\"Once I ran to you (I ran) / Now I run from you / This tainted love you've given / I give you all a boy could give you\"]",
+          "zh": "[]"
+        },
+        {
+          "id": 2928,
+          "word_id": 184,
+          "sense_idx": 2,
+          "gloss": "To move swiftly.",
+          "examples": "[\"I can run a mile, but I can't run the cross-country course.\"]",
+          "zh": "[]"
+        }
+      ],
+      "record_count": 4,
+      "pos": [
+        "adj",
+        "noun",
+        "verb"
+      ],
+      "sense_count": 118,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "root_zh",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "direct_example_candidate",
+        "sense_zh",
+        "candidate_sense_zh",
+        "same_sense_example_zh"
+      ]
+    },
+    "résumé": {
+      "current_word": null,
+      "current_senses": [],
+      "record_count": 1,
+      "pos": [
+        "noun"
+      ],
+      "sense_count": 1,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "gloss",
+        "any_examples"
+      ]
+    },
+    "shade-tolerant": {
+      "current_word": null,
+      "current_senses": [],
+      "record_count": 0,
+      "pos": [],
+      "sense_count": 0,
+      "flags": []
+    },
+    "surprising": {
+      "current_word": {
+        "id": 2470,
+        "knowledge_entity_id": 2470,
+        "headword": "surprising",
+        "rank": 2470,
+        "pos": "a.",
+        "phonetic": "sɚˈpraɪzɪŋ",
+        "translation": "a. 令人惊讶的"
+      },
+      "current_senses": [
+        {
+          "id": 14130,
+          "word_id": 2470,
+          "sense_idx": 0,
+          "gloss": "Causing surprise.",
+          "examples": "[\"A surprising number of people attended the rally.\"]",
+          "zh": "[]"
+        }
+      ],
+      "record_count": 3,
+      "pos": [
+        "adj",
+        "noun",
+        "verb"
+      ],
+      "sense_count": 3,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "gloss",
+        "any_examples",
+        "candidate_sense",
+        "direct_example_candidate"
+      ]
+    },
+    "tire": {
+      "current_word": {
+        "id": 2524,
+        "knowledge_entity_id": 2524,
+        "headword": "tire",
+        "rank": 2524,
+        "pos": "n.",
+        "phonetic": "ˈtaɪɚ",
+        "translation": "n. 轮胎, 头饰\nvt. 使疲倦, 使厌烦, 打扮\nvi. 疲劳, 厌倦"
+      },
+      "current_senses": [
+        {
+          "id": 5376,
+          "word_id": 2524,
+          "sense_idx": 2,
+          "gloss": "To become bored or impatient (with).",
+          "examples": "[\"I tire of this book.\"]",
+          "zh": "[]"
+        }
+      ],
+      "record_count": 5,
+      "pos": [
+        "noun",
+        "verb"
+      ],
+      "sense_count": 14,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "direct_example_candidate",
+        "sense_zh",
+        "candidate_sense_zh"
+      ]
+    },
+    "tyre": {
+      "current_word": {
+        "id": 48695,
+        "knowledge_entity_id": 73385,
+        "headword": "tyre",
+        "rank": null,
+        "pos": "n.",
+        "phonetic": "'taiә",
+        "translation": "n. 轮胎\\nvt. 装轮胎于"
+      },
+      "current_senses": [],
+      "record_count": 5,
+      "pos": [
+        "noun",
+        "verb"
+      ],
+      "sense_count": 6,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "root_zh",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "direct_example_candidate"
+      ]
+    },
+    "undertake": {
+      "current_word": {
+        "id": 3546,
+        "knowledge_entity_id": 3545,
+        "headword": "undertake",
+        "rank": 3546,
+        "pos": "vt.",
+        "phonetic": "ˈʌndɚˌtek",
+        "translation": "vt. 试图, 从事, 保证, 承担, 同意, 接受"
+      },
+      "current_senses": [
+        {
+          "id": 3112,
+          "word_id": 3546,
+          "sense_idx": 0,
+          "gloss": "To take upon oneself; to start, to embark on.",
+          "examples": "[\"They undertook the new venture, not sure where it would lead.\",\"They undertook cleaning the house room by room.\"]",
+          "zh": "[\"进行\"]"
+        },
+        {
+          "id": 3113,
+          "word_id": 3546,
+          "sense_idx": 1,
+          "gloss": "To commit oneself (to an obligation, activity etc.).",
+          "examples": "[\"He undertook to exercise more in future.\",\"They undertook to clean the house room by room.\"]",
+          "zh": "[]"
+        },
+        {
+          "id": 3114,
+          "word_id": 3546,
+          "sense_idx": 3,
+          "gloss": "To pledge; to assert, assure; to dare say.",
+          "examples": "[\"That is her ransom; I deliver her; And those two counties I will undertake Your grace shall well and quietly enjoy.\"]",
+          "zh": "[]"
+        }
+      ],
+      "record_count": 2,
+      "pos": [
+        "noun",
+        "verb"
+      ],
+      "sense_count": 10,
+      "flags": [
+        "matched",
+        "pos",
+        "ipa",
+        "gloss",
+        "any_zh",
+        "any_examples",
+        "candidate_sense",
+        "direct_example_candidate",
+        "sense_zh",
+        "candidate_sense_zh",
+        "same_sense_example_zh"
+      ]
+    }
+  }
+}

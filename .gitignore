@@ -8,3 +8,5 @@ server/.env
 server/scripts/data/
 *.log
 .DS_Store
+__pycache__/
+*.pyc

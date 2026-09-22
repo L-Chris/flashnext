@@ -19,7 +19,7 @@ export class CardRepository {
     return prisma.card.findMany({
       where: { deckId },
       orderBy: { createdAt: 'desc' },
-      include: { word: { include: { tags: true } } },
+      include: { word: { include: { tags: true, pronunciations: { where: { status: 'accepted' } } } } },
     })
   }
 
@@ -59,7 +59,16 @@ export class CardRepository {
   listByIds(ids: number[]) {
     return prisma.card.findMany({
       where: { id: { in: ids } },
-      include: { word: { include: { tags: true } } },
+      include: {
+        word: {
+          include: {
+            tags: true,
+            senses: { orderBy: { senseIdx: 'asc' }, take: 3 },
+            ieltsUsages: { orderBy: { sourceOrder: 'asc' } },
+            pronunciations: { where: { status: 'accepted' }, orderBy: { id: 'asc' } },
+          },
+        },
+      },
     })
   }
 

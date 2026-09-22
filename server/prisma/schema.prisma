@@ -102,10 +102,12 @@ model WordnetSynset {
 }
 
 model WordnetSense {
-  id       Int           @id @default(autoincrement())
-  synsetId String        @map("synset_id")
-  lemma    String
-  synset   WordnetSynset @relation(fields: [synsetId], references: [id], onDelete: Cascade)
+  id         Int           @id @default(autoincrement())
+  synsetId   String        @map("synset_id")
+  lemma      String
+  semcorFreq Int           @default(0) @map("semcor_freq")
+  senseRank  Int           @default(1) @map("sense_rank")
+  synset     WordnetSynset @relation(fields: [synsetId], references: [id], onDelete: Cascade)
 
   @@unique([synsetId, lemma])
   @@index([lemma])
@@ -128,12 +130,69 @@ model Word {
   rank        Int?      @unique
   pos         String    @default("")
   phonetic    String    @default("")
+  phoneticLegacy String? @map("phonetic_legacy")
+  phoneticProfile String @default("legacy") @map("phonetic_profile")
   translation String    @default("")
   knowledgeEntity KnowledgeEntity? @relation(fields: [knowledgeEntityId], references: [id], onDelete: SetNull)
   cards       Card[]
   tags        WordTag[]
+  senses      WordSense[]
+  ieltsUsages IeltsUsage[]
+  pronunciations WordPronunciation[]
 
   @@map("words")
+}
+
+model WordPronunciation {
+  id Int @id @default(autoincrement())
+  wordId Int @map("word_id")
+  sourceKey String @unique @map("source_key")
+  source String
+  revision String
+  pos String
+  usage String @default("")
+  accent String
+  rawIpa String @map("raw_ipa")
+  displayIpa String @default("") @map("display_ipa")
+  status String
+  note String @default("")
+  word Word @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  @@index([wordId, status])
+  @@map("word_pronunciations")
+}
+
+model IeltsUsage {
+  id          Int    @id @default(autoincrement())
+  wordId      Int    @map("word_id")
+  source      String
+  sourceUrl   String @map("source_url")
+  sourceOrder Int    @map("source_order")
+  chapter     String
+  displayWord String @map("display_word")
+  pos         String
+  meaning     String
+  phonetic    String @default("")
+  phoneticLegacy String? @map("phonetic_legacy")
+  phoneticProfile String @default("legacy") @map("phonetic_profile")
+  word        Word   @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  @@unique([source, sourceOrder])
+  @@index([wordId])
+  @@map("ielts_usages")
+}
+
+model WordSense {
+  id       Int    @id @default(autoincrement())
+  wordId   Int    @map("word_id")
+  senseIdx Int    @map("sense_idx")
+  gloss    String @default("")
+  examples String @default("[]")
+  zh       String @default("[]")
+  word     Word   @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  @@index([wordId])
+  @@map("word_senses")
 }
 
 model WordTag {

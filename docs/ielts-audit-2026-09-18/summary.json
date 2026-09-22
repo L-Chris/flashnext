@@ -1,0 +1,53 @@
+{
+  "local_lines": 3630,
+  "local_unique": 3630,
+  "qwerty_occurrences": 3673,
+  "qwerty_unique": 3630,
+  "exact_ordered_dedup_match": true,
+  "blog_occurrences": 3674,
+  "manual_occurrences": 3674,
+  "manual_raw_headword_differences": {
+    "local_only": [
+      "apologise",
+      "artefact",
+      "baptise",
+      "favour",
+      "fibre",
+      "flavour",
+      "honour",
+      "hybridise",
+      "jewellery",
+      "manoeuvre",
+      "mesmerise",
+      "neighbourhood",
+      "organisation",
+      "sceptical",
+      "tyre"
+    ],
+    "manual_only": [
+      "apologize",
+      "artifact",
+      "baptize",
+      "favor",
+      "fiber",
+      "flavor",
+      "honor",
+      "hybridize",
+      "jewelry",
+      "maneuver",
+      "mesmerize",
+      "neighborhood",
+      "organization",
+      "résumé",
+      "skeptical",
+      "surprising"
+    ]
+  },
+  "sha256": {
+    "server/scripts/data/ielts.txt": "b27bf1dbc5f04c90ee376baf95f9acae2d9d3e6083455047d33ef7d1b814de65",
+    "server/scripts/data/ielts-audit-2026-09-18/IELTSVocabularyBible.json": "2064ed8337c3e16a5a336e9466502e5075bbf693b105b5b736bc0a9a9074531d",
+    "server/scripts/data/ielts-audit-2026-09-18/blog-rows.json": "89a87589741ac59f65dd5ed4def3d298714221d7418d750515aa14acf742752f",
+    "server/scripts/data/ielts-audit-2026-09-18/guixue.html": "759aaea6ef30bf08f9df00da6e1862d99d3693bc74391e5c72bde6de222bbe05",
+    "server/scripts/data/ielts-audit-2026-09-18/vocabulary.txt": "ccd50bb4e973e0daf07dc26d244b0fbbfa28b18cfb43e1a77a08e53f59702e03"
+  }
+}

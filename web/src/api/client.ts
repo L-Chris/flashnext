@@ -96,12 +96,19 @@ export const api = {
 
   rebuildFsrsStatus: () => request<RebuildJob>('/api/fsrs/rebuild'),
 
-  listSynonymGroups: (query: { page?: number; pageSize?: number; q?: string; pos?: string } = {}) => {
+  listSynonymGroups: (query: {
+    page?: number
+    pageSize?: number
+    q?: string
+    mode?: string
+    hideRare?: boolean
+  } = {}) => {
     const params = new URLSearchParams()
     if (query.page) params.set('page', String(query.page))
     if (query.pageSize) params.set('pageSize', String(query.pageSize))
     if (query.q) params.set('q', query.q)
-    if (query.pos) params.set('pos', query.pos)
+    if (query.mode && query.mode !== 'all') params.set('mode', query.mode)
+    if (query.hideRare) params.set('hideRare', '1')
     const qs = params.toString()
     return request<SynonymPage>(`/api/synonyms/groups${qs ? `?${qs}` : ''}`)
   },

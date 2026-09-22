@@ -1,6 +1,9 @@
+import Pronunciations from './Pronunciations'
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { api } from '../api/client'
 import type { Card, Deck, DueCounts, DueUsage, Rating } from '../types'
+import SenseExamples from './SenseExamples'
+import IeltsUsages from './IeltsUsages'
 
 interface Props {
   deck: Deck
@@ -134,7 +137,7 @@ export default function ReviewView({ deck, onExit }: Props) {
             const meanings = (hasPhonetic ? lines.slice(1) : lines).join('\n')
             return (
               <div className="mt-4 text-xl text-emerald-700 dark:text-emerald-400">
-                {phonetic && <p className="text-center">{phonetic}</p>}
+                {(phonetic || current.word?.pronunciations?.length) && <div className="text-center"><Pronunciations items={meanings === current.word?.translation ? current.word?.pronunciations : undefined} fallback={phonetic} /></div>}
                 {meanings && (
                   <div
                     className={`grid grid-cols-[max-content_1fr] gap-x-3 gap-y-1 text-left ${
@@ -164,6 +167,8 @@ export default function ReviewView({ deck, onExit }: Props) {
               </div>
             )
           })()}
+        {revealed && <IeltsUsages usages={current.word?.ieltsUsages} />}
+        {revealed && <SenseExamples senses={current.word?.senses} />}
       </div>
 
       {!revealed ? (

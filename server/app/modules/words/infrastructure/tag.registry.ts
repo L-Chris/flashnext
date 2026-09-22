@@ -32,6 +32,13 @@ export const TAG_SCHEMES: TagScheme[] = [
       { level: 6, label: 'CET-6', description: '大学英语六级' },
     ],
   },
+  {
+    scheme: 'ielts',
+    name: 'IELTS',
+    levels: [
+      { level: 1, label: '雅思核心', description: '雅思核心必备词汇' },
+    ],
+  },
 ]
 
 export const cocaLevelOfRank = (rank: number | null): number | null => {

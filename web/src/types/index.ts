@@ -1,3 +1,14 @@
+export interface WordPronunciation {
+  id: number
+  pos: string
+  usage: string
+  accent: string
+  displayIpa: string
+  rawIpa: string
+  status: string
+  source: string
+}
+
 export interface DueUsage {
   newCount: number
   reviewCount: number
@@ -29,6 +40,26 @@ export interface DueQueue {
   cards: Card[]
   usage: DueUsage
   counts: DueCounts
+}
+
+export interface IeltsUsage {
+  id: number
+  chapter: string
+  displayWord: string
+  pos: string
+  meaning: string
+  phonetic: string
+  sourceUrl: string
+  phoneticProfile?: string
+}
+
+export interface WordSense {
+  id: number
+  wordId: number
+  senseIdx: number
+  gloss: string
+  examples: string
+  zh: string
 }
 
 export interface WordTag {
@@ -65,7 +96,18 @@ export interface Card {
   due: string
   lastReview: string | null
   createdAt: string
-  word?: { id: number; headword: string; rank?: number | null; phonetic?: string; translation?: string; tags: WordTag[] } | null
+  word?: {
+    id: number
+    headword: string
+    rank?: number | null
+    phonetic?: string
+    phoneticProfile?: string
+    pronunciations?: WordPronunciation[]
+    translation?: string
+    tags: WordTag[]
+    senses?: WordSense[]
+    ieltsUsages?: IeltsUsage[]
+  } | null
   retrievability?: number
   overdueDays?: number
   lapseRate?: number
@@ -76,11 +118,20 @@ export interface SynonymMember {
   zh: string
 }
 
+export interface SynonymExample {
+  text: string
+  members: string[]
+}
+
 export interface SynonymGroup {
   id: string
   pos: string
   posLabel: string
   gloss: string
+  definition: string
+  examples: SynonymExample[]
+  commonness: number
+  semcorTotal: number
   members: SynonymMember[]
 }
 

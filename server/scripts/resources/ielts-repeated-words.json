@@ -1,0 +1,791 @@
+{
+  "source": "my-ielts:5cef573933663c4673c6e0093f1df04e68018b1a",
+  "sourceUrl": "https://github.com/hefengxian/my-ielts/blob/5cef573933663c4673c6e0093f1df04e68018b1a/src/pages/vocabulary/vocabulary.txt",
+  "status": "网络转录，未核对原书印次",
+  "entries": [
+    {
+      "headword": "core",
+      "sourceOrder": 8,
+      "chapter": "自然地理",
+      "displayWord": "core",
+      "pos": "n.",
+      "meaning": "中心；核心；地核",
+      "phonetic": ""
+    },
+    {
+      "headword": "pole",
+      "sourceOrder": 69,
+      "chapter": "自然地理",
+      "displayWord": "pole",
+      "pos": "n.",
+      "meaning": "（地）极；截然相反的两极之一",
+      "phonetic": ""
+    },
+    {
+      "headword": "current",
+      "sourceOrder": 88,
+      "chapter": "自然地理",
+      "displayWord": "current",
+      "pos": "n.",
+      "meaning": "水流；潮流；电流；气流",
+      "phonetic": ""
+    },
+    {
+      "headword": "superficial",
+      "sourceOrder": 93,
+      "chapter": "自然地理",
+      "displayWord": "superficial",
+      "pos": "adj.",
+      "meaning": "表皮的；表层的",
+      "phonetic": ""
+    },
+    {
+      "headword": "flat",
+      "sourceOrder": 94,
+      "chapter": "自然地理",
+      "displayWord": "flat",
+      "pos": "adj.",
+      "meaning": "平坦的；扁平的；单调的",
+      "phonetic": ""
+    },
+    {
+      "headword": "range",
+      "sourceOrder": 142,
+      "chapter": "自然地理",
+      "displayWord": "range",
+      "pos": "n.",
+      "meaning": "山脉；范围",
+      "phonetic": ""
+    },
+    {
+      "headword": "spring",
+      "sourceOrder": 215,
+      "chapter": "自然地理",
+      "displayWord": "spring",
+      "pos": "n.",
+      "meaning": "春天；泉水",
+      "phonetic": ""
+    },
+    {
+      "headword": "mould",
+      "sourceOrder": 284,
+      "chapter": "植物研究",
+      "displayWord": "mould",
+      "pos": "n./v.",
+      "meaning": "霉菌/发霉",
+      "phonetic": ""
+    },
+    {
+      "headword": "fruit",
+      "sourceOrder": 296,
+      "chapter": "植物研究",
+      "displayWord": "fruit",
+      "pos": "v.",
+      "meaning": "结果实",
+      "phonetic": ""
+    },
+    {
+      "headword": "field",
+      "sourceOrder": 305,
+      "chapter": "植物研究",
+      "displayWord": "field",
+      "pos": "n.",
+      "meaning": "原野；场地；野外",
+      "phonetic": ""
+    },
+    {
+      "headword": "terrace",
+      "sourceOrder": 306,
+      "chapter": "植物研究",
+      "displayWord": "terrace",
+      "pos": "n.",
+      "meaning": "梯田",
+      "phonetic": ""
+    },
+    {
+      "headword": "trunk",
+      "sourceOrder": 313,
+      "chapter": "植物研究",
+      "displayWord": "trunk",
+      "pos": "n.",
+      "meaning": "树干；躯干；大箱子",
+      "phonetic": ""
+    },
+    {
+      "headword": "root",
+      "sourceOrder": 315,
+      "chapter": "植物研究",
+      "displayWord": "root",
+      "pos": "n./v.",
+      "meaning": "根；使生根",
+      "phonetic": ""
+    },
+    {
+      "headword": "absorb",
+      "sourceOrder": 336,
+      "chapter": "植物研究",
+      "displayWord": "absorb",
+      "pos": "v.",
+      "meaning": "吸收；吸引全部注意力",
+      "phonetic": ""
+    },
+    {
+      "headword": "mate",
+      "sourceOrder": 409,
+      "chapter": "动物保护",
+      "displayWord": "mate",
+      "pos": "v./n.",
+      "meaning": "交配/配偶",
+      "phonetic": ""
+    },
+    {
+      "headword": "cricket",
+      "sourceOrder": 434,
+      "chapter": "动物保护",
+      "displayWord": "cricket",
+      "pos": "n.",
+      "meaning": "蟋蟀",
+      "phonetic": ""
+    },
+    {
+      "headword": "trunk",
+      "sourceOrder": 444,
+      "chapter": "动物保护",
+      "displayWord": "trunk",
+      "pos": "n.",
+      "meaning": "象鼻",
+      "phonetic": ""
+    },
+    {
+      "headword": "bear",
+      "sourceOrder": 447,
+      "chapter": "动物保护",
+      "displayWord": "bear",
+      "pos": "n.",
+      "meaning": "熊",
+      "phonetic": ""
+    },
+    {
+      "headword": "harness",
+      "sourceOrder": 463,
+      "chapter": "动物保护",
+      "displayWord": "harness",
+      "pos": "n.",
+      "meaning": "马具；挽具",
+      "phonetic": ""
+    },
+    {
+      "headword": "swallow",
+      "sourceOrder": 468,
+      "chapter": "动物保护",
+      "displayWord": "swallow",
+      "pos": "n.",
+      "meaning": "燕子",
+      "phonetic": ""
+    },
+    {
+      "headword": "bar",
+      "sourceOrder": 497,
+      "chapter": "动物保护",
+      "displayWord": "bar",
+      "pos": "n.",
+      "meaning": "栅；栏杆；条；长块",
+      "phonetic": ""
+    },
+    {
+      "headword": "envelope",
+      "sourceOrder": 554,
+      "chapter": "太空探索",
+      "displayWord": "envelope",
+      "pos": "n.",
+      "meaning": "外裹物；外层",
+      "phonetic": ""
+    },
+    {
+      "headword": "motion",
+      "sourceOrder": 563,
+      "chapter": "太空探索",
+      "displayWord": "motion",
+      "pos": "n.",
+      "meaning": "运动；移动",
+      "phonetic": ""
+    },
+    {
+      "headword": "permit",
+      "sourceOrder": 694,
+      "chapter": "学校教育",
+      "displayWord": "permit",
+      "pos": "n.",
+      "meaning": "许可证",
+      "phonetic": ""
+    },
+    {
+      "headword": "sketch",
+      "sourceOrder": 747,
+      "chapter": "学校教育",
+      "displayWord": "sketch",
+      "pos": "n./v.",
+      "meaning": "概略；概述",
+      "phonetic": ""
+    },
+    {
+      "headword": "reel",
+      "sourceOrder": 760,
+      "chapter": "学校教育",
+      "displayWord": "reel",
+      "pos": "n.",
+      "meaning": "卷轴；卷筒；一卷胶卷",
+      "phonetic": ""
+    },
+    {
+      "headword": "dividend",
+      "sourceOrder": 800,
+      "chapter": "学校教育",
+      "displayWord": "dividend",
+      "pos": "n.",
+      "meaning": "被除数",
+      "phonetic": ""
+    },
+    {
+      "headword": "rational",
+      "sourceOrder": 802,
+      "chapter": "学校教育",
+      "displayWord": "rational",
+      "pos": "n./adj.",
+      "meaning": "有理数；（数、式等）有理的",
+      "phonetic": ""
+    },
+    {
+      "headword": "mean",
+      "sourceOrder": 807,
+      "chapter": "学校教育",
+      "displayWord": "mean",
+      "pos": "n./adj.",
+      "meaning": "平均数；平均值。平均的",
+      "phonetic": ""
+    },
+    {
+      "headword": "superficial",
+      "sourceOrder": 895,
+      "chapter": "学校教育",
+      "displayWord": "superficial",
+      "pos": "adj.",
+      "meaning": "表面的；外表的；肤浅的",
+      "phonetic": ""
+    },
+    {
+      "headword": "apply",
+      "sourceOrder": 1009,
+      "chapter": "学校教育",
+      "displayWord": "apply",
+      "pos": "v.",
+      "meaning": "申请",
+      "phonetic": ""
+    },
+    {
+      "headword": "field",
+      "sourceOrder": 1034,
+      "chapter": "科技发明",
+      "displayWord": "field",
+      "pos": "n.",
+      "meaning": "领域",
+      "phonetic": ""
+    },
+    {
+      "headword": "absorb",
+      "sourceOrder": 1038,
+      "chapter": "科技发明",
+      "displayWord": "absorb",
+      "pos": "v.",
+      "meaning": "吸收；理解；掌握",
+      "phonetic": ""
+    },
+    {
+      "headword": "apply",
+      "sourceOrder": 1044,
+      "chapter": "科技发明",
+      "displayWord": "apply",
+      "pos": "v.",
+      "meaning": "应用；适用",
+      "phonetic": ""
+    },
+    {
+      "headword": "assemble",
+      "sourceOrder": 1065,
+      "chapter": "科技发明",
+      "displayWord": "assemble",
+      "pos": "v.",
+      "meaning": "集合；聚集",
+      "phonetic": ""
+    },
+    {
+      "headword": "mould",
+      "sourceOrder": 1112,
+      "chapter": "科技发明",
+      "displayWord": "mould",
+      "pos": "v./n.",
+      "meaning": "浇铸；塑造/模子",
+      "phonetic": ""
+    },
+    {
+      "headword": "root",
+      "sourceOrder": 1251,
+      "chapter": "语言演化",
+      "displayWord": "root",
+      "pos": "n.",
+      "meaning": "根；词根",
+      "phonetic": ""
+    },
+    {
+      "headword": "complex",
+      "sourceOrder": 1268,
+      "chapter": "语言演化",
+      "displayWord": "complex",
+      "pos": "adj.",
+      "meaning": "复杂的",
+      "phonetic": ""
+    },
+    {
+      "headword": "perform",
+      "sourceOrder": 1316,
+      "chapter": "娱乐运动",
+      "displayWord": "perform",
+      "pos": "v.",
+      "meaning": "表演；演出",
+      "phonetic": ""
+    },
+    {
+      "headword": "sketch",
+      "sourceOrder": 1351,
+      "chapter": "娱乐运动",
+      "displayWord": "sketch",
+      "pos": "n./v.",
+      "meaning": "素描；草图；速写；画素描；画速写",
+      "phonetic": ""
+    },
+    {
+      "headword": "motion",
+      "sourceOrder": 1397,
+      "chapter": "娱乐运动",
+      "displayWord": "motion",
+      "pos": "v.",
+      "meaning": "做动作；示意",
+      "phonetic": ""
+    },
+    {
+      "headword": "cricket",
+      "sourceOrder": 1412,
+      "chapter": "娱乐运动",
+      "displayWord": "cricket",
+      "pos": "n.",
+      "meaning": "板球",
+      "phonetic": ""
+    },
+    {
+      "headword": "pitch",
+      "sourceOrder": 1419,
+      "chapter": "娱乐运动",
+      "displayWord": "pitch",
+      "pos": "v./n.",
+      "meaning": "投；掷；球场；（棒球中的）投球",
+      "phonetic": ""
+    },
+    {
+      "headword": "spring",
+      "sourceOrder": 1434,
+      "chapter": "娱乐运动",
+      "displayWord": "spring",
+      "pos": "v./n.",
+      "meaning": "跳；跃",
+      "phonetic": ""
+    },
+    {
+      "headword": "bow",
+      "sourceOrder": 1460,
+      "chapter": "娱乐运动",
+      "displayWord": "bow",
+      "pos": "v./n.",
+      "meaning": "鞠躬",
+      "phonetic": "baʊ"
+    },
+    {
+      "headword": "item",
+      "sourceOrder": 1462,
+      "chapter": "物品材料",
+      "displayWord": "item",
+      "pos": "n.",
+      "meaning": "一件物品；一件商品",
+      "phonetic": ""
+    },
+    {
+      "headword": "tap",
+      "sourceOrder": 1489,
+      "chapter": "物品材料",
+      "displayWord": "tap",
+      "pos": "n.",
+      "meaning": "旋塞；龙头",
+      "phonetic": ""
+    },
+    {
+      "headword": "pitch",
+      "sourceOrder": 1585,
+      "chapter": "物品材料",
+      "displayWord": "pitch",
+      "pos": "n.",
+      "meaning": "沥青",
+      "phonetic": ""
+    },
+    {
+      "headword": "current",
+      "sourceOrder": 1617,
+      "chapter": "时尚潮流",
+      "displayWord": "current",
+      "pos": "n./adj.",
+      "meaning": "潮流；趋势；当前的",
+      "phonetic": ""
+    },
+    {
+      "headword": "wrap",
+      "sourceOrder": 1680,
+      "chapter": "时尚潮流",
+      "displayWord": "wrap",
+      "pos": "n.",
+      "meaning": "披肩",
+      "phonetic": ""
+    },
+    {
+      "headword": "chain",
+      "sourceOrder": 1701,
+      "chapter": "时尚潮流",
+      "displayWord": "chain",
+      "pos": "n.",
+      "meaning": "链子；链条",
+      "phonetic": ""
+    },
+    {
+      "headword": "bar",
+      "sourceOrder": 1736,
+      "chapter": "饮食健康",
+      "displayWord": "bar",
+      "pos": "n.",
+      "meaning": "酒吧、吧台",
+      "phonetic": ""
+    },
+    {
+      "headword": "order",
+      "sourceOrder": 1747,
+      "chapter": "饮食健康",
+      "displayWord": "order",
+      "pos": "n./v.",
+      "meaning": "订单、点的餐/点（酒菜等）",
+      "phonetic": ""
+    },
+    {
+      "headword": "fruit",
+      "sourceOrder": 1799,
+      "chapter": "饮食健康",
+      "displayWord": "fruit",
+      "pos": "n.",
+      "meaning": "水果",
+      "phonetic": ""
+    },
+    {
+      "headword": "peel",
+      "sourceOrder": 1800,
+      "chapter": "饮食健康",
+      "displayWord": "peel",
+      "pos": "v./n.",
+      "meaning": "剥（水果、蔬菜的）皮/（水果）皮",
+      "phonetic": ""
+    },
+    {
+      "headword": "core",
+      "sourceOrder": 1802,
+      "chapter": "饮食健康",
+      "displayWord": "core",
+      "pos": "n.",
+      "meaning": "果核",
+      "phonetic": ""
+    },
+    {
+      "headword": "swallow",
+      "sourceOrder": 1889,
+      "chapter": "饮食健康",
+      "displayWord": "swallow",
+      "pos": "v.",
+      "meaning": "咽下、吞下",
+      "phonetic": ""
+    },
+    {
+      "headword": "flat",
+      "sourceOrder": 1924,
+      "chapter": "建筑场所",
+      "displayWord": "flat",
+      "pos": "n.",
+      "meaning": "[尤英]单元房；公寓",
+      "phonetic": ""
+    },
+    {
+      "headword": "terrace",
+      "sourceOrder": 1964,
+      "chapter": "建筑场所",
+      "displayWord": "terrace",
+      "pos": "n.",
+      "meaning": "露天平台、大阳台",
+      "phonetic": ""
+    },
+    {
+      "headword": "complex",
+      "sourceOrder": 1973,
+      "chapter": "建筑场所",
+      "displayWord": "complex",
+      "pos": "n.",
+      "meaning": "综合建筑群",
+      "phonetic": ""
+    },
+    {
+      "headword": "pole",
+      "sourceOrder": 1996,
+      "chapter": "建筑场所",
+      "displayWord": "pole",
+      "pos": "n.",
+      "meaning": "竿；杆",
+      "phonetic": ""
+    },
+    {
+      "headword": "assemble",
+      "sourceOrder": 2015,
+      "chapter": "建筑场所",
+      "displayWord": "assemble",
+      "pos": "v.",
+      "meaning": "组装；装配",
+      "phonetic": ""
+    },
+    {
+      "headword": "stern",
+      "sourceOrder": 2127,
+      "chapter": "交通旅行",
+      "displayWord": "stern",
+      "pos": "n./adj.",
+      "meaning": "船尾/严厉的，苛刻的；严峻的，棘手的",
+      "phonetic": ""
+    },
+    {
+      "headword": "envelope",
+      "sourceOrder": 2151,
+      "chapter": "交通旅行",
+      "displayWord": "envelope",
+      "pos": "n.",
+      "meaning": "信封",
+      "phonetic": ""
+    },
+    {
+      "headword": "harness",
+      "sourceOrder": 2209,
+      "chapter": "国家政府",
+      "displayWord": "harness",
+      "pos": "v.",
+      "meaning": "利用；控制",
+      "phonetic": ""
+    },
+    {
+      "headword": "chain",
+      "sourceOrder": 2332,
+      "chapter": "社会经济",
+      "displayWord": "chain",
+      "pos": "n.",
+      "meaning": "一连串；连锁店",
+      "phonetic": ""
+    },
+    {
+      "headword": "bond",
+      "sourceOrder": 2358,
+      "chapter": "社会经济",
+      "displayWord": "bond",
+      "pos": "n.",
+      "meaning": "债券",
+      "phonetic": ""
+    },
+    {
+      "headword": "dividend",
+      "sourceOrder": 2414,
+      "chapter": "社会经济",
+      "displayWord": "dividend",
+      "pos": "n.",
+      "meaning": "股息；红利",
+      "phonetic": ""
+    },
+    {
+      "headword": "resume",
+      "sourceOrder": 2458,
+      "chapter": "社会经济",
+      "displayWord": "résumé",
+      "pos": "n.",
+      "meaning": "履历；简历；摘要",
+      "phonetic": "ˈrez.juː.meɪ"
+    },
+    {
+      "headword": "item",
+      "sourceOrder": 2491,
+      "chapter": "法律法规",
+      "displayWord": "item",
+      "pos": "n.",
+      "meaning": "条目",
+      "phonetic": ""
+    },
+    {
+      "headword": "permit",
+      "sourceOrder": 2500,
+      "chapter": "法律法规",
+      "displayWord": "permit",
+      "pos": "v.",
+      "meaning": "允许；准许",
+      "phonetic": ""
+    },
+    {
+      "headword": "perform",
+      "sourceOrder": 2503,
+      "chapter": "法律法规",
+      "displayWord": "perform",
+      "pos": "v.",
+      "meaning": "履行；执行",
+      "phonetic": ""
+    },
+    {
+      "headword": "bow",
+      "sourceOrder": 2637,
+      "chapter": "沙场争锋",
+      "displayWord": "bow",
+      "pos": "n.",
+      "meaning": "弓；蝴蝶结",
+      "phonetic": "bəʊ"
+    },
+    {
+      "headword": "order",
+      "sourceOrder": 2723,
+      "chapter": "沙场争锋",
+      "displayWord": "order",
+      "pos": "n./v.",
+      "meaning": "次序；整齐/命令",
+      "phonetic": ""
+    },
+    {
+      "headword": "mate",
+      "sourceOrder": 2898,
+      "chapter": "社会角色",
+      "displayWord": "mate",
+      "pos": "n.",
+      "meaning": "伙伴；[构成复合词]同伴",
+      "phonetic": ""
+    },
+    {
+      "headword": "bear",
+      "sourceOrder": 2945,
+      "chapter": "行为动作",
+      "displayWord": "bear",
+      "pos": "v.",
+      "meaning": "生（孩子）；容忍；承担（责任）",
+      "phonetic": ""
+    },
+    {
+      "headword": "tap",
+      "sourceOrder": 2987,
+      "chapter": "行为动作",
+      "displayWord": "tap",
+      "pos": "v.",
+      "meaning": "轻拍，轻扣，开发",
+      "phonetic": ""
+    },
+    {
+      "headword": "peel",
+      "sourceOrder": 3009,
+      "chapter": "行为动作",
+      "displayWord": "peel",
+      "pos": "v.",
+      "meaning": "剥落；掉漆；脱皮",
+      "phonetic": ""
+    },
+    {
+      "headword": "reel",
+      "sourceOrder": 3016,
+      "chapter": "行为动作",
+      "displayWord": "reel",
+      "pos": "v.",
+      "meaning": "眩晕；混乱",
+      "phonetic": ""
+    },
+    {
+      "headword": "bond",
+      "sourceOrder": 3022,
+      "chapter": "行为动作",
+      "displayWord": "bond",
+      "pos": "v./n.",
+      "meaning": "与...黏合（或连接）/黏合；（情感的）纽带",
+      "phonetic": ""
+    },
+    {
+      "headword": "wrap",
+      "sourceOrder": 3024,
+      "chapter": "行为动作",
+      "displayWord": "wrap",
+      "pos": "v.",
+      "meaning": "包；裹；用...缠绕",
+      "phonetic": ""
+    },
+    {
+      "headword": "range",
+      "sourceOrder": 3103,
+      "chapter": "行为动作",
+      "displayWord": "range",
+      "pos": "v.",
+      "meaning": "（在一定幅度内的）变动",
+      "phonetic": ""
+    },
+    {
+      "headword": "resume",
+      "sourceOrder": 3409,
+      "chapter": "身心健康",
+      "displayWord": "resume",
+      "pos": "v.",
+      "meaning": "重新开始；（中断后的）继续",
+      "phonetic": "rɪˈzjuːm"
+    },
+    {
+      "headword": "rational",
+      "sourceOrder": 3468,
+      "chapter": "身心健康",
+      "displayWord": "rational",
+      "pos": "adj.",
+      "meaning": "理性的；合理的",
+      "phonetic": ""
+    },
+    {
+      "headword": "stern",
+      "sourceOrder": 3470,
+      "chapter": "身心健康",
+      "displayWord": "stern",
+      "pos": "adj.",
+      "meaning": "严厉的；坚定的",
+      "phonetic": ""
+    },
+    {
+      "headword": "mean",
+      "sourceOrder": 3567,
+      "chapter": "身心健康",
+      "displayWord": "mean",
+      "pos": "adj./v.",
+      "meaning": "卑鄙的；吝啬的/意思是",
+      "phonetic": ""
+    }
+  ],
+  "editorialNotes": [
+    "仅恢复 43 个重复词的 86 个章节用法，不增加词条或学习卡片。",
+    "motion 太空探索条目的“作物”修正为“运动”；flat 自然地理条目的“平躺”修正为“平坦”。",
+    "resume 的简历义显示为 résumé，与动词分开列示英式读音；bow 补充两种英式读音。"
+  ],
+  "verificationUrls": [
+    "https://dictionary.cambridge.org/us/dictionary/english/motion",
+    "https://dictionary.cambridge.org/dictionary/english/bow",
+    "https://dictionary.cambridge.org/us/pronunciation/english/resume"
+  ]
+}

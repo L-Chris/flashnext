@@ -1,0 +1,13 @@
+[
+  {"word":"teacher","pos":"noun","ipa":"ˈtiːtʃə(r)","usage":"教师","priority":0,"reference":"https://dictionary.cambridge.org/pronunciation/english/teacher"},
+  {"word":"bird","pos":"noun","ipa":"bɜːd","usage":"鸟","priority":0,"reference":"https://dictionary.cambridge.org/us/dictionary/english/bird"},
+  {"word":"read","pos":"verb","ipa":"riːd","usage":"原形／现在时：读","priority":0,"reference":"local-kaikki:read:etymology-1"},
+  {"word":"read","pos":"verb","ipa":"red","usage":"过去式／过去分词：读","priority":1,"reference":"https://www.oxfordlearnersdictionaries.com/definition/english/red_2"},
+  {"word":"resume","pos":"verb","ipa":"rɪˈzjuːm","usage":"继续、恢复","priority":0,"reference":"https://dictionary.cambridge.org/us/pronunciation/english/resume"},
+  {"word":"resume","pos":"noun","ipa":"ˈrezjuːmeɪ","usage":"résumé：简历、概要","priority":1,"reference":"https://dictionary.cambridge.org/us/pronunciation/english/resume"},
+  {"word":"bow","pos":"noun","ipa":"bəʊ","usage":"弓、蝴蝶结、琴弓","priority":0,"reference":"local-kaikki:bow:etymology-1"},
+  {"word":"bow","pos":"verb","ipa":"baʊ","usage":"鞠躬、低头","priority":1,"reference":"local-kaikki:bow:etymology-2"},
+  {"word":"bow","pos":"noun","ipa":"baʊ","usage":"鞠躬；船首","priority":1,"reference":"local-kaikki:bow:etymology-2,3"},
+  {"word":"permit","pos":"noun","ipa":"ˈpɜːmɪt","usage":"许可证","priority":0,"reference":"local-kaikki:permit:etymology-1:noun"},
+  {"word":"permit","pos":"verb","ipa":"pəˈmɪt","usage":"允许","priority":1,"reference":"local-kaikki:permit:etymology-1:verb"}
+]
