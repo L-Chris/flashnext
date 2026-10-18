@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
-const readline = require('readline')
+const { lookupEcdict } = require('./lib/ecdict')
+const { dictionaryTranslation } = require('./lib/definition-overrides')
 const { PrismaClient } = require('@prisma/client')
 
 const DATA_DIR = path.join(__dirname, 'data')
@@ -63,7 +64,7 @@ const arpabetToKK = arpabet => {
 }
 
 const collectCmudict = headwords => {
-  const wanted = new Set(headwords.map(w => w.headword.toLowerCase()))
+  const wanted = new Set(headwords.map(w => w.headword))
   const map = new Map()
   const lines = fs.readFileSync(CMUDICT_FILE, 'utf8').split('\n')
   for (const line of lines) {
@@ -100,7 +101,7 @@ const collectHeadwords = () => {
   const seen = new Set()
   const words = []
   for (const w of lines) {
-    const key = w.toLowerCase()
+    const key = w
     if (seen.has(key)) continue
     seen.add(key)
     words.push({ headword: w, rank: words.length + 1 })
@@ -109,46 +110,8 @@ const collectHeadwords = () => {
   return words
 }
 
-const parseCSVLine = line => {
-  const out = []
-  let cur = ''
-  let q = false
-  for (let i = 0; i < line.length; i++) {
-    const c = line[i]
-    if (q) {
-      if (c === '"') {
-        if (line[i + 1] === '"') { cur += '"'; i++ }
-        else q = false
-      } else cur += c
-    } else {
-      if (c === '"') q = true
-      else if (c === ',') { out.push(cur); cur = '' }
-      else cur += c
-    }
-  }
-  out.push(cur)
-  return out
-}
-
-const collectEcdict = headwords => {
-  const wanted = new Set(headwords.map(w => w.headword.toLowerCase()))
-  const map = new Map()
-
-  const rl = readline.createInterface({ input: fs.createReadStream(ECDICT_FILE, 'utf8'), crlfDelay: Infinity })
-  return new Promise(resolve => {
-    rl.on('line', line => {
-      if (!line) return
-      const cols = parseCSVLine(line)
-      const key = cols[0].toLowerCase()
-      if (!wanted.has(key) || map.has(key)) return
-      map.set(key, { phonetic: cols[1] || '', translation: cols[3] || '' })
-    })
-    rl.on('close', () => resolve(map))
-  })
-}
-
 const collectTranslations = headwords => {
-  const wanted = new Set(headwords.map(w => w.headword.toLowerCase()))
+  const wanted = new Set(headwords.map(w => w.headword))
   const map = new Map()
   const lines = fs.readFileSync(COCA_TR_FILE, 'utf8').split('\n')
   let current = null
@@ -167,7 +130,7 @@ const collectTranslations = headwords => {
     if (/^——+$/.test(line)) { flush(); continue }
     if (!line) continue
     if (current === null) {
-      current = line.toLowerCase()
+      current = line
     } else {
       buffer.push(line)
     }
@@ -200,7 +163,7 @@ const main = async () => {
   console.log(`headwords: ${headwords.length}`)
 
   console.log('scanning ECDICT for phonetic/translation...')
-  const ecdict = await collectEcdict(headwords)
+  const ecdict = await lookupEcdict(ECDICT_FILE, headwords.map(w => w.headword))
 
   console.log('parsing COCA translation fallback...')
   const fallback = collectTranslations(headwords)
@@ -210,16 +173,15 @@ const main = async () => {
   let kkMiss = 0
   const rows = headwords
     .map(({ headword, rank }) => {
-      const key = headword.toLowerCase()
-      const ec = ecdict.get(key)
+      const ec = ecdict.get(headword)
       const translation = cleanTranslation(
-        (ec?.translation || fallback.get(key) || '').replace(/\\n/g, '\n'),
+        dictionaryTranslation(headword, ec?.translation || fallback.get(headword) || ''),
       )
       if (!ec?.phonetic) kkMiss++
       return {
         headword,
         rank,
-        pos: extractPos(translation),
+        pos: ec?.pos || extractPos(translation),
         phonetic: ec?.phonetic || '', // Legacy candidate only; the pronunciation pipeline approves display IPA.
         translation,
       }

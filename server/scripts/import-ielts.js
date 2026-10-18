@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const readline = require('readline')
+const { lookupEcdict } = require('./lib/ecdict')
 const { PrismaClient } = require('@prisma/client')
 const { importIeltsUsages } = require('./import-ielts-usages')
 
@@ -11,8 +11,6 @@ const ECDICT_FILE = path.join(DATA_DIR, 'ecdict.csv')
 const SCHEME = 'ielts'
 const LEVEL = 1
 const LABEL = '雅思核心'
-
-const POS_RE = /^((?:[a-z&]+\.\s*)+)/
 
 const envPath = path.join(__dirname, '..', '.env')
 if (fs.existsSync(envPath)) {
@@ -35,71 +33,9 @@ const parseWords = file => {
     // 如果带空格（如短语或复合词），保留纯字母/连字符/空格词
     const token = line.replace(/[\r\n]/g, '').trim()
     if (!/^[A-Za-z][A-Za-z'\-.\s]*$/.test(token)) continue
-    words.add(token.toLowerCase())
+    words.add(token)
   }
   return [...words]
-}
-
-const parseCSVLine = line => {
-  const out = []
-  let cur = ''
-  let q = false
-  for (let i = 0; i < line.length; i++) {
-    const c = line[i]
-    if (q) {
-      if (c === '"') {
-        if (line[i + 1] === '"') {
-          cur += '"'
-          i++
-        } else q = false
-      } else cur += c
-    } else {
-      if (c === '"') q = true
-      else if (c === ',') {
-        out.push(cur)
-        cur = ''
-      } else cur += c
-    }
-  }
-  out.push(cur)
-  return out
-}
-
-const lookupEcdict = async missingWords => {
-  const wanted = new Set(missingWords.map(w => w.toLowerCase()))
-  const map = new Map()
-  if (!fs.existsSync(ECDICT_FILE)) return map
-
-  const rl = readline.createInterface({
-    input: fs.createReadStream(ECDICT_FILE, 'utf8'),
-    crlfDelay: Infinity,
-  })
-
-  for await (const line of rl) {
-    if (!line) continue
-    const commaIdx = line.indexOf(',')
-    if (commaIdx <= 0) continue
-    let wordKey = line.slice(0, commaIdx).toLowerCase()
-    if (wordKey.startsWith('"') && wordKey.endsWith('"')) wordKey = wordKey.slice(1, -1)
-    if (!wanted.has(wordKey) || map.has(wordKey)) continue
-
-    const cols = parseCSVLine(line)
-    const headword = cols[0]
-    const phonetic = cols[1] || ''
-    const translation = cols[3] || ''
-    const posMatch = translation.match(POS_RE)
-    const pos = cols[4] || (posMatch ? posMatch[1].trim() : '')
-
-    map.set(wordKey, {
-      headword,
-      phonetic,
-      translation,
-      pos,
-    })
-    if (map.size === wanted.size) break
-  }
-
-  return map
 }
 
 const main = async () => {
@@ -111,7 +47,7 @@ const main = async () => {
   const allWords = await prisma.word.findMany({
     select: { id: true, headword: true },
   })
-  const wordByKey = new Map(allWords.map(w => [w.headword.toLowerCase(), w]))
+  const wordByKey = new Map(allWords.map(w => [w.headword, w]))
 
   // 2. 检查未入库的词
   const missing = list.filter(w => !wordByKey.has(w))
@@ -119,7 +55,7 @@ const main = async () => {
 
   if (missing.length > 0) {
     console.log(`looking up ${missing.length} missing words in ECDICT...`)
-    const ecdictMap = await lookupEcdict(missing)
+    const ecdictMap = await lookupEcdict(ECDICT_FILE, missing)
     let createdCount = 0
 
     for (const key of missing) {

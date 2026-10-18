@@ -1,6 +1,7 @@
 const fs = require('fs')
+const { dictionaryTranslation } = require('./lib/definition-overrides')
 const path = require('path')
-const readline = require('readline')
+const { lookupEcdict } = require('./lib/ecdict')
 const { PrismaClient } = require('@prisma/client')
 
 const DATA_DIR = path.join(__dirname, 'data')
@@ -74,44 +75,6 @@ const collectCmudict = headwords => {
   return map
 }
 
-const parseCSVLine = line => {
-  const out = []
-  let cur = ''
-  let q = false
-  for (let i = 0; i < line.length; i++) {
-    const c = line[i]
-    if (q) {
-      if (c === '"') {
-        if (line[i + 1] === '"') { cur += '"'; i++ }
-        else q = false
-      } else cur += c
-    } else {
-      if (c === '"') q = true
-      else if (c === ',') { out.push(cur); cur = '' }
-      else cur += c
-    }
-  }
-  out.push(cur)
-  return out
-}
-
-const collectEcdict = targets => {
-  const wanted = new Set(targets.map(w => w.headword.toLowerCase()))
-  const map = new Map()
-
-  const rl = readline.createInterface({ input: fs.createReadStream(ECDICT_FILE, 'utf8'), crlfDelay: Infinity })
-  return new Promise(resolve => {
-    rl.on('line', line => {
-      if (!line) return
-      const cols = parseCSVLine(line)
-      const key = cols[0].toLowerCase()
-      if (!wanted.has(key) || map.has(key)) return
-      map.set(key, { phonetic: cols[1] || '', translation: cols[3] || '' })
-    })
-    rl.on('close', () => resolve(map))
-  })
-}
-
 const POS_RE = /^((?:[a-z&]+\.\s*)+)/
 const DOMAIN_LINE_RE = /^\[[^\]a-zA-Z0-9]{1,8}\]/
 
@@ -147,7 +110,7 @@ const main = async () => {
   console.log(`words with missing fields: ${targets.length}`)
 
   console.log('scanning ECDICT / CMUdict for these headwords...')
-  const ecdict = await collectEcdict(targets)
+  const ecdict = await lookupEcdict(ECDICT_FILE, targets.map(w => w.headword))
   const cmudict = collectCmudict(targets)
   console.log(`ecdict hits: ${ecdict.size}, cmudict hits: ${cmudict.size}`)
 
@@ -157,10 +120,10 @@ const main = async () => {
 
   for (const w of targets) {
     const key = w.headword.toLowerCase()
-    const ec = ecdict.get(key)
+    const ec = ecdict.get(w.headword)
     const data = {}
 
-    let translation = w.translation
+    let translation = dictionaryTranslation(w.headword, w.translation)
     if (translation === 'translation') {
       translation = ''
       stats.dirty += 1
@@ -170,7 +133,7 @@ const main = async () => {
       stats.dirty += 1
     }
     if (!translation) {
-      translation = cleanTranslation((ec?.translation || '').replace(/\\n/g, '\n'))
+      translation = cleanTranslation(dictionaryTranslation(w.headword, ec?.translation || ''))
     }
     if (translation !== w.translation) {
       data.translation = translation

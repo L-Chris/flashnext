@@ -1,3 +1,4 @@
+import { reviewBack } from '../utils/dictionary-text'
 import Pronunciations from './Pronunciations'
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { api } from '../api/client'
@@ -131,13 +132,10 @@ export default function ReviewView({ deck, onExit }: Props) {
         <p className="text-2xl font-medium">{current.front}</p>
         {revealed &&
           (() => {
-            const lines = current.back.split('\n')
-            const hasPhonetic = lines[0]?.startsWith('/')
-            const phonetic = hasPhonetic ? lines[0] : ''
-            const meanings = (hasPhonetic ? lines.slice(1) : lines).join('\n')
+            const { phonetic, meanings, isWordBack } = reviewBack(current.back, current.word?.translation)
             return (
               <div className="mt-4 text-xl text-emerald-700 dark:text-emerald-400">
-                {(phonetic || current.word?.pronunciations?.length) && <div className="text-center"><Pronunciations items={meanings === current.word?.translation ? current.word?.pronunciations : undefined} fallback={phonetic} /></div>}
+                {(phonetic || current.word?.pronunciations?.length) && <div className="text-center"><Pronunciations items={isWordBack ? current.word?.pronunciations : undefined} fallback={phonetic} /></div>}
                 {meanings && (
                   <div
                     className={`grid grid-cols-[max-content_1fr] gap-x-3 gap-y-1 text-left ${

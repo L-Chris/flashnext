@@ -1,3 +1,4 @@
+import { normalizeDictionaryNewlines } from '../utils/dictionary-text'
 import Pronunciations from './Pronunciations'
 import { Fragment, useState } from 'react'
 import SenseExamples from './SenseExamples'
@@ -62,8 +63,8 @@ export const TABLE_COLUMNS: TableColumn[] = [
     label: '释义',
     defaultVisible: true,
     render: c => (
-      <span className="block max-w-64 truncate text-zinc-600 dark:text-zinc-400" title={c.word?.translation}>
-        {c.word?.translation}
+      <span className="block max-w-64 truncate text-zinc-600 dark:text-zinc-400" title={normalizeDictionaryNewlines(c.word?.translation || '')}>
+        {normalizeDictionaryNewlines(c.word?.translation || '')}
       </span>
     ),
   },

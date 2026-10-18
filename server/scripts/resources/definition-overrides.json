@@ -1,0 +1,246 @@
+{
+  "hybridisation": {
+    "replaces": "n. <主英> = hybridization",
+    "translation": "n. （动植物的）杂交，杂交育种（hybridization 的英式拼写）",
+    "references": [
+      "https://dictionary.cambridge.org/dictionary/english/hybridization"
+    ]
+  },
+  "hybridise": {
+    "replaces": "v. <主英> = hybridize",
+    "translation": "v. （使动植物）杂交；使不同事物融合，形成兼具双方特点的新事物（hybridize 的英式拼写）",
+    "references": [
+      "https://www.oxfordlearnersdictionaries.com/us/definition/english/hybridize",
+      "https://dictionary.cambridge.org/dictionary/english/hybridize"
+    ]
+  },
+  "word": {
+    "replaces": "translation",
+    "translation": "n. 单词；话语；消息；诺言\nv. 用言语表达",
+    "pos": "n. v.",
+    "references": [
+      "https://en.wiktionary.org/wiki/word#English"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "stolen": {
+    "replaces": "steal的过去分词",
+    "translation": "a. 被偷的；偷来的（steal 的过去分词）",
+    "pos": "a.",
+    "references": [
+      "https://en.wiktionary.org/wiki/stolen#English"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "proven": {
+    "replaces": "prove的过去分词",
+    "translation": "a. 经证实的；已证明有效的（prove 的过去分词）",
+    "pos": "a.",
+    "references": [
+      "https://en.wiktionary.org/wiki/proven#English"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "chosen": {
+    "replaces": "choose的过去分词",
+    "translation": "a. 选定的；被选中的（choose 的过去分词）",
+    "pos": "a.",
+    "references": [
+      "https://en.wiktionary.org/wiki/chosen#English"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "stuck": {
+    "replaces": "stick的过去式和过去分词",
+    "translation": "a. 卡住的；受困的；难以继续的\nv. 粘住；陷住；插入（stick 的过去式和过去分词）",
+    "pos": "a. v.",
+    "references": [
+      "https://en.wiktionary.org/wiki/stuck#English",
+      "https://dictionary.cambridge.org/dictionary/english/stuck"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "LED": {
+    "replaces": "lead的过去式和过去分词",
+    "translation": "n. 发光二极管（light-emitting diode 的缩写）",
+    "pos": "n.",
+    "references": [
+      "https://www.oxfordlearnersdictionaries.com/definition/english/led_2"
+    ],
+    "reviewedAt": "2026-10-18",
+    "canonicalKey": "en:word:LED"
+  },
+  "Euro-American": {
+    "replaces": "a. ,n. = Euramerican",
+    "translation": "a. 欧洲和美洲的；欧美的\nn. 欧裔美国人",
+    "pos": "a. n.",
+    "references": [
+      "https://www.merriam-webster.com/dictionary/Euro-American"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "store-bought": {
+    "replaces": "= shop-bought",
+    "translation": "a. 商店里买的；现成的（尤指食物，相对于自制的；美式用法，对应英式 shop-bought）",
+    "pos": "a.",
+    "references": [
+      "https://en.wiktionary.org/wiki/store-bought#English",
+      "https://dictionary.cambridge.org/dictionary/english/store-bought"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "unspoken": {
+    "replaces": "unspeak的过去分词",
+    "translation": "a. 未说出口的；未明言但彼此理解的；不言而喻的",
+    "pos": "a.",
+    "references": [
+      "https://en.wiktionary.org/wiki/unspoken#English",
+      "https://dictionary.cambridge.org/dictionary/english/unspoken"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "woven": {
+    "replaces": "weave的过去分词",
+    "translation": "a. 编织的；交织的（weave 的过去分词）",
+    "pos": "a.",
+    "references": [
+      "https://en.wiktionary.org/wiki/woven#English"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "burnt": {
+    "replaces": "burn的过去式和过去分词",
+    "translation": "a. 烧焦的；烧坏的；灼伤的\nv. 燃烧；烧毁；烫伤（burn 的过去式和过去分词）",
+    "pos": "a. v.",
+    "references": [
+      "https://en.wiktionary.org/wiki/burnt#English"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "melted": {
+    "replaces": "melt的过去式和过去分词",
+    "translation": "a. 融化的；熔化的\nv. （使）融化，熔化（melt 的过去式和过去分词）",
+    "pos": "a. v.",
+    "references": [
+      "https://en.wiktionary.org/wiki/melted#English"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "lighted": {
+    "replaces": "light的过去式和过去分词",
+    "translation": "a. 点燃的；照亮的\nv. 点燃；照亮（light 的过去式和过去分词）",
+    "pos": "a. v.",
+    "references": [
+      "https://en.wiktionary.org/wiki/lighted#English"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "burned": {
+    "replaces": "burn的过去式和过去分词",
+    "translation": "a. 烧焦的；烧坏的；灼伤的\nv. 燃烧；烧毁；烫伤（burn 的过去式和过去分词）",
+    "pos": "a. v.",
+    "references": [
+      "https://en.wiktionary.org/wiki/burned#English"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "spoiled": {
+    "replaces": "spoil的过去式和过去分词",
+    "translation": "a. 变质的；被宠坏的\nv. 损坏；破坏；宠坏（spoil 的过去式和过去分词）",
+    "pos": "a. v.",
+    "references": [
+      "https://en.wiktionary.org/wiki/spoiled#English"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "sworn": {
+    "replaces": "swear的过去分词",
+    "translation": "a. 宣誓作出的；已宣誓的\nv. 发誓；宣誓；咒骂（swear 的过去分词）",
+    "pos": "a. v.",
+    "references": [
+      "https://en.wiktionary.org/wiki/sworn#English"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "spilled": {
+    "replaces": "spill的过去式和过去分词",
+    "translation": "v. （使液体等）洒出，溢出（spill 的过去式和过去分词）",
+    "pos": "v.",
+    "references": [
+      "https://en.wiktionary.org/wiki/spilled#English"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "slain": {
+    "replaces": "slay的过去分词",
+    "translation": "v. 杀死；杀害（slay 的过去分词）",
+    "pos": "v.",
+    "references": [
+      "https://en.wiktionary.org/wiki/slain#English"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "blended": {
+    "replaces": "blend的过去式和过去分词",
+    "translation": "a. 混合的；调和的\nv. （使）混合，融合（blend 的过去式和过去分词）",
+    "pos": "a. v.",
+    "references": [
+      "https://en.wiktionary.org/wiki/blended#English"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "shaved": {
+    "replaces": "shave的过去式和过去分词",
+    "translation": "v. 剃；刮去（毛发）（shave 的过去式和过去分词）",
+    "pos": "v.",
+    "references": [
+      "https://en.wiktionary.org/wiki/shaved#English"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "rebuilt": {
+    "replaces": "rebuild的过去式和过去分词",
+    "translation": "a. 重建的；重新组装的\nv. 重建；重新组装（rebuild 的过去式和过去分词）",
+    "pos": "a. v.",
+    "references": [
+      "https://en.wiktionary.org/wiki/rebuilt#English"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "fed": {
+    "replaces": "feed的过去式和过去分词",
+    "translation": "v. 喂养；给……食物（feed 的过去式和过去分词）",
+    "pos": "v.",
+    "references": [
+      "https://en.wiktionary.org/wiki/fed#English"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "shredded": {
+    "replaces": "shred的过去式和过去分词",
+    "translation": "a. 切成细条的；撕碎的\nv. 切碎；撕碎（shred 的过去式和过去分词）",
+    "pos": "a. v.",
+    "references": [
+      "https://en.wiktionary.org/wiki/shredded#English"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "forgotten": {
+    "replaces": "forget的过去分词",
+    "translation": "a. 被遗忘的；被忽视的\nv. 忘记；遗忘（forget 的过去分词）",
+    "pos": "a. v.",
+    "references": [
+      "https://en.wiktionary.org/wiki/forgotten#English"
+    ],
+    "reviewedAt": "2026-10-18"
+  },
+  "torn": {
+    "replaces": "tear的过去分词",
+    "translation": "a. 撕裂的；（在选择或感情上）犹豫不决的\nv. 撕；扯裂（tear 的过去分词）",
+    "pos": "a. v.",
+    "references": [
+      "https://en.wiktionary.org/wiki/torn#English"
+    ],
+    "reviewedAt": "2026-10-18"
+  }
+}

@@ -4,12 +4,7 @@ import { DeckRepository } from 'app/modules/decks/infrastructure/deck.repository
 import { TAG_SCHEMES, SINGLE_DECK_NAME } from '../infrastructure/tag.registry'
 import { prisma } from 'app/shared/prisma'
 
-const cardBack = (phonetic: string, translation: string) => {
-  const parts: string[] = []
-  if (phonetic) parts.push(`/${phonetic}/`)
-  parts.push(translation)
-  return parts.join('\n')
-}
+import { dictionaryCardBack as cardBack } from '../../../../scripts/lib/dictionary-text'
 
 @Service()
 export class WordService {
