@@ -44,14 +44,16 @@ en_params = call(f'/decks/{english}/fsrs/params')
 en_cards = digest('SELECT * FROM cards WHERE deck_id=? ORDER BY id',(english,))
 en_logs = digest('SELECT r.* FROM review_logs r JOIN cards c ON r.card_id=c.id WHERE c.deck_id=? ORDER BY r.id',(english,))
 assert call(f'/decks/{japanese}/fsrs/params')['reviewCount'] == 0
-for path in ['/settings','/fsrs/params','/fsrs/optimize','/fsrs/rebuild']:
+assert isinstance(call('/settings')['timezone'], str)
+call('/settings', {'newPerDay': 3}, status=400)
+for path in ['/fsrs/params','/fsrs/optimize','/fsrs/rebuild']:
     call(path,status=400)
     call(path,{},status=400)
 call('/decks/9999999/settings',status=404)
 call('/decks/0/settings',status=400)
 for bad in [{'newPerDay':-1},{'reviewPerDay':1.5},{'rolloverHour':24},{'timezone':'invalid/timezone'},{'newPerDay':'2'},{'timezone':None}]:
     call(f'/decks/{japanese}/settings',bad,status=400)
-call(f'/decks/{japanese}/settings',{'newPerDay':1,'reviewPerDay':2,'timezone':'Asia/Tokyo','rolloverHour':6})
+call(f'/decks/{japanese}/settings',{'newPerDay':1,'reviewPerDay':2,'rolloverHour':6})
 queue = call(f'/decks/{japanese}/cards/due')
 assert len(queue['cards']) == 1 and queue['usage']['newLimit'] == 1
 assert call(f'/decks/{english}/settings') == en_settings
@@ -61,7 +63,7 @@ call(f'/decks/{japanese}/fsrs/optimize',{})
 job=wait(japanese,'optimize')
 assert '0 < 1000' in job['error'],job
 assert call(f'/decks/{english}/fsrs/optimize')['startedAt'] is None
-print('PASS independent limits/queues/weights/jobs, input validation, rejected legacy global endpoints')
+print('PASS independent limits/queues/weights/jobs, input validation, rejected unscoped learning endpoints')
 
 fixture = call('/decks',{'name':'isolated rebuild test'})['id']
 assert call(f'/decks/{fixture}/fsrs/params')['source'] == 'default'
@@ -114,6 +116,8 @@ print('PASS deleting deck cascades settings and cannot resurrect parameters')
 # Same log time falls on different learning days under different deck cutoffs.
 from datetime import datetime, timezone
 hour=datetime.now(timezone.utc).hour
+original_timezone=call('/settings')['timezone']
+call('/settings',{'timezone':'UTC'})
 window_decks=[]
 for rollover in [hour,(hour+1)%24]:
     deck=call('/decks',{'name':'clock usage test'})['id'];window_decks.append(deck)
@@ -125,6 +129,7 @@ first=call(f'/decks/{window_decks[0]}/cards/due')['usage']
 second=call(f'/decks/{window_decks[1]}/cards/due')['usage']
 assert first['newCount']==0 and second['newCount']==1,(first,second)
 for deck in window_decks: call(f'/decks/{deck}',method='DELETE')
+call('/settings',{'timezone':original_timezone})
 print('PASS daily usage respects each deck cutoff at the same instant')
 
 call(f'/decks/{japanese}',method='DELETE')

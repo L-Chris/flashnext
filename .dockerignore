@@ -3,6 +3,7 @@
 **/.build-ts
 .env
 server/data
+server/data-backup
 server/.env
 .git
 server/scripts/data

@@ -332,6 +332,8 @@ export interface DailyLimits {
   reviewPerDay: number
 }
 
+export interface GlobalSettings { timezone: string; version: number }
+
 export interface RebuildJob {
   running: boolean
   startedAt: string | null

@@ -478,6 +478,10 @@ dayIndex(ms) = floor((ms + tz_offset_minutes*60_000 - ROLLOVER_HOUR*3_600_000) /
 | `FLASHNEXT_MAXIMUM_INTERVAL` | `36500` | 最大间隔（天）。复习量太少时可下调（如 365）换取更高保持率 |
 | `FLASHNEXT_OPTIMIZE_TIMEOUT_MS` | `120000` | fsrs-rs 训练时间预算 |
 
+## 统一时区与牌组学习设置
+
+统一设置弹窗通过 `GET/POST /api/settings` 读取和保存 `{timezone}`，所有牌组共用；不能在该接口修改每日限额或 FSRS 参数。每日额度、日切点、音频与答案显示设置仍在每个牌组维护，见 [设置说明](docs/deck-settings-2026-10-19/README.md)。
+
 ## FSRS 参数训练
 
 不再自研优化器（旧版坐标下降会把 `w[6]/w[7]/w[20]` 顶到 clip 边界，导致 interval 爆炸）。
@@ -494,16 +498,16 @@ dayIndex(ms) = floor((ms + tz_offset_minutes*60_000 - ROLLOVER_HOUR*3_600_000) /
 
 | 方法 | 路径 | 说明 |
 |---|---|---|
-| GET | `/api/fsrs/params` | 当前 w / 来源 / 日切点时区 / 日志数 / review_state 是否已回填 |
-| POST | `/api/fsrs/params` | `{ w? }` 写入参数；不传 `w` 即重置为 FSRS-6 官方默认值 |
-| POST | `/api/fsrs/optimize` | `{ force?, timeoutMs? }` 启动后台训练（立即返回；训练是分钟级任务，走同步 HTTP 会被反代 60s 超时掐断） |
-| GET | `/api/fsrs/optimize` | 训练任务状态 `{ running, result: { saved, w, audit }, error }`，前端轮询 |
-| POST | `/api/fsrs/rebuild` | `{ dryRun? }` 全量重放复习历史：重建记忆状态、把 `due` 对齐日切点、回填 `review_state` |
-| GET | `/api/fsrs/rebuild` | 重建任务进度与结果（今日到期变化、interval 分位数、未来 30 天 due 预报） |
+| GET | `/api/decks/:deckId/fsrs/params` | 当前 w / 来源 / 日切点时区 / 日志数 / review_state 是否已回填 |
+| POST | `/api/decks/:deckId/fsrs/params` | `{ w? }` 写入参数；不传 `w` 即重置为 FSRS-6 官方默认值 |
+| POST | `/api/decks/:deckId/fsrs/optimize` | `{ force?, timeoutMs? }` 启动后台训练（立即返回；训练是分钟级任务，走同步 HTTP 会被反代 60s 超时掐断） |
+| GET | `/api/decks/:deckId/fsrs/optimize` | 训练任务状态 `{ running, result: { saved, w, audit }, error }`，前端轮询 |
+| POST | `/api/decks/:deckId/fsrs/rebuild` | `{ dryRun? }` 全量重放复习历史：重建记忆状态、把 `due` 对齐日切点、回填 `review_state` |
+| GET | `/api/decks/:deckId/fsrs/rebuild` | 重建任务进度与结果（今日到期变化、interval 分位数、未来 30 天 due 预报） |
 
 > 训练数据来自别的调度器（例如从 Anki 导入的历史）时，官方优化器可能给出 metrics 更优、
 > 但 interval 明显偏长的解（例如新卡 Good 就有 48 天 stability）。metrics 护栏不会拦这种解，
-> 训练后卡片间隔变长属于预期行为；想回到默认值用 `POST /api/fsrs/params`（不传 `w`）重置。
+> 训练后卡片间隔变长属于预期行为；想回到默认值用 `POST /api/decks/:deckId/fsrs/params`（不传 `w`）重置。
 
 测试数据：`node scripts/seed-review-logs.js` 可模拟复习历史（之后需跑一次 rebuild 回填 state）。
 
@@ -528,7 +532,7 @@ node scripts/import-anki.js "1-考研-英语单词"   # 牌组名可省略，默
 4. 复习日志写入规范卡（每词最早创建的卡片），供参数优化训练
 5. revlog 的 `type` 映射为 `review_state`（首次复习=0 New，type 0=1 Learning，type 2=3 Relearning，其余=2 Review），
    `耗时` 写入 `durationMs`
-6. 记忆状态**不再由脚本重放**，统一交给服务端 `POST /api/fsrs/rebuild`：
+6. 记忆状态**不再由脚本重放**，统一交给服务端 `POST /api/decks/:deckId/fsrs/rebuild`：
    走与在线复习完全相同的调度实现（日切点对齐、fuzz、learn-ahead），保证导入与日常复习语义一致
 
 配套脚本：`reset-memory.js`（清空记忆记录）、`cleanup-anki-import.js`（回滚导入）。

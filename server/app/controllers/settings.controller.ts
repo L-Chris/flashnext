@@ -1,4 +1,4 @@
-import { Body, Get, HttpError, JsonController, Param, Post } from 'routing-controllers'
+import { Body, Get, JsonController, Param, Post } from 'routing-controllers'
 import { Service } from 'typedi'
 import { SettingsService, type DeckSettings } from 'app/modules/settings/application/settings.service'
 
@@ -20,7 +20,8 @@ export class DeckSettingsController {
 
 @JsonController('/settings')
 @Service()
-export class LegacySettingsController {
-  @Get('/') get() { throw new HttpError(400, '请从牌组的设置入口操作') }
-  @Post('/') save() { throw new HttpError(400, '必须指定牌组，禁止修改全局学习设置') }
+export class GlobalSettingsController {
+  constructor(private settingsService: SettingsService) {}
+  @Get('/') async get() { return { data: await this.settingsService.global() } }
+  @Post('/') async save(@Body() body: unknown) { return { data: await this.settingsService.saveGlobal(body) } }
 }

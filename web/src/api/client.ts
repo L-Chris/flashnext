@@ -13,6 +13,7 @@ import type {
   DueQueue,
   EnsureResult,
   FsrsStatus,
+  GlobalSettings,
   OptimizeJob,
   Rating,
   RebuildJob,
@@ -33,6 +34,8 @@ const request = async <T>(url: string, options: RequestInit = {}): Promise<T> =>
 }
 
 export const api = {
+  getGlobalSettings: () => request<GlobalSettings>('/api/settings'),
+  saveGlobalSettings: (timezone: string) => request<GlobalSettings>('/api/settings', { method: 'POST', body: JSON.stringify({ timezone }) }),
   listDecks: () => request<Deck[]>('/api/decks'),
 
   createDeck: (name: string, description: string) =>

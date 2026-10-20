@@ -78,6 +78,36 @@ test('牌组配置保存、关闭倒计时和相互隔离', async ({ page, reque
   expect(await dialog.getByRole('button', { name: '关闭', exact: true }).count()).toBe(0)
 })
 
+test('时区只在统一设置中保存，牌组弹窗空白处关闭且面板内点击不关闭', async ({ page, request }) => {
+  const original = await api(request, '/settings')
+  const first = await deck(request), second = await deck(request)
+  try {
+    await page.goto('/')
+    await page.getByRole('button', { name: '全局设置', exact: true }).click()
+    const dialog = page.getByRole('dialog')
+    await expect(dialog.getByLabel('时区', { exact: true })).toHaveValue(original.timezone)
+    await dialog.getByLabel('时区', { exact: true }).fill('Asia/Tokyo')
+    await dialog.getByRole('button', { name: '保存', exact: true }).click()
+    await expect(dialog.getByRole('status')).toContainText('已保存')
+    expect((await api(request, `/decks/${first.id}/settings`)).timezone).toBe('Asia/Tokyo')
+    expect((await api(request, `/decks/${second.id}/settings`)).timezone).toBe('Asia/Tokyo')
+    await page.mouse.click(5, 5)
+    await expect(dialog).not.toBeVisible()
+    for (const viewport of [{ width: 1200, height: 850 }, { width: 390, height: 844 }]) {
+      await page.setViewportSize(viewport)
+      await page.getByRole('button', { name: `${first.name}设置`, exact: true }).click()
+      await expect(dialog.getByLabel('每日新卡')).toBeVisible()
+      expect(await dialog.getByLabel('时区', { exact: true }).count()).toBe(0)
+      await expect(dialog).not.toContainText(/额度有效|训练在服务器|约需 1–2 分钟/)
+      await dialog.getByRole('heading', { name: '每日限额' }).click()
+      await expect(dialog).toBeVisible()
+      await page.mouse.click(5, 5)
+      await expect(dialog).not.toBeVisible()
+      expect(await page.evaluate(() => document.body.style.overflow)).not.toBe('hidden')
+    }
+  } finally { await api(request, '/settings', { timezone: original.timezone }) }
+})
+
 test('添加和编辑数学卡片、上传正反面音频、错误公式不能覆盖原内容', async ({ page, request }) => {
   const group = await deck(request)
   await page.goto(`/#/deck/${group.id}`)

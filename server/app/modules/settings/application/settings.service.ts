@@ -3,7 +3,7 @@ import { HttpError } from 'routing-controllers'
 import type { Prisma } from '@prisma/client'
 import { prisma } from 'app/shared/prisma'
 import { dueVisibleWhere } from 'app/modules/cards/infrastructure/due-filter'
-import { ensureDeckConfig } from '../../../../scripts/lib/deck-config'
+import { ensureDeckConfig, ensureGlobalSettings } from '../../../../scripts/lib/deck-config'
 
 export interface DeckSettings {
   deckId: number
@@ -19,7 +19,28 @@ export interface DeckSettings {
 
 @Service()
 export class SettingsService {
+  async global() {
+    const row = await ensureGlobalSettings(prisma)
+    return { timezone: row.timezone as string, version: row.version }
+  }
+
+  async saveGlobal(body: unknown) {
+    if (!body || typeof body !== 'object' || Array.isArray(body) || Object.keys(body).some(k => k !== 'timezone')) throw new HttpError(400, '统一设置仅接受时区，学习限额请从牌组设置修改')
+    const timezone = (body as { timezone?: unknown }).timezone
+    if (typeof timezone !== 'string' || !timezone.trim()) throw new HttpError(400, '无效时区')
+    try { new Intl.DateTimeFormat('en', { timeZone: timezone.trim() }) } catch { throw new HttpError(400, '无效时区') }
+    return prisma.$transaction(async tx => {
+      const current = await ensureGlobalSettings(tx)
+      if (current.timezone === timezone.trim()) return { timezone: current.timezone, version: current.version }
+      const row = await tx.appSetting.update({ where: { id: 1 }, data: { timezone: timezone.trim(), version: { increment: 1 } } })
+      await tx.deckSetting.updateMany({ data: { timezone: row.timezone!, version: { increment: 1 } } })
+      return { timezone: row.timezone!, version: row.version }
+    })
+  }
+
   async get(deckId: number): Promise<DeckSettings> {
+    // Global updates synchronize every deck in one transaction. Read its stored
+    // clock and version together without taking a write lock on ordinary reads.
     const row = await prisma.deckSetting.findUnique({ where: { deckId } })
     if (row) return row
     if (!await prisma.deck.findUnique({ where: { id: deckId } })) throw new HttpError(404, '牌组不存在')
@@ -38,10 +59,10 @@ export class SettingsService {
     const delay = data.autoRevealAnswerSeconds
     if (delay !== undefined && delay !== null && (!Number.isInteger(delay) || delay < 1 || delay > 3600)) throw new HttpError(400, '自动显示答案的秒数必须是 1–3600 的整数，或 null 关闭')
     if (data.timezone !== undefined) {
-      if (typeof data.timezone !== 'string' || !data.timezone.trim()) throw new HttpError(400, '无效时区')
-      try { new Intl.DateTimeFormat('en', { timeZone: data.timezone }) } catch { throw new HttpError(400, '无效时区') }
+      if (data.timezone !== (await this.global()).timezone) throw new HttpError(400, '时区请从统一设置修改')
     }
-    return prisma.deckSetting.update({ where: { deckId }, data: { ...data, version: { increment: 1 } } })
+    const { timezone: _timezone, ...deckData } = data
+    return prisma.deckSetting.update({ where: { deckId }, data: { ...deckData, version: { increment: 1 } } })
   }
 
   async visibleCardsWhere(now = new Date()): Promise<Prisma.CardWhereInput> {

@@ -121,6 +121,8 @@ model AppSetting {
   id           Int      @id @default(1)
   newPerDay    Int      @default(20) @map("new_per_day")
   reviewPerDay Int      @default(200) @map("review_per_day")
+  timezone     String?
+  version      Int      @default(0)
   updatedAt    DateTime @updatedAt @map("updated_at")
 
   @@map("app_settings")

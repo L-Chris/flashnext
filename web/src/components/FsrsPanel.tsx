@@ -53,7 +53,7 @@ export default function FsrsPanel({ deck, onSaved }: { deck: Deck; onSaved: () =
     try {
       const next = await api.saveSettings(deck.id, {
         newPerDay: draft.newPerDay, reviewPerDay: draft.reviewPerDay,
-        timezone: draft.timezone, rolloverHour: draft.rolloverHour,
+        rolloverHour: draft.rolloverHour,
         audioAutoplay: draft.audioAutoplay, showNewCardAnswerImmediately: draft.showNewCardAnswerImmediately,
         autoRevealAnswerSeconds: draft.autoRevealAnswerSeconds,
       })
@@ -81,7 +81,7 @@ export default function FsrsPanel({ deck, onSaved }: { deck: Deck; onSaved: () =
     finally { if (mounted.current) setPending(false) }
   }
   const busy = pending || Boolean(train?.running || rebuild?.running)
-  const changed = draft && settings && ['newPerDay', 'reviewPerDay', 'timezone', 'rolloverHour', 'audioAutoplay', 'showNewCardAnswerImmediately', 'autoRevealAnswerSeconds'].some(k => draft[k as keyof DailyLimits] !== settings[k as keyof DailyLimits])
+  const changed = draft && settings && ['newPerDay', 'reviewPerDay', 'rolloverHour', 'audioAutoplay', 'showNewCardAnswerImmediately', 'autoRevealAnswerSeconds'].some(k => draft[k as keyof DailyLimits] !== settings[k as keyof DailyLimits])
   const inputClass = 'rounded border border-zinc-300 bg-white px-2 py-1 dark:border-zinc-700 dark:bg-zinc-900'
   const buttonClass = 'rounded-md border border-zinc-300 px-3 py-1.5 hover:bg-zinc-100 disabled:opacity-50 dark:border-zinc-700 dark:hover:bg-zinc-800'
   const result = train?.result
@@ -124,11 +124,8 @@ export default function FsrsPanel({ deck, onSaved }: { deck: Deck; onSaved: () =
             <p className="text-zinc-500">新卡直接显示优先于倒计时；显示答案后仍需手动评分。</p>
           </div>
           <details className="text-xs">
-            <summary className="cursor-pointer text-zinc-500">高级：时区与日切点</summary>
+            <summary className="cursor-pointer text-zinc-500">高级：日切点</summary>
             <div className="mt-3 flex flex-wrap items-center gap-3">
-              <label className="flex items-center gap-1">时区
-                <input aria-label="时区" value={draft.timezone} onChange={e => setDraft({ ...draft, timezone: e.target.value })} className={`w-40 ${inputClass}`} placeholder="Asia/Shanghai" />
-              </label>
               <label className="flex items-center gap-1">日切点
                 <select aria-label="日切点" value={draft.rolloverHour} onChange={e => setDraft({ ...draft, rolloverHour: Number(e.target.value) })} className={inputClass}>
                   {Array.from({ length: 24 }, (_, h) => <option key={h} value={h}>{String(h).padStart(2, '0')}:00</option>)}
@@ -137,8 +134,7 @@ export default function FsrsPanel({ deck, onSaved }: { deck: Deck; onSaved: () =
             </div>
             <p className="mt-2 text-zinc-500">用于本牌组每日计数和后续调度。保存后已有到期时间保持原值。</p>
           </details>
-          <div className="flex items-center justify-between gap-3 text-xs">
-            <span className="text-zinc-500">仅影响「{deck.name}」</span>
+          <div className="flex items-center justify-end gap-3 text-xs">
             <button disabled={pending || !changed} onClick={save} className={buttonClass}>{pending ? '处理中…' : '保存'}</button>
           </div>
         </div>
@@ -156,7 +152,6 @@ export default function FsrsPanel({ deck, onSaved }: { deck: Deck; onSaved: () =
           </button>
         </div>
         {!status.revlogMigratedAt && <p className="text-xs text-amber-700">历史日志缺少记忆状态，请在下方预览并重建后再训练。</p>}
-        {train?.running && <p className="text-xs text-zinc-500">正在用本牌组复习记录训练，约需 1–2 分钟。可以离开此窗口。</p>}
         {train?.error && <p role="alert" className="text-xs text-red-600">训练失败：{train.error}</p>}
         {result && !train?.running && <div className="space-y-2 text-xs text-zinc-500">
           <p>{result.saved ? '已保存本牌组训练参数' : `训练结果未写入：${result.audit.reasons.join('；')}`} · {result.audit.items} 个样本</p>

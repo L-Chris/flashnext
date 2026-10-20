@@ -8,6 +8,7 @@ import ReviewView from './components/ReviewView'
 import WordsView from './components/WordsView'
 import SynonymsView from './components/SynonymsView'
 import DeckSettingsDialog from './components/DeckSettingsDialog'
+import GlobalSettingsDialog from './components/GlobalSettingsDialog'
 
 type Route =
   | { type: 'decks' }
@@ -61,6 +62,8 @@ export default function App() {
   const [theme, setTheme] = useState<Theme>(initialTheme)
   const [deckAddOpen, setDeckAddOpen] = useState(false)
   const [settingsDeck, setSettingsDeck] = useState<Deck | null>(null)
+  const [globalSettingsOpen, setGlobalSettingsOpen] = useState(false)
+  const [settingsRevision, setSettingsRevision] = useState(0)
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark')
@@ -82,6 +85,7 @@ export default function App() {
   const loadDecks = useCallback(async () => {
     setDecks(await api.listDecks())
   }, [])
+  const globalSaved = useCallback(async () => { await loadDecks(); setSettingsRevision(value => value + 1) }, [loadDecks])
 
   useEffect(() => {
     loadDecks()
@@ -139,6 +143,7 @@ export default function App() {
             </button>
           ))}
         </nav>
+        <button aria-label="全局设置" onClick={() => setGlobalSettingsOpen(true)} className="shrink-0 rounded-md p-2 text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800">⚙</button>
       </header>
 
       {/* 侧边导航 */}
@@ -154,6 +159,9 @@ export default function App() {
           ))}
         </nav>
         <div className="border-t border-zinc-200 p-2 dark:border-zinc-800">
+          <button onClick={() => setGlobalSettingsOpen(true)} aria-label="全局设置" className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800">
+            <span aria-hidden>⚙</span>设置
+          </button>
           <button
             onClick={() => setTheme(t => (t === 'dark' ? 'light' : 'dark'))}
             className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
@@ -209,13 +217,14 @@ export default function App() {
           )}
 
           {route.type === 'review' && routeDeck && (
-            <ReviewView key={routeDeck.id}
+            <ReviewView key={`${routeDeck.id}:${settingsRevision}`}
               deck={routeDeck}
               onExit={() => navigate({ type: 'deck', id: routeDeck.id })}
             />
           )}
         </div>
       </main>
+      {globalSettingsOpen && <GlobalSettingsDialog onClose={() => setGlobalSettingsOpen(false)} onSaved={globalSaved} />}
     </div>
   )
 }
