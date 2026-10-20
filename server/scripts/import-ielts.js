@@ -45,6 +45,7 @@ const main = async () => {
 
   // 1. 获取现有词库
   const allWords = await prisma.word.findMany({
+    where: { language: 'en' },
     select: { id: true, headword: true },
   })
   const wordByKey = new Map(allWords.map(w => [w.headword, w]))
@@ -76,6 +77,7 @@ const main = async () => {
       const word = await prisma.word.create({
         data: {
           headword: info.headword,
+          language: 'en', lexicalKey: `en:word:${info.headword}`,
           rank: null,
           pos: info.pos,
           phonetic: info.phonetic,

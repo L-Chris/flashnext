@@ -5,7 +5,7 @@ const dataset = require('./resources/ielts-repeated-words.json')
 
 // Chapter occurrences belong to an existing word, not to new cards or schedules.
 async function importIeltsUsages(prisma, { dryRun = false } = {}) {
-  const words = await prisma.word.findMany({ select: { id: true, headword: true } })
+  const words = await prisma.word.findMany({ where: { language: 'en' }, select: { id: true, headword: true } })
   const byKey = new Map()
   for (const word of words) {
     const key = word.headword.toLowerCase()

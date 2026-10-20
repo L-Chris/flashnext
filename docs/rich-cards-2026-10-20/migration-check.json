@@ -1,0 +1,32 @@
+{
+  "preserved_tables": {
+    "cards": 10594,
+    "word_tags": 32876,
+    "fsrs_params": 1,
+    "review_logs": 129044,
+    "profiles": 1,
+    "knowledge_entities": 19471,
+    "personal_knowledge_states": 18322,
+    "app_settings": 1,
+    "wordnet_synsets": 117791,
+    "wordnet_senses": 207235,
+    "word_pronunciations": 99118,
+    "ielts_usages": 86,
+    "decks": 2,
+    "word_senses": 24270,
+    "words": 19471,
+    "deck_settings": 2,
+    "deck_fsrs_params": 2
+  },
+  "existing_columns_unchanged": true,
+  "default_content_format": "plain",
+  "default_answer_seconds": 10,
+  "default_audio_autoplay": false,
+  "default_new_card_immediate": false,
+  "backup": "server/data-backup/flashnext-pre-rich-cards-20261020.db",
+  "deployed_api_smoke": "passed",
+  "deployed_media_smoke_asset_removed": true,
+  "deployed_image": "sha256:fb49e25b3def4db1f9af2d61445cf1c963f4b5f9865bd6ece81f9f980e197e42",
+  "deployed_browser_compatibility": "passed",
+  "upload_without_filename": "passed"
+}

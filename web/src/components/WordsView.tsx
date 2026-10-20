@@ -62,13 +62,13 @@ export default function WordsView() {
 
   return (
     <div>
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex items-center justify-between overflow-x-auto">
         <div className="flex gap-1 rounded-lg border border-zinc-200 bg-white p-1 dark:border-zinc-800 dark:bg-zinc-900">
           {schemes.map(s => (
             <button
               key={s.scheme}
               onClick={() => setScheme(s.scheme)}
-              className={`rounded-md px-4 py-1.5 text-sm font-medium transition-colors ${
+              className={`shrink-0 rounded-md px-4 py-1.5 text-sm font-medium transition-colors ${
                 scheme === s.scheme
                   ? 'bg-indigo-600 text-white'
                   : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
@@ -81,6 +81,13 @@ export default function WordsView() {
         </div>
       </div>
 
+      {scheme === 'jlpt' && <p className="mb-4 text-xs text-zinc-500">
+        来源与许可：<a className="underline" href="https://github.com/evanclan/OpenJLPT/blob/main/NOTICE.md" target="_blank" rel="noreferrer">OpenJLPT（社区分级）</a>
+        {' · '}<a className="underline" href="https://www.edrdg.org/edrdg/licence.html" target="_blank" rel="noreferrer">JMdict／EDRDG</a>
+        {' · '}<a className="underline" href="https://kaikki.org/zhwiktionary/" target="_blank" rel="noreferrer">Wiktionary／Kaikki</a>
+        {' · '}<a className="underline" href="https://tatoeba.org/en/downloads" target="_blank" rel="noreferrer">Tatoeba 例句</a>
+      </p>}
+
       {message && (
         <p className="mb-4 rounded-lg border border-emerald-300 bg-emerald-50 px-4 py-3 text-sm text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
           {message}
@@ -90,7 +97,7 @@ export default function WordsView() {
       <ul className="space-y-3">
         {rows.map(row => {
           const key = row.level === null ? 'none' : String(row.level)
-          const full = row.wordTotal > 0 && row.cardCount >= row.wordTotal
+          const full = row.wordTotal > 0 && row.cardCount >= (row.readyCount ?? row.wordTotal)
           return (
             <li
               key={key}
@@ -104,7 +111,7 @@ export default function WordsView() {
                   )}
                 </div>
                 <button
-                  disabled={busy !== null || full || row.wordTotal === 0 || row.level === null}
+                  disabled={busy !== null || full || row.wordTotal === 0 || row.readyCount === 0 || row.level === null}
                   onClick={() => handleEnsure(row.level ?? undefined)}
                   className={`shrink-0 rounded-lg px-4 py-1.5 text-sm font-medium disabled:opacity-50 ${
                     full
@@ -112,7 +119,7 @@ export default function WordsView() {
                       : 'bg-indigo-600 text-white hover:bg-indigo-500'
                   }`}
                 >
-                  {busy === key ? '补建中...' : full ? '已建全' : '补建本级'}
+                  {busy === key ? '补建中...' : full ? (row.readyCount !== undefined && row.readyCount < row.wordTotal ? '已建核验词' : '已建全') : '补建本级'}
                 </button>
               </div>
 
@@ -124,6 +131,7 @@ export default function WordsView() {
               </div>
 
               <p className="mt-2 text-xs text-zinc-500">
+                {row.readyCount !== undefined && row.level !== null && row.readyCount < row.wordTotal && `已核验 ${row.readyCount} · 待核验 ${row.wordTotal - row.readyCount} · `}
                 卡片 {row.cardCount}/{row.wordTotal}（{pct(row.coverage)}） · 已学{' '}
                 {row.studiedCount} · 待复习 {row.dueCount}
               </p>

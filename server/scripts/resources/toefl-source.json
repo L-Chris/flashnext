@@ -1,0 +1,16 @@
+{
+  "sourceId": "qwerty-toefl-3-t-v1",
+  "title": "TOEFL 4264（社区整理）",
+  "authorityType": "community",
+  "maintainer": "RealKai42/qwerty-learner",
+  "edition": "TOEFL_3_T；具体教材版次未核实",
+  "url": "https://raw.githubusercontent.com/RealKai42/qwerty-learner/e889a3879cc276fb40bf00a7252c8c32458b95dd/public/dicts/TOEFL_3_T.json",
+  "revision": "e889a3879cc276fb40bf00a7252c8c32458b95dd",
+  "retrievedAt": "2026-10-18",
+  "sourceSha256": "a1209981905e8dacd3e52774ecc1157a6f5dd1417240a5ded08797c51a835d4c",
+  "headwordsSha256": "34938b6e1d1f5565d322aa84328e608aad1842d99239abd3ada72841a05293d1",
+  "count": 4264,
+  "unit": "exact-case headword",
+  "membership": "complete list; not a CET increment",
+  "licenseNote": "Community transcription; repository software license does not establish publisher permission for dictionary content. Only headword membership is retained in version control."
+}

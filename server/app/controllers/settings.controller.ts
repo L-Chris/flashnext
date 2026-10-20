@@ -1,31 +1,26 @@
-import { Body, Get, JsonController, Post } from 'routing-controllers'
+import { Body, Get, HttpError, JsonController, Param, Post } from 'routing-controllers'
 import { Service } from 'typedi'
-import { SettingsService } from 'app/modules/settings/application/settings.service'
+import { SettingsService, type DeckSettings } from 'app/modules/settings/application/settings.service'
 
-class SettingsBody {
-  newPerDay?: number
-  reviewPerDay?: number
+import { deckIdOf } from 'app/shared/deck-id'
+
+@JsonController('/decks/:deckId/settings')
+@Service()
+export class DeckSettingsController {
+  constructor(private settingsService: SettingsService) {}
+  @Get('/')
+  async get(@Param('deckId') deckId: string) { return { data: await this.settingsService.get(deckIdOf(deckId)) } }
+  @Post('/')
+  async save(@Param('deckId') deckId: string, @Body() body: Partial<DeckSettings>) {
+    const data: Partial<DeckSettings> = {}
+    for (const key of ['newPerDay', 'reviewPerDay', 'timezone', 'rolloverHour', 'audioAutoplay', 'showNewCardAnswerImmediately', 'autoRevealAnswerSeconds'] as const) if (body?.[key] !== undefined) (data as any)[key] = body[key]
+    return { data: await this.settingsService.save(deckIdOf(deckId), data) }
+  }
 }
 
 @JsonController('/settings')
 @Service()
-export class SettingsController {
-  constructor(private settingsService: SettingsService) {}
-
-  @Get('/')
-  async get() {
-    const data = await this.settingsService.get()
-    return { data }
-  }
-
-  @Post('/')
-  async save(@Body() body: SettingsBody) {
-    const payload: { newPerDay?: number; reviewPerDay?: number } = {}
-    const n = Number(body?.newPerDay)
-    const r = Number(body?.reviewPerDay)
-    if (Number.isFinite(n)) payload.newPerDay = n
-    if (Number.isFinite(r)) payload.reviewPerDay = r
-    const data = await this.settingsService.save(payload)
-    return { data }
-  }
+export class LegacySettingsController {
+  @Get('/') get() { throw new HttpError(400, '请从牌组的设置入口操作') }
+  @Post('/') save() { throw new HttpError(400, '必须指定牌组，禁止修改全局学习设置') }
 }

@@ -30,7 +30,7 @@ const parseWords = file => {
 }
 
 const main = async () => {
-  const allWords = await prisma.word.findMany({ select: { id: true, headword: true } })
+  const allWords = await prisma.word.findMany({ where: { language: 'en' }, select: { id: true, headword: true } })
   const wordByKey = new Map(allWords.map(w => [w.headword.toLowerCase(), w]))
 
   const existing = await prisma.wordTag.findMany({

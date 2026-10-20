@@ -1,6 +1,9 @@
+import { HttpError } from 'routing-controllers'
+import { SettingsService } from 'app/modules/settings/application/settings.service'
+import { DeckWorkLock } from './deck-work-lock'
 import { Service } from 'typedi'
 import { FsrsRepository } from '../infrastructure/fsrs.repository'
-import { ROLLOVER_HOUR, TZ_NAME, fsrsOffsetProvider } from 'app/shared/day-boundary'
+import { fsrsOffsetProvider } from 'app/shared/day-boundary'
 import { clearSchedulerCache } from 'app/modules/cards/application/fsrs.scheduler'
 import { MIN_TRAINING_REVIEWS, OPTIMIZE_TIMEOUT_MS, RELEARNING_STEPS } from 'configs/constants'
 
@@ -54,41 +57,23 @@ const loadFSRS = (): Promise<FsrsModule> => {
 
 @Service()
 export class OptimizerService {
-  private job: OptimizeJob = {
-    running: false,
-    startedAt: null,
-    finishedAt: null,
-    force: false,
-    result: null,
-    error: null,
+  private jobs = new Map<number, OptimizeJob>()
+  constructor(private fsrsRepository: FsrsRepository, private settingsService: SettingsService, private workLock: DeckWorkLock) {}
+
+  status(deckId: number): OptimizeJob {
+    return this.jobs.get(deckId) || { running: false, startedAt: null, finishedAt: null, force: false, result: null, error: null }
   }
 
-  constructor(private fsrsRepository: FsrsRepository) {}
-
-  status() {
-    return this.job
-  }
-
-  /**
-   * 训练是分钟级任务，走同步 HTTP 会被反向代理 60s 超时掐断，
-   * 因此与 rebuild 一样改成后台 job：POST 立即返回，GET 轮询结果。
-   */
-  start(options: { force?: boolean; timeoutMs?: number } = {}) {
-    if (this.job.running) return { started: false, reason: 'already running', job: this.job }
-    this.job = {
-      running: true,
-      startedAt: new Date().toISOString(),
-      finishedAt: null,
-      force: Boolean(options.force),
-      result: null,
-      error: null,
-    }
-    void this.run(options).catch(error => {
-      this.job.running = false
-      this.job.finishedAt = new Date().toISOString()
-      this.job.error = error?.message || String(error)
-    })
-    return { started: true, job: this.job }
+  async start(deckId: number, options: { force?: boolean; timeoutMs?: number } = {}) {
+    await this.settingsService.get(deckId)
+    if (this.status(deckId).running) return { started: false, reason: 'already running', job: this.status(deckId) }
+    this.workLock.acquire(deckId, 'train')
+    const job: OptimizeJob = { running: true, startedAt: new Date().toISOString(), finishedAt: null, force: Boolean(options.force), result: null, error: null }
+    this.jobs.set(deckId, job)
+    void this.run(deckId, job, options).catch(error => {
+      Object.assign(job, { running: false, finishedAt: new Date().toISOString(), error: error?.message || String(error) })
+    }).finally(() => this.workLock.release(deckId))
+    return { started: true, job }
   }
 
   private async defaultW(): Promise<number[]> {
@@ -96,8 +81,8 @@ export class OptimizerService {
     return defaultWCache
   }
 
-  async getCurrentW(): Promise<number[]> {
-    const row = await this.fsrsRepository.getParamRow()
+  async getCurrentW(deckId: number): Promise<number[]> {
+    const row = await this.fsrsRepository.getParamRow(deckId)
     if (row) {
       const w = JSON.parse(row.w) as number[]
       if (w.length) return w
@@ -105,28 +90,31 @@ export class OptimizerService {
     return this.defaultW()
   }
 
-  async getStatus() {
-    const row = await this.fsrsRepository.getParamRow()
-    const reviewCount = await this.fsrsRepository.countLogs()
+  async getStatus(deckId: number) {
+    const row = await this.fsrsRepository.getParamRow(deckId)
+    const reviewCount = await this.fsrsRepository.countLogs(deckId)
+    const settings = await this.settingsService.get(deckId)
     return {
+      deckId,
       w: row ? (JSON.parse(row.w) as number[]) : await this.defaultW(),
       source: row?.source ?? 'default',
       updatedAt: row?.updatedAt ?? null,
       revlogMigratedAt: row?.revlogMigratedAt ?? null,
       reviewCount,
       minReviews: MIN_TRAINING_REVIEWS,
-      timezone: TZ_NAME,
-      rolloverHour: ROLLOVER_HOUR,
+      timezone: settings.timezone,
+      rolloverHour: settings.rolloverHour,
     }
   }
 
-  private async buildTrainSet(cardIds?: Set<number>) {
+  private async buildTrainSet(deckId: number, cardIds?: Set<number>) {
     const binding = await loadBinding()
-    const { csv, rows } = await this.fsrsRepository.buildRevlogCsv(cardIds)
+    const { csv, rows } = await this.fsrsRepository.buildRevlogCsv(deckId, cardIds)
+    const settings = await this.settingsService.get(deckId)
     const items = binding.convertCsvToFsrsItems(
       Buffer.from(csv),
-      ROLLOVER_HOUR,
-      TZ_NAME,
+      settings.rolloverHour,
+      settings.timezone,
       fsrsOffsetProvider,
     )
     return { items, rows }
@@ -165,23 +153,25 @@ export class OptimizerService {
    * 准入只有一条护栏：logLoss / rmseBins 不得比 FSRS-6 默认参数差（官方 evaluate 指标）。
    * 其余完全跟随官方行为：clip 后照用、训练结果照存。
    */
-  private async run(options: { force?: boolean; timeoutMs?: number } = {}): Promise<OptimizeOutcome> {
-    const reviewCount = await this.fsrsRepository.countLogs()
+  private async run(deckId: number, job: OptimizeJob, options: { force?: boolean; timeoutMs?: number } = {}): Promise<OptimizeOutcome> {
+    const reviewCount = await this.fsrsRepository.countLogs(deckId)
     if (reviewCount < MIN_TRAINING_REVIEWS) {
       throw new Error(`review logs insufficient: ${reviewCount} < ${MIN_TRAINING_REVIEWS}`)
     }
 
-    const row = await this.fsrsRepository.getParamRow()
+    const row = await this.fsrsRepository.getParamRow(deckId)
+    const settings = await this.settingsService.get(deckId)
+    const expected = { settings: settings.version, params: row.version }
     if (!row?.revlogMigratedAt) {
       throw new Error(
-        'revlog 尚未回填 review_state，先用 POST /api/fsrs/rebuild 重建记忆状态，再训练参数',
+        'revlog 尚未回填 review_state，先用 本牌组的“预览重建” 重建记忆状态，再训练参数',
       )
     }
 
     const binding = await loadBinding()
-    const { items, rows } = await this.buildTrainSet()
+    const { items, rows } = await this.buildTrainSet(deckId)
     if (!items.length) {
-      throw new Error(`no trainable fsrs items (revlog rows=${rows}); run POST /api/fsrs/rebuild first`)
+      throw new Error(`no trainable fsrs items (revlog rows=${rows}); run 本牌组的“预览重建” first`)
     }
 
     const started = Date.now()
@@ -198,12 +188,12 @@ export class OptimizerService {
     // 护栏未通过时不落库，把诊断返回给调用方；force 可强制写入
     if (!audit.accepted && !options.force) {
       const outcome: OptimizeOutcome = { saved: false, w, audit, rows, elapsedMs, forced: false }
-      this.job = { ...this.job, running: false, finishedAt: new Date().toISOString(), result: outcome }
+      Object.assign(job, { running: false, finishedAt: new Date().toISOString(), result: outcome })
       return outcome
     }
 
     const source = audit.accepted ? 'official-fsrs-rs' : 'official-forced'
-    await this.fsrsRepository.saveParams(w, source)
+    await this.fsrsRepository.saveParams(deckId, w, source, expected)
     clearSchedulerCache()
 
     const outcome: OptimizeOutcome = {
@@ -215,7 +205,7 @@ export class OptimizerService {
       elapsedMs,
       forced: !audit.accepted,
     }
-    this.job = { ...this.job, running: false, finishedAt: new Date().toISOString(), result: outcome }
+    Object.assign(job, { running: false, finishedAt: new Date().toISOString(), result: outcome })
     return outcome
   }
 
@@ -224,22 +214,23 @@ export class OptimizerService {
    * 用于两种情况：训练数据来自别的调度器导致官方优化结果退化时回退默认值；
    * 或直接粘贴 Anki「Optimize」得到的参数。
    */
-  async setParams(w?: number[], withAudit = false) {
+  async setParams(deckId: number, w?: number[], withAudit = false) {
+    await this.settingsService.get(deckId)
     const manual = Array.isArray(w) && w.length > 0
     const target = manual ? (w as number[]).map(Number) : await this.defaultW()
-    if (!target.length || target.some(v => !Number.isFinite(v))) {
+    if (target.length !== (await this.defaultW()).length || target.some(v => !Number.isFinite(v))) {
       throw new Error('invalid weights')
     }
-    await this.fsrsRepository.saveParams(target, manual ? 'manual' : 'default')
+    await this.fsrsRepository.saveParams(deckId, target, manual ? 'manual' : 'default')
     clearSchedulerCache()
-    const audit = withAudit ? await this.auditParameters(target).catch(e => ({ error: String(e?.message || e) })) : null
-    return { ...(await this.getStatus()), audit }
+    const audit = withAudit ? await this.auditParameters(deckId, target).catch(e => ({ error: String(e?.message || e) })) : null
+    return { ...(await this.getStatus(deckId)), audit }
   }
 
   /** 只评估、不落库，用于预览/诊断 */
-  async auditParameters(w: number[], cardIds?: Set<number>): Promise<Audit> {
+  async auditParameters(deckId: number, w: number[], cardIds?: Set<number>): Promise<Audit> {
     const binding = await loadBinding()
-    const { items } = await this.buildTrainSet(cardIds)
+    const { items } = await this.buildTrainSet(deckId, cardIds)
     const audit = await this.audit(binding, w, items)
     audit.items = items.length
     return audit

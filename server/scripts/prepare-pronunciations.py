@@ -5,7 +5,8 @@ sys.path.insert(0,str(Path(__file__).parent/'lib'))
 from pronunciation import normalize,PROFILE
 p=argparse.ArgumentParser();p.add_argument('--db',required=True);p.add_argument('--output',required=True);p.add_argument('--data',default=str(Path(__file__).parent/'data/kaikki.org-dictionary-English.jsonl'));a=p.parse_args()
 c=sqlite3.connect(f'file:{Path(a.db).resolve()}?mode=ro',uri=True)
-words={w:i for i,w in c.execute('select id,headword from words')}
+english_filter=" where language='en'" if any(r[1]=='language' for r in c.execute('pragma table_info(words)')) else ''
+words={w:i for i,w in c.execute('select id,headword from words'+english_filter)}
 overrides=json.loads((Path(__file__).parent/'resources/pronunciation-overrides.json').read_text())
 overridden={x['word'] for x in overrides}
 rows={};digest=hashlib.sha256();counts=collections.Counter()

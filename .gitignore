@@ -10,3 +10,6 @@ server/scripts/data/
 .DS_Store
 __pycache__/
 *.pyc
+
+web/test-results/
+web/playwright-report/

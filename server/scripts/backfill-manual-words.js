@@ -87,7 +87,7 @@ const main = async () => {
 
   // SQLite 不支持 mode:'insensitive'，取候选集后在 JS 里按小写匹配
   const words = await prisma.word.findMany({
-    where: { OR: [{ translation: '' }, { phonetic: { endsWith: '/' } }] },
+    where: { language: 'en', OR: [{ translation: '' }, { phonetic: { endsWith: '/' } }] },
     include: { cards: true },
   })
   console.log(`matched words: ${words.length}`)

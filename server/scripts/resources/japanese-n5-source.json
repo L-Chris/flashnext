@@ -1,0 +1,28 @@
+{
+  "sourceId": "openjlpt-n5-v1",
+  "title": "JLPT N5（社区参考词表）",
+  "authorityType": "community",
+  "edition": "OpenJLPT pinned N5 snapshot",
+  "retrievedAt": "2026-10-19",
+  "count": 674,
+  "url": "https://raw.githubusercontent.com/evanclan/OpenJLPT/0d1d3410bec90bd4098a7c72de820543cb4f707c/data/json/vocab/n5.json",
+  "dictionaries": {
+    "kaikkiUrl": "https://kaikki.org/zhwiktionary/raw-wiktextract-data.jsonl.gz",
+    "rawSha256": "1247aede05c605cc127c51d1cc99c3cda5e440be547845d2332269e63c2128b1",
+    "japaneseEntries": 137529,
+    "compressedSha256": "b5482adefdfeaf0359f257b03cd429187feb8fbc16da8d6e00ba046bd063e18a",
+    "jmdictUrl": "https://github.com/scriptin/jmdict-simplified/releases/download/3.6.2%2B20261012204142/jmdict-eng-3.6.2%2B20261012204142.json.zip",
+    "jmdictSha256": "b80a07e826cc91084dc6c819b5f8af2797cb3d4f3d2c270840e5b01b2db4e7b0",
+    "openjlptRevision": "0d1d3410bec90bd4098a7c72de820543cb4f707c",
+    "openjlptSha256": "cbb221c9a3a92108fcd02fb088d9afacc70bc8c96570d5730425de0a49dad5f3",
+    "kaikkiJapaneseSha256": "2749c09fecb5eb28b73a43ffde889071ccd14ddba5a37f1d0af9009f6081ad47",
+    "reviewedSha256": "19caacad395e6d915c0290d60d9a851288a00e72d1828a7c7381b85ab6bfcda4"
+  },
+  "reviewPolicy": "Only explicit reviewed Chinese summaries with validated JMdict identity can create cards.",
+  "attribution": [
+    "https://github.com/evanclan/OpenJLPT/blob/main/NOTICE.md",
+    "https://www.edrdg.org/edrdg/licence.html",
+    "https://kaikki.org/zhwiktionary/rawdata.html",
+    "https://tatoeba.org/en/downloads"
+  ]
+}

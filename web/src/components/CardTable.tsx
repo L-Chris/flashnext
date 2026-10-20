@@ -1,8 +1,7 @@
-import { normalizeDictionaryNewlines } from '../utils/dictionary-text'
+import { reviewWordBack } from '../utils/word-card'
 import Pronunciations from './Pronunciations'
+import CardDetails from './CardDetails'
 import { Fragment, useState } from 'react'
-import SenseExamples from './SenseExamples'
-import IeltsUsages from './IeltsUsages'
 import type { Card, CardPage, CardSortKey } from '../types'
 
 export interface TableColumn {
@@ -23,8 +22,10 @@ const STATE_LABEL: Record<number, { label: string; className: string }> = {
 }
 
 const TAG_COLORS: Record<string, string> = {
+  jlpt: 'bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300',
   coca: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300',
   cet: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300',
+  toefl: 'bg-violet-100 text-violet-700 dark:bg-violet-500/20 dark:text-violet-300',
   ielts: 'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300',
 }
 
@@ -51,20 +52,20 @@ const dueText = (card: Card) => {
 }
 
 export const TABLE_COLUMNS: TableColumn[] = [
-  { key: 'front', label: '词', fixed: true, defaultVisible: true, render: c => <span className="font-medium">{c.front}</span> },
+  { key: 'front', label: '词', fixed: true, defaultVisible: true, render: c => <span className="block max-w-64 truncate font-medium" title={c.front}>{c.front}{c.contentFormat === 'markdown_math' && <span className="ml-2 text-[10px] text-indigo-500">公式</span>}</span> },
   {
     key: 'phonetic',
-    label: '音标',
+    label: '读音',
     defaultVisible: false,
-    render: c => <span className="text-zinc-500 dark:text-zinc-400"><Pronunciations items={c.word?.pronunciations} fallback={c.word?.phonetic} compact /></span>,
+    render: c => <span className="text-zinc-500 dark:text-zinc-400">{c.word?.language === 'ja' ? <span lang="ja">{c.word.reading}</span> : <Pronunciations items={c.word?.pronunciations} fallback={c.word?.phonetic} compact />}</span>,
   },
   {
     key: 'translation',
     label: '释义',
     defaultVisible: true,
     render: c => (
-      <span className="block max-w-64 truncate text-zinc-600 dark:text-zinc-400" title={normalizeDictionaryNewlines(c.word?.translation || '')}>
-        {normalizeDictionaryNewlines(c.word?.translation || '')}
+      <span className="block max-w-64 truncate text-zinc-600 dark:text-zinc-400" title={(c.contentFormat === 'markdown_math' ? c.back : reviewWordBack(c.back, c.word).meanings)}>
+        {(c.contentFormat === 'markdown_math' ? c.back : reviewWordBack(c.back, c.word).meanings)}
       </span>
     ),
   },
@@ -223,6 +224,7 @@ interface Props {
   page: CardPage
   loading: boolean
   visible: Record<string, boolean>
+  onEdit: (card: Card) => void
   onSort: (key: CardSortKey) => void
   onPage: (page: number) => void
   onPageSize: (size: number) => void
@@ -253,7 +255,7 @@ const Th = ({
   </th>
 )
 
-export default function CardTable({ page, loading, visible, onSort, onPage, onPageSize }: Props) {
+export default function CardTable({ page, loading, visible, onEdit, onSort, onPage, onPageSize }: Props) {
   const [expanded, setExpanded] = useState<Set<number>>(new Set())
   const columns = TABLE_COLUMNS.filter(c => c.fixed || visible[c.key])
 
@@ -290,6 +292,7 @@ export default function CardTable({ page, loading, visible, onSort, onPage, onPa
                   onClick={c.sortKey ? () => onSort(c.sortKey!) : undefined}
                 />
               ))}
+              <th className="px-2 py-2 text-right font-medium">操作</th>
             </tr>
           </thead>
           <tbody className={loading ? 'opacity-50' : ''}>
@@ -307,15 +310,17 @@ export default function CardTable({ page, loading, visible, onSort, onPage, onPa
                       {c.render(card)}
                     </td>
                   ))}
+                  <td className="whitespace-nowrap px-2 py-1.5 text-right">
+                    <button aria-label={`编辑卡片 ${card.front}`} onClick={event => { event.stopPropagation(); onEdit(card) }} className="rounded px-2 py-1 text-indigo-600 hover:bg-indigo-50 dark:text-indigo-400 dark:hover:bg-indigo-950">编辑</button>
+                  </td>
                 </tr>
-                {expanded.has(card.id) && (card.word?.senses?.length || card.word?.ieltsUsages?.length) ? (
+                {expanded.has(card.id) && (
                   <tr className="border-b border-zinc-100 bg-zinc-50/60 dark:border-zinc-800/60 dark:bg-zinc-800/20">
-                    <td colSpan={columns.length} className="px-4 py-3">
-                      <IeltsUsages usages={card.word?.ieltsUsages} />
-                      <SenseExamples senses={card.word?.senses} />
+                    <td colSpan={columns.length + 1} className="px-4 py-3">
+                      <CardDetails card={card} />
                     </td>
                   </tr>
-                ) : null}
+                )}
               </Fragment>
             ))}
           </tbody>

@@ -21,6 +21,7 @@ for (const line of fs.readFileSync(envPath, 'utf8').split('\n')) {
 const prisma = new PrismaClient()
 
 const main = async () => {
+  if (await prisma.word.count({ where: { language: { not: 'en' } } })) throw new Error('This legacy migration cannot run on a multilingual library.')
   let deck = await prisma.deck.findFirst({ where: { name: SINGLE_DECK_NAME } })
   if (!deck) {
     deck = await prisma.deck.create({ data: { name: SINGLE_DECK_NAME, description: '全部单词卡片' } })

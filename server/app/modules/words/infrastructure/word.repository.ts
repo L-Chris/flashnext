@@ -1,6 +1,9 @@
 import { Service } from 'typedi'
 import { prisma } from 'app/shared/prisma'
-import { dueVisibleWhere } from 'app/modules/cards/infrastructure/due-filter'
+import { TAG_SCHEMES } from './tag.registry'
+import { SettingsService } from 'app/modules/settings/application/settings.service'
+
+const languageOf = (scheme: string) => TAG_SCHEMES.find(s => s.scheme === scheme)?.language || 'en'
 
 const tagFilter = (scheme: string, level?: number) => ({
   scheme,
@@ -9,60 +12,69 @@ const tagFilter = (scheme: string, level?: number) => ({
 
 @Service()
 export class WordRepository {
+  constructor(private settingsService: SettingsService) {}
   countTagged(scheme: string, level?: number) {
-    return prisma.word.count({ where: { tags: { some: tagFilter(scheme, level) } } })
+    return prisma.word.count({ where: { language: languageOf(scheme), tags: { some: tagFilter(scheme, level) } } })
   }
 
   countTaggedWithCard(scheme: string, level?: number) {
     return prisma.word.count({
-      where: { tags: { some: tagFilter(scheme, level) }, cards: { some: {} } },
+      where: { language: languageOf(scheme), tags: { some: tagFilter(scheme, level) }, cards: { some: {} } },
     })
   }
 
   countTaggedStudied(scheme: string, level?: number) {
     return prisma.word.count({
       where: {
+        language: languageOf(scheme),
         tags: { some: tagFilter(scheme, level) },
         cards: { some: { reps: { gt: 0 } } },
       },
     })
   }
 
-  countTaggedDue(scheme: string, level?: number) {
+  async countTaggedDue(scheme: string, level?: number) {
     return prisma.word.count({
       where: {
+        language: languageOf(scheme),
         tags: { some: tagFilter(scheme, level) },
-        cards: { some: { AND: [dueVisibleWhere()] } },
+        cards: { some: await this.settingsService.visibleCardsWhere() },
       },
     })
   }
 
+  countReady(scheme: string, level: number) {
+    return prisma.word.count({ where: { language: languageOf(scheme), definitionStatus: 'ready', tags: { some: tagFilter(scheme, level) } } })
+  }
+
   countUntagged(scheme: string) {
-    return prisma.word.count({ where: { tags: { none: { scheme } } } })
+    return prisma.word.count({ where: { language: languageOf(scheme), tags: { none: { scheme } } } })
   }
 
   countUntaggedWithCard(scheme: string) {
     return prisma.word.count({
-      where: { tags: { none: { scheme } }, cards: { some: {} } },
+      where: { language: languageOf(scheme), tags: { none: { scheme } }, cards: { some: {} } },
     })
   }
 
   countUntaggedStudied(scheme: string) {
     return prisma.word.count({
-      where: { tags: { none: { scheme } }, cards: { some: { reps: { gt: 0 } } } },
+      where: { language: languageOf(scheme), tags: { none: { scheme } }, cards: { some: { reps: { gt: 0 } } } },
     })
   }
 
-  countUntaggedDue(scheme: string) {
+  async countUntaggedDue(scheme: string) {
     return prisma.word.count({
-      where: { tags: { none: { scheme } }, cards: { some: { AND: [dueVisibleWhere()] } } },
+      where: { language: languageOf(scheme), tags: { none: { scheme } }, cards: { some: await this.settingsService.visibleCardsWhere() } },
     })
   }
 
   findTaggedWithoutCard(scheme: string, level?: number) {
     return prisma.word.findMany({
       where: {
+        language: languageOf(scheme),
         tags: { some: tagFilter(scheme, level) },
+        definitionStatus: 'ready',
         NOT: { cards: { some: {} } },
       },
       orderBy: { rank: { sort: 'asc', nulls: 'last' } },
@@ -71,7 +83,7 @@ export class WordRepository {
 
   findAllWithoutCard() {
     return prisma.word.findMany({
-      where: { NOT: { cards: { some: {} } } },
+      where: { language: 'en', definitionStatus: 'ready', NOT: { cards: { some: {} } } },
       orderBy: { rank: { sort: 'asc', nulls: 'last' } },
     })
   }
@@ -88,6 +100,6 @@ export class WordRepository {
   }
 
   findWordsByHeadwords(headwords: string[]) {
-    return prisma.word.findMany({ where: { headword: { in: headwords } } })
+    return prisma.word.findMany({ where: { language: 'en', headword: { in: headwords } } })
   }
 }

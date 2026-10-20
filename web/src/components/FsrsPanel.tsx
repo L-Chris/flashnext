@@ -1,283 +1,182 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { api } from '../api/client'
-import type { DailyLimits, FsrsStatus, OptimizeJob, OptimizeResult, RebuildJob } from '../types'
+import type { DailyLimits, Deck, FsrsStatus, OptimizeJob, RebuildJob } from '../types'
 
 const SOURCE_LABEL: Record<string, string> = {
-  default: 'FSRS-6 官方默认',
-  manual: '手工写入',
-  'official-fsrs-rs': 'fsrs-rs 训练',
-  'official-forced': 'fsrs-rs 训练（强制）',
+  default: 'FSRS-6 官方默认', manual: '手工写入',
+  'official-fsrs-rs': 'fsrs-rs 训练', 'official-forced': 'fsrs-rs 训练（强制）',
   legacy: '旧版自研优化（已废弃）',
 }
 
-export default function FsrsPanel() {
+export default function FsrsPanel({ deck, onSaved }: { deck: Deck; onSaved: () => Promise<void> }) {
   const [status, setStatus] = useState<FsrsStatus | null>(null)
-  const [running, setRunning] = useState(false)
+  const [settings, setSettings] = useState<DailyLimits | null>(null)
+  const [draft, setDraft] = useState<DailyLimits | null>(null)
+  const [train, setTrain] = useState<OptimizeJob | null>(null)
+  const [rebuild, setRebuild] = useState<RebuildJob | null>(null)
+  const [pending, setPending] = useState(false)
   const [message, setMessage] = useState('')
-  const [optimize, setOptimize] = useState<OptimizeResult | null>(null)
-  const [job, setJob] = useState<RebuildJob | null>(null)
-  const [trainJob, setTrainJob] = useState<OptimizeJob | null>(null)
-  const [limits, setLimits] = useState<DailyLimits | null>(null)
-  const [limitDraft, setLimitDraft] = useState<DailyLimits | null>(null)
-  const [toast, setToast] = useState<string | null>(null)
-  const toastTimer = useRef<number | null>(null)
-  const timer = useRef<number | null>(null)
-  const trainTimer = useRef<number | null>(null)
-
-  const load = useCallback(async () => {
-    const [nextStatus, nextJob, nextLimits] = await Promise.all([
-      api.getFsrsStatus(),
-      api.rebuildFsrsStatus(),
-      api.getSettings(),
-    ])
-    setStatus(nextStatus)
-    setJob(nextJob)
-    setLimits(nextLimits)
-    setLimitDraft(nextLimits)
-  }, [])
+  const [error, setError] = useState('')
+  const mounted = useRef(true)
+  useEffect(() => {
+    mounted.current = true
+    Promise.all([api.getSettings(deck.id), api.getFsrsStatus(deck.id), api.optimizeFsrsStatus(deck.id), api.rebuildFsrsStatus(deck.id)])
+      .then(([s, f, t, r]) => { if (mounted.current) { setSettings(s); setDraft(s); setStatus(f); setTrain(t); setRebuild(r) } })
+      .catch(e => { if (mounted.current) setError(e.message) })
+    return () => { mounted.current = false }
+  }, [deck.id])
 
   useEffect(() => {
-    load()
-    return () => {
-      if (timer.current) window.clearInterval(timer.current)
-      if (trainTimer.current) window.clearInterval(trainTimer.current)
+    if (!train?.running && !rebuild?.running) return
+    let cancelled = false
+    let timer: number
+    const poll = async () => {
+      try {
+        const [t, r] = await Promise.all([api.optimizeFsrsStatus(deck.id), api.rebuildFsrsStatus(deck.id)])
+        if (cancelled) return
+        setTrain(t); setRebuild(r)
+        if (!t.running && !r.running) {
+          const next = await api.getFsrsStatus(deck.id)
+          if (!cancelled) { setStatus(next); await onSaved() }
+        } else timer = window.setTimeout(poll, 1200)
+      } catch (e: any) {
+        if (!cancelled) { setError(e.message); timer = window.setTimeout(poll, 3000) }
+      }
     }
-  }, [load])
+    timer = window.setTimeout(poll, 1000)
+    return () => { cancelled = true; window.clearTimeout(timer) }
+  }, [deck.id, train?.running, rebuild?.running, onSaved])
 
-  useEffect(() => {
-    if (!job?.running) return
-    timer.current = window.setInterval(async () => {
-      const next = await api.rebuildFsrsStatus()
-      setJob(next)
-      if (!next.running && timer.current) {
-        window.clearInterval(timer.current)
-        await load()
-      }
-    }, 1000)
-    return () => {
-      if (timer.current) window.clearInterval(timer.current)
-    }
-  }, [job?.running, load])
-
-  const applyOutcome = useCallback(
-    async (result: OptimizeResult | null, error: string | null) => {
-      setOptimize(result)
-      if (error) {
-        setMessage(`训练失败：${error}`)
-        return
-      }
-      if (!result) return
-      setMessage(
-        result.saved
-          ? `已写入训练参数（${result.audit.items} 个训练样本，耗时 ${Math.round(result.elapsedMs / 1000)}s）`
-          : `训练结果比默认参数差，未写入：${result.audit.reasons.join('；')}`,
-      )
-      if (result.saved) await load()
-    },
-    [load],
-  )
-
-  const pollTrain = useCallback(() => {
-    if (trainTimer.current) window.clearInterval(trainTimer.current)
-    trainTimer.current = window.setInterval(async () => {
-      const next = await api.optimizeFsrsStatus()
-      setTrainJob(next)
-      if (!next.running) {
-        if (trainTimer.current) window.clearInterval(trainTimer.current)
-        setRunning(false)
-        await applyOutcome(next.result, next.error)
-      }
-    }, 1500)
-  }, [applyOutcome])
-
-  const handleOptimize = async (force = false) => {
-    setRunning(true)
-    setMessage('')
-    setOptimize(null)
+  const save = async () => {
+    if (!draft) return
+    setPending(true); setError(''); setMessage('')
     try {
-      const started = await api.optimizeFsrs(force)
-      if (!started.started) {
-        setMessage(started.reason === 'already running' ? '训练任务已在进行中' : '无法启动训练')
-        setRunning(false)
-        return
-      }
-      setTrainJob(started.job)
-      pollTrain()
-    } catch (error: any) {
-      setMessage(error?.message || '优化失败')
-      setRunning(false)
-    }
-  }
-
-  const showToast = (text: string) => {
-    setToast(text)
-    if (toastTimer.current) window.clearTimeout(toastTimer.current)
-    toastTimer.current = window.setTimeout(() => setToast(null), 2000)
-  }
-
-  const saveLimits = async () => {
-    if (!limitDraft) return
-    setRunning(true)
-    setMessage('')
-    try {
-      const next = await api.saveSettings({
-        newPerDay: Number(limitDraft.newPerDay),
-        reviewPerDay: Number(limitDraft.reviewPerDay),
+      const next = await api.saveSettings(deck.id, {
+        newPerDay: draft.newPerDay, reviewPerDay: draft.reviewPerDay,
+        timezone: draft.timezone, rolloverHour: draft.rolloverHour,
+        audioAutoplay: draft.audioAutoplay, showNewCardAnswerImmediately: draft.showNewCardAnswerImmediately,
+        autoRevealAnswerSeconds: draft.autoRevealAnswerSeconds,
       })
-      setLimits(next)
-      setLimitDraft(next)
-      showToast('保存成功')
-      await load()
-    } catch (error: any) {
-      setMessage(error?.message || '保存失败')
-    } finally {
-      setRunning(false)
-    }
+      if (!mounted.current) return
+      setSettings(next); setDraft(next); setMessage('本牌组设置已保存')
+      setStatus(await api.getFsrsStatus(deck.id))
+      await onSaved()
+    } catch (e: any) { if (mounted.current) setError(e.message) }
+    finally { if (mounted.current) setPending(false) }
   }
-
-  if (!status) return null
-
-  const ready = status.reviewCount >= status.minReviews
-  const migrated = Boolean(status.revlogMigratedAt)
-
+  const startTrain = async (force = false) => {
+    setPending(true); setError(''); setMessage('')
+    try {
+      const next = await api.optimizeFsrs(deck.id, force)
+      if (mounted.current) setTrain(next.job)
+    } catch (e: any) { if (mounted.current) setError(e.message) }
+    finally { if (mounted.current) setPending(false) }
+  }
+  const startRebuild = async (dryRun: boolean) => {
+    setPending(true); setError(''); setMessage('')
+    try {
+      const next = await api.rebuildFsrs(deck.id, dryRun)
+      if (mounted.current) setRebuild(next.job)
+    } catch (e: any) { if (mounted.current) setError(e.message) }
+    finally { if (mounted.current) setPending(false) }
+  }
+  const busy = pending || Boolean(train?.running || rebuild?.running)
+  const changed = draft && settings && ['newPerDay', 'reviewPerDay', 'timezone', 'rolloverHour', 'audioAutoplay', 'showNewCardAnswerImmediately', 'autoRevealAnswerSeconds'].some(k => draft[k as keyof DailyLimits] !== settings[k as keyof DailyLimits])
+  const inputClass = 'rounded border border-zinc-300 bg-white px-2 py-1 dark:border-zinc-700 dark:bg-zinc-900'
+  const buttonClass = 'rounded-md border border-zinc-300 px-3 py-1.5 hover:bg-zinc-100 disabled:opacity-50 dark:border-zinc-700 dark:hover:bg-zinc-800'
+  const result = train?.result
   return (
-    <div>
-      {toast && (
-        <div className="fixed left-1/2 top-6 z-[60] -translate-x-1/2 rounded-full bg-zinc-900/90 px-4 py-2 text-xs text-white shadow-lg dark:bg-zinc-100/90 dark:text-zinc-900">
-          {toast}
+    <div className="space-y-4 text-sm">
+      {error && <p role="alert" className="text-red-600">{error}</p>}
+      {!status || !draft || !settings ? <p className="text-zinc-500">正在加载设置…</p> : <>
+        <div className="space-y-3 rounded-lg border border-zinc-200 p-3 dark:border-zinc-800">
+          <h3 className="font-medium">每日限额</h3>
+          <div className="flex flex-wrap items-center gap-3 text-xs">
+            <label className="flex items-center gap-1">新卡
+              <input aria-label="每日新卡" type="number" min={0} max={100000} step={1} value={draft.newPerDay}
+                onChange={e => setDraft({ ...draft, newPerDay: Number(e.target.value) })} className={`w-20 ${inputClass}`} />张/天
+            </label>
+            <label className="flex items-center gap-1">复习
+              <input aria-label="每日复习" type="number" min={0} max={100000} step={1} value={draft.reviewPerDay}
+                onChange={e => setDraft({ ...draft, reviewPerDay: Number(e.target.value) })} className={`w-20 ${inputClass}`} />张/天
+            </label>
+          </div>
+          <div className="space-y-3 border-t border-zinc-200 pt-3 text-xs dark:border-zinc-800">
+            <h3 className="text-sm font-medium">复习展示</h3>
+            <label className="flex items-center gap-2">
+              <input type="checkbox" checked={draft.audioAutoplay} onChange={e => setDraft({ ...draft, audioAutoplay: e.target.checked })} className="accent-indigo-600" />
+              自动播放卡片音频
+            </label>
+            <label className="flex items-center gap-2">
+              <input type="checkbox" checked={draft.showNewCardAnswerImmediately} onChange={e => setDraft({ ...draft, showNewCardAnswerImmediately: e.target.checked })} className="accent-indigo-600" />
+              未学习的新卡直接显示答案
+            </label>
+            <div className="flex flex-wrap items-center gap-2">
+              <label className="flex items-center gap-2">
+                <input type="checkbox" checked={draft.autoRevealAnswerSeconds !== null} onChange={e => setDraft({ ...draft, autoRevealAnswerSeconds: e.target.checked ? 10 : null })} className="accent-indigo-600" />
+                自动显示答案
+              </label>
+              {draft.autoRevealAnswerSeconds !== null && <label className="flex items-center gap-1">
+                等待 <input aria-label="自动显示答案等待秒数" type="number" min={1} max={3600} step={1} value={draft.autoRevealAnswerSeconds}
+                  onChange={e => setDraft({ ...draft, autoRevealAnswerSeconds: Number(e.target.value) })} className={`w-20 ${inputClass}`} /> 秒
+              </label>}
+            </div>
+            <p className="text-zinc-500">新卡直接显示优先于倒计时；显示答案后仍需手动评分。</p>
+          </div>
+          <details className="text-xs">
+            <summary className="cursor-pointer text-zinc-500">高级：时区与日切点</summary>
+            <div className="mt-3 flex flex-wrap items-center gap-3">
+              <label className="flex items-center gap-1">时区
+                <input aria-label="时区" value={draft.timezone} onChange={e => setDraft({ ...draft, timezone: e.target.value })} className={`w-40 ${inputClass}`} placeholder="Asia/Shanghai" />
+              </label>
+              <label className="flex items-center gap-1">日切点
+                <select aria-label="日切点" value={draft.rolloverHour} onChange={e => setDraft({ ...draft, rolloverHour: Number(e.target.value) })} className={inputClass}>
+                  {Array.from({ length: 24 }, (_, h) => <option key={h} value={h}>{String(h).padStart(2, '0')}:00</option>)}
+                </select>
+              </label>
+            </div>
+            <p className="mt-2 text-zinc-500">用于本牌组每日计数和后续调度。保存后已有到期时间保持原值。</p>
+          </details>
+          <div className="flex items-center justify-between gap-3 text-xs">
+            <span className="text-zinc-500">仅影响「{deck.name}」</span>
+            <button disabled={pending || !changed} onClick={save} className={buttonClass}>{pending ? '处理中…' : '保存'}</button>
+          </div>
         </div>
-      )}
-      {limits && limitDraft && (
-        <div className="mb-4 flex flex-wrap items-center gap-2 rounded-lg border border-zinc-200 px-3 py-2 text-xs dark:border-zinc-800">
-          <span className="font-medium">每日限额</span>
-          <label className="flex items-center gap-1">
-            新卡
-            <input
-              type="number"
-              min={0}
-              value={limitDraft.newPerDay}
-              onChange={e => setLimitDraft({ ...limitDraft, newPerDay: Number(e.target.value) })}
-              className="w-20 rounded border border-zinc-300 bg-white px-2 py-1 dark:border-zinc-700 dark:bg-zinc-900"
-            />
-            张/天
-          </label>
-          <label className="flex items-center gap-1">
-            复习
-            <input
-              type="number"
-              min={0}
-              value={limitDraft.reviewPerDay}
-              onChange={e => setLimitDraft({ ...limitDraft, reviewPerDay: Number(e.target.value) })}
-              className="w-20 rounded border border-zinc-300 bg-white px-2 py-1 dark:border-zinc-700 dark:bg-zinc-900"
-            />
-            张/天
-          </label>
-          <button
-            disabled={running || (limitDraft.newPerDay === limits.newPerDay && limitDraft.reviewPerDay === limits.reviewPerDay)}
-            onClick={saveLimits}
-            className="ml-auto rounded-md border border-zinc-300 px-3 py-1 hover:bg-zinc-100 disabled:opacity-50 dark:border-zinc-700 dark:hover:bg-zinc-800"
-          >
-            {running ? '保存中...' : '保存'}
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="text-xs text-zinc-500">
+            <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">FSRS 记忆参数</h3>
+            <p className="mt-1">当前来源：{SOURCE_LABEL[status.source] || status.source} · {status.w.length} 维</p>
+            {status.updatedAt && <p className="mt-1">更新于 {new Date(status.updatedAt).toLocaleString()}</p>}
+            <p className="mt-1">日切点 {String(status.rolloverHour).padStart(2, '0')}:00（{status.timezone}）</p>
+            <p className="mt-1">本牌组复习日志 {status.reviewCount} 条{status.reviewCount < status.minReviews && `（满 ${status.minReviews} 条后可训练）`}</p>
+          </div>
+          <button disabled={busy || status.reviewCount < status.minReviews || !status.revlogMigratedAt} onClick={() => startTrain()}
+            className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 disabled:opacity-50">
+            {train?.running ? '训练中…' : '训练本牌组'}
           </button>
         </div>
-      )}
-
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <h3 className="text-sm font-semibold">FSRS 记忆参数</h3>
-          <p className="mt-1 text-xs text-zinc-500">
-            当前来源：{SOURCE_LABEL[status.source] || status.source} · {status.w.length} 维
-            {status.updatedAt ? ` · 更新于 ${new Date(status.updatedAt).toLocaleString()}` : ''}
-          </p>
-          <p className="mt-1 text-xs text-zinc-500">
-            日切点 {String(status.rolloverHour).padStart(2, '0')}:00（{status.timezone}）· 复习日志{' '}
-            {status.reviewCount} 条
-            {!ready && `（满 ${status.minReviews} 条后可训练）`}
-          </p>
-        </div>
-        <button
-          disabled={!ready || !migrated || running}
-          onClick={() => handleOptimize(false)}
-          className="shrink-0 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 disabled:opacity-50"
-        >
-          {running ? '训练中...' : '训练参数'}
-        </button>
-      </div>
-
-      {!migrated && (
-        <p className="mt-3 rounded-md bg-amber-50 px-3 py-2 text-xs text-amber-800 dark:bg-amber-950/50 dark:text-amber-300">
-          复习日志缺少复习当时的卡片状态，无法训练。请执行 POST /api/fsrs/rebuild 重建记忆状态。
-        </p>
-      )}
-
-      {trainJob?.running && (
-        <p className="mt-3 text-xs text-zinc-600 dark:text-zinc-400">
-          训练中（fsrs-rs 官方优化器，约 1-2 分钟，可离开本页面）...
-        </p>
-      )}
-
-      {job?.running && (
-        <p className="mt-3 text-xs text-zinc-600 dark:text-zinc-400">
-          重建进度：{job.progress.cards}/{job.progress.totalCards} 张卡片 ·{' '}
-          {job.progress.logs}/{job.progress.totalLogs} 条复习
-        </p>
-      )}
-
-      {job?.error && <p className="mt-3 text-xs text-red-600">重建失败：{job.error}</p>}
-
-      {job?.result && !job.running && (
-        <div className="mt-3 space-y-1 text-xs text-zinc-600 dark:text-zinc-400">
-          <p>
-            上次重建：{job.result.cards} 张卡 · {job.result.logs} 条日志 ·{' '}
-            {(job.result.elapsedMs / 1000).toFixed(1)}s · 今日到期 {job.result.dueTodayBefore} →{' '}
-            {job.result.dueTodayAfter}
-          </p>
-          <p>
-            interval p50 {job.result.intervalPercentiles.p50}d / p90{' '}
-            {job.result.intervalPercentiles.p90}d / max {job.result.intervalPercentiles.max}d · 最远{' '}
-            {new Date(job.result.maxDue).toLocaleDateString()}
-          </p>
-        </div>
-      )}
-
-      {message && (
-        <p
-          className={`mt-3 text-xs ${
-            optimize && !optimize.saved
-              ? 'text-amber-700 dark:text-amber-400'
-              : 'text-emerald-700 dark:text-emerald-400'
-          }`}
-        >
-          {message}
-        </p>
-      )}
-
-      {optimize && (
-        <div className="mt-2 space-y-1 text-xs text-zinc-500">
-          <p>
-            logLoss {optimize.audit.metrics.candidate?.logLoss?.toFixed(4)}（默认{' '}
-            {optimize.audit.metrics.default?.logLoss?.toFixed(4)}）· rmseBins{' '}
-            {optimize.audit.metrics.candidate?.rmseBins?.toFixed(4)}（默认{' '}
-            {optimize.audit.metrics.default?.rmseBins?.toFixed(4)}）
-          </p>
-          <p>
-            新卡初始 stability：
-            {Object.entries(optimize.audit.newCardStability)
-              .map(([g, v]) => `${g}=${Number(v).toFixed(1)}d`)
-              .join(' ')}
-            {optimize.audit.pinned.length > 0 && ` · 触边界：${optimize.audit.pinned.join(' ')}`}
-          </p>
-          {!optimize.saved && (
-            <button
-              disabled={running}
-              onClick={() => handleOptimize(true)}
-              className="mt-1 rounded-md border border-zinc-300 px-3 py-1 hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
-            >
-              仍然采用这组参数
-            </button>
-          )}
-        </div>
-      )}
+        {!status.revlogMigratedAt && <p className="text-xs text-amber-700">历史日志缺少记忆状态，请在下方预览并重建后再训练。</p>}
+        {train?.running && <p className="text-xs text-zinc-500">正在用本牌组复习记录训练，约需 1–2 分钟。可以离开此窗口。</p>}
+        {train?.error && <p role="alert" className="text-xs text-red-600">训练失败：{train.error}</p>}
+        {result && !train?.running && <div className="space-y-2 text-xs text-zinc-500">
+          <p>{result.saved ? '已保存本牌组训练参数' : `训练结果未写入：${result.audit.reasons.join('；')}`} · {result.audit.items} 个样本</p>
+          {!result.saved && <button disabled={busy} onClick={() => startTrain(true)} className={buttonClass}>重新训练并强制采用</button>}
+        </div>}
+        <details className="border-t border-zinc-200 pt-3 text-xs dark:border-zinc-800">
+          <summary className="cursor-pointer text-zinc-500">高级：重建本牌组记忆状态</summary>
+          <p className="my-3 text-zinc-500">根据本牌组复习历史和当前参数重新计算记忆状态与到期时间。先预览，再应用。</p>
+          <button disabled={busy || Boolean(changed)} onClick={() => startRebuild(true)} className={buttonClass}>预览重建</button>
+          {changed && <p className="mt-2 text-zinc-500">请先保存设置，再预览重建。</p>}
+          {rebuild?.running && <p className="mt-2">{rebuild.dryRun ? '预览' : '重建'}进度：{rebuild.progress.cards}/{rebuild.progress.totalCards} 张卡 · {rebuild.progress.logs}/{rebuild.progress.totalLogs} 条日志</p>}
+          {rebuild?.error && <p role="alert" className="mt-2 text-red-600">重建失败：{rebuild.error}</p>}
+          {rebuild?.result && !rebuild.running && <div className="mt-3 space-y-2">
+            <p>{rebuild.result.dryRun ? '预览' : '已重建'}：{rebuild.result.cards} 张卡 · {rebuild.result.logs} 条日志 · 今日到期 {rebuild.result.dueTodayBefore} → {rebuild.result.dueTodayAfter}</p>
+            <p>复习间隔中位数 {rebuild.result.intervalPercentiles.p50} 天 · 最远到期 {new Date(rebuild.result.maxDue).toLocaleDateString()}</p>
+            {rebuild.result.dryRun && !rebuild.error && <button disabled={busy || Boolean(changed)} onClick={() => startRebuild(false)} className={buttonClass}>应用以上预览到本牌组</button>}
+          </div>}
+        </details>
+      </>}
+      {message && <p role="status" className="text-xs text-emerald-700 dark:text-emerald-400">{message}</p>}
     </div>
   )
 }

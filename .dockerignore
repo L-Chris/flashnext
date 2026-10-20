@@ -6,3 +6,6 @@ server/data
 server/.env
 .git
 server/scripts/data
+
+web/test-results
+web/playwright-report

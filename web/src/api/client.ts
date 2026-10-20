@@ -1,6 +1,10 @@
 import type {
   ApiResponse,
   Card,
+  CardContentBody,
+  ContentFormat,
+  ContentPreview,
+  MediaAsset,
   CardPage,
   CardPageQuery,
   CoverageRow,
@@ -18,10 +22,10 @@ import type {
 
 const request = async <T>(url: string, options: RequestInit = {}): Promise<T> => {
   const res = await fetch(url, {
-    headers: { 'Content-Type': 'application/json' },
+    headers: options.body instanceof FormData ? undefined : { 'Content-Type': 'application/json' },
     ...options,
   })
-  const body: ApiResponse<T> = await res.json()
+  const body: ApiResponse<T> = await res.json().catch(() => { throw new Error(`服务器返回异常（${res.status}），请稍后重试`) })
   if (res.status >= 400 || body.data === false) {
     throw new Error((body as any).message || `request failed: ${res.status}`)
   }
@@ -47,13 +51,22 @@ export const api = {
     return request<CardPage>(`/api/decks/${deckId}/cards${qs ? `?${qs}` : ''}`)
   },
 
-  listDue: (deckId: number) => request<DueQueue>(`/api/decks/${deckId}/cards/due`),
+  listDue: (deckId: number, signal?: AbortSignal) => request<DueQueue>(`/api/decks/${deckId}/cards/due`, { signal }),
 
-  createCard: (deckId: number, front: string, back: string) =>
-    request<Card>(`/api/decks/${deckId}/cards`, {
-      method: 'POST',
-      body: JSON.stringify({ front, back }),
-    }),
+  createCard: (deckId: number, content: CardContentBody) =>
+    request<Card>(`/api/decks/${deckId}/cards`, { method: 'POST', body: JSON.stringify(content) }),
+
+  editCard: (id: number, content: CardContentBody) =>
+    request<Card>(`/api/cards/${id}`, { method: 'PATCH', body: JSON.stringify(content) }),
+
+  uploadAudio: (file: File) => {
+    const body = new FormData()
+    body.append('file', file)
+    return request<MediaAsset>('/api/media', { method: 'POST', body })
+  },
+
+  previewContent: (front: string, back: string, contentFormat: ContentFormat, signal?: AbortSignal) =>
+    request<ContentPreview>('/api/content/preview', { method: 'POST', body: JSON.stringify({ front, back, contentFormat }), signal }),
 
   deleteCard: (id: number) => request<boolean>(`/api/cards/${id}`, { method: 'DELETE' }),
 
@@ -75,26 +88,26 @@ export const api = {
       body: JSON.stringify({ scheme, level }),
     }),
 
-  getFsrsStatus: () => request<FsrsStatus>('/api/fsrs/params'),
+  getFsrsStatus: (deckId: number) => request<FsrsStatus>(`/api/decks/${deckId}/fsrs/params`),
 
-  setFsrsParams: (w?: number[]) =>
-    request<FsrsStatus>('/api/fsrs/params', { method: 'POST', body: JSON.stringify({ w }) }),
+  setFsrsParams: (deckId: number, w?: number[]) =>
+    request<FsrsStatus>(`/api/decks/${deckId}/fsrs/params`, { method: 'POST', body: JSON.stringify({ w }) }),
 
-  optimizeFsrs: (force = false, timeoutMs?: number) =>
-    request<{ started: boolean; reason?: string; job: OptimizeJob }>('/api/fsrs/optimize', {
+  optimizeFsrs: (deckId: number, force = false, timeoutMs?: number) =>
+    request<{ started: boolean; reason?: string; job: OptimizeJob }>(`/api/decks/${deckId}/fsrs/optimize`, {
       method: 'POST',
       body: JSON.stringify({ force, timeoutMs }),
     }),
 
-  optimizeFsrsStatus: () => request<OptimizeJob>('/api/fsrs/optimize'),
+  optimizeFsrsStatus: (deckId: number) => request<OptimizeJob>(`/api/decks/${deckId}/fsrs/optimize`),
 
-  rebuildFsrs: (dryRun = false) =>
-    request<{ started: boolean; reason?: string; job: RebuildJob }>('/api/fsrs/rebuild', {
+  rebuildFsrs: (deckId: number, dryRun = false) =>
+    request<{ started: boolean; reason?: string; job: RebuildJob }>(`/api/decks/${deckId}/fsrs/rebuild`, {
       method: 'POST',
       body: JSON.stringify({ dryRun }),
     }),
 
-  rebuildFsrsStatus: () => request<RebuildJob>('/api/fsrs/rebuild'),
+  rebuildFsrsStatus: (deckId: number) => request<RebuildJob>(`/api/decks/${deckId}/fsrs/rebuild`),
 
   listSynonymGroups: (query: {
     page?: number
@@ -113,8 +126,8 @@ export const api = {
     return request<SynonymPage>(`/api/synonyms/groups${qs ? `?${qs}` : ''}`)
   },
 
-  getSettings: () => request<DailyLimits>('/api/settings'),
+  getSettings: (deckId: number) => request<DailyLimits>(`/api/decks/${deckId}/settings`),
 
-  saveSettings: (limits: Partial<DailyLimits>) =>
-    request<DailyLimits>('/api/settings', { method: 'POST', body: JSON.stringify(limits) }),
+  saveSettings: (deckId: number, limits: Partial<DailyLimits>) =>
+    request<DailyLimits>(`/api/decks/${deckId}/settings`, { method: 'POST', body: JSON.stringify(limits) }),
 }

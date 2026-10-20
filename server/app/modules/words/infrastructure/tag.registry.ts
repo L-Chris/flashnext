@@ -6,6 +6,7 @@ export interface TagLevel {
 
 export interface TagScheme {
   scheme: string
+  language?: 'en' | 'ja'
   name: string
   levels: TagLevel[]
 }
@@ -38,6 +39,19 @@ export const TAG_SCHEMES: TagScheme[] = [
     levels: [
       { level: 1, label: '雅思核心', description: '雅思核心必备词汇' },
     ],
+  },
+  {
+    scheme: 'toefl',
+    name: 'TOEFL',
+    levels: [
+      { level: 1, label: '托福词汇', description: '4,264 词 · 社区整理' },
+    ],
+  },
+  {
+    scheme: 'jlpt',
+    language: 'ja',
+    name: '日语 JLPT',
+    levels: [{ level: 5, label: 'N5', description: '社区参考分级 · 仅为已核验词条建卡' }],
   },
 ]
 

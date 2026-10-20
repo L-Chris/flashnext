@@ -1,3 +1,5 @@
+import { HttpError } from 'routing-controllers'
+import { wordCardBack } from 'app/shared/word-card'
 import { Service } from 'typedi'
 import { WordRepository } from '../infrastructure/word.repository'
 import { DeckRepository } from 'app/modules/decks/infrastructure/deck.repository'
@@ -18,6 +20,7 @@ export class WordService {
       TAG_SCHEMES.map(async meta => ({
         scheme: meta.scheme,
         name: meta.name,
+        language: meta.language || 'en',
         levels: meta.levels,
         taggedCount: await this.wordRepository.countTagged(meta.scheme),
       })),
@@ -27,7 +30,7 @@ export class WordService {
 
   async getCoverage(scheme: string) {
     const meta = TAG_SCHEMES.find(s => s.scheme === scheme)
-    if (!meta) throw new Error(`unknown scheme: ${scheme}`)
+    if (!meta) throw new HttpError(400, `unknown scheme: ${scheme}`)
 
     const rows = await Promise.all(
       meta.levels.map(async level => {
@@ -37,7 +40,9 @@ export class WordService {
           this.wordRepository.countTaggedStudied(scheme, level.level),
           this.wordRepository.countTaggedDue(scheme, level.level),
         ])
+        const readyCount = await this.wordRepository.countReady(scheme, level.level)
         return {
+          readyCount,
           level: level.level,
           label: level.label,
           description: level.description,
@@ -57,6 +62,7 @@ export class WordService {
       this.wordRepository.countUntaggedDue(scheme),
     ])
     rows.push({
+      readyCount: 0,
       level: null,
       label: '未收录',
       description: `不在${meta.name}分级内`,
@@ -71,7 +77,10 @@ export class WordService {
   }
 
   async ensureCards(scheme?: string, level?: number) {
-    const deck = await this.ensureSingleDeck()
+    const meta = scheme ? TAG_SCHEMES.find(s => s.scheme === scheme) : undefined
+    if (scheme && (!meta || (level !== undefined && !meta.levels.some(l => l.level === level)))) throw new HttpError(400, 'unknown word list or level')
+    const language = meta?.language || 'en'
+    const deck = await this.ensureSingleDeck(language)
 
     const words = scheme
       ? await this.wordRepository.findTaggedWithoutCard(scheme, level)
@@ -86,7 +95,7 @@ export class WordService {
             deckId: deck.id,
             wordId: w.id,
             front: w.headword,
-            back: cardBack(w.phonetic, w.translation),
+            back: wordCardBack(w),
           })),
         })
       }
@@ -97,10 +106,11 @@ export class WordService {
     return { deck, created: words.length, synced }
   }
 
-  async ensureSingleDeck() {
-    const existing = await prisma.deck.findFirst({ where: { name: SINGLE_DECK_NAME } })
+  async ensureSingleDeck(language = 'en') {
+    const name = language === 'ja' ? '日语单词' : SINGLE_DECK_NAME
+    const existing = await prisma.deck.findFirst({ where: { name, language } })
     if (existing) return existing
-    return this.deckRepository.create(SINGLE_DECK_NAME, '全部单词卡片')
+    return this.deckRepository.create(name, language === 'ja' ? '日语词汇 · 假名、释义与例句' : '全部单词卡片', language)
   }
 
   private async syncDeckCards(deckId: number) {
@@ -109,7 +119,7 @@ export class WordService {
       include: { word: true },
     })
 
-    const stale = cards.filter(c => c.word && c.front === c.word.headword &&
+    const stale = cards.filter(c => c.word && c.word.language === 'en' && c.front === c.word.headword &&
       c.word.phoneticLegacy !== null &&
       c.back === cardBack(c.word.phoneticLegacy, c.word.translation) &&
       c.back !== cardBack(c.word.phonetic, c.word.translation))

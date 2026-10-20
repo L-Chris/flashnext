@@ -31,6 +31,7 @@ const normalize = raw => {
 
 const main = async () => {
   const words = await prisma.word.findMany({
+    where: { language: 'en' },
     select: { id: true, headword: true },
     orderBy: { id: 'asc' },
   })
@@ -62,7 +63,7 @@ const main = async () => {
 
   for (const r of rename) {
     await prisma.$transaction([
-      prisma.word.update({ where: { id: r.id }, data: { headword: r.to } }),
+      prisma.word.update({ where: { id: r.id }, data: { headword: r.to, lexicalKey: `en:word:${r.to}` } }),
       prisma.card.updateMany({
         where: { wordId: r.id, front: r.from },
         data: { front: r.to },

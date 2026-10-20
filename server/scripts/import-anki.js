@@ -163,7 +163,7 @@ const main = async () => {
   console.log(`reviews: ${totalReviews}, words with history: ${logsByWord.size}`)
 
   console.log('matching against word library...')
-  const allWords = await prisma.word.findMany({})
+  const allWords = await prisma.word.findMany({ where: { language: 'en' } })
   const existingByKey = new Map(allWords.map(w => [w.headword.toLowerCase(), w]))
   const matched = new Set([...wordInfos.keys()].filter(k => existingByKey.has(k)))
   const unmatchedAll = [...wordInfos.keys()].filter(k => !matched.has(k))
@@ -195,6 +195,7 @@ const main = async () => {
     const word = await prisma.word.create({
       data: {
         headword: info.headword,
+        language: 'en', lexicalKey: `en:word:${info.headword}`,
         rank: null,
         pos,
         phonetic: info.phonetic || '',

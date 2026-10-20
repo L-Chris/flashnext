@@ -198,9 +198,9 @@ const main = async () => {
     await prisma.$transaction(
       chunk.map(row =>
         prisma.word.upsert({
-          where: { headword: row.headword },
+          where: { lexicalKey: `en:word:${row.headword}` },
           update: { headword: row.headword, rank: row.rank, pos: row.pos, translation: row.translation }, // Never overwrite an approved pronunciation.
-          create: row,
+          create: { ...row, language: 'en', lexicalKey: `en:word:${row.headword}` },
         }),
       ),
     )
@@ -218,7 +218,7 @@ const main = async () => {
     5: 'L5 学术',
   }
   const wordsWithRank = await prisma.word.findMany({
-    where: { rank: { not: null } },
+    where: { language: 'en', rank: { not: null } },
     select: { id: true, rank: true, tags: { where: { scheme: 'coca' }, select: { id: true } } },
   })
   const tagRows = wordsWithRank

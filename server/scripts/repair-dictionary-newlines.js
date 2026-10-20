@@ -30,7 +30,7 @@ function planRepair(words) {
 async function repair(prisma, { apply = false } = {}) {
   return prisma.$transaction(async tx => {
     const words = await tx.word.findMany({
-      where: { OR: ['\\n', '\\r', '\r'].map(value => ({ translation: { contains: value } })) },
+      where: { language: 'en', OR: ['\\n', '\\r', '\r'].map(value => ({ translation: { contains: value } })) },
       include: { cards: true, knowledgeEntity: true },
     })
     const plan = planRepair(words)

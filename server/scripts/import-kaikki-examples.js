@@ -43,7 +43,7 @@ const main = async () => {
   loadEnv()
   const prisma = new PrismaClient()
   const words = await prisma.word.findMany({
-    where: { cards: { some: {} } },
+    where: { language: 'en', cards: { some: {} }, senses: { none: { source: { not: 'legacy' } } } },
     select: { id: true, headword: true },
   })
   const idByHeadword = new Map(words.map(w => [w.headword, w.id]))
@@ -108,7 +108,7 @@ const main = async () => {
     const chunk = entries.slice(i, i + 500).flat()
     const ids = [...new Set(chunk.map(c => c.wordId))]
     await prisma.$transaction([
-      prisma.wordSense.deleteMany({ where: { wordId: { in: ids } } }),
+      prisma.wordSense.deleteMany({ where: { wordId: { in: ids }, source: 'legacy' } }),
       prisma.wordSense.createMany({ data: chunk }),
     ])
     written += chunk.length

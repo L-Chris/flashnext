@@ -1,3 +1,6 @@
+import { CardEditor } from './card-editor'
+import { CardPresenter } from './card-presenter'
+import { SettingsService } from 'app/modules/settings/application/settings.service'
 import { Service } from 'typedi'
 import { CardRepository } from '../infrastructure/card.repository'
 import { DueService } from './due.service'
@@ -76,10 +79,13 @@ export class CardService {
     private dueService: DueService,
     private optimizerService: OptimizerService,
     private fsrsRepository: FsrsRepository,
+    private settingsService: SettingsService,
+    private cardEditor: CardEditor,
+    private presenter: CardPresenter,
   ) {}
 
-  listCards(deckId: number) {
-    return this.cardRepository.listByDeck(deckId)
+  async listCards(deckId: number) {
+    return this.presenter.cards(await this.cardRepository.listByDeck(deckId))
   }
 
   /**
@@ -89,24 +95,26 @@ export class CardService {
   async listCardsPaged(deckId: number, query: CardPageQuery) {
     const { sort, dir, page, pageSize, q } = query
     const needle = q.toLowerCase()
-    const [rows, w] = await Promise.all([
+    const [rows, w, clock] = await Promise.all([
       this.cardRepository.listLightByDeck(deckId),
-      this.optimizerService.getCurrentW(),
+      this.optimizerService.getCurrentW(deckId),
+      this.settingsService.get(deckId),
     ])
     const { forgetting_curve } = await import('ts-fsrs')
     const now = new Date()
-    const todayIdx = dayIndexOf(now)
+    const todayIdx = dayIndexOf(now, clock)
 
     const matched = needle
       ? rows.filter(
           r =>
             r.front.toLowerCase().includes(needle) ||
-            (r.word?.translation || '').toLowerCase().includes(needle),
+            (r.word?.translation || '').toLowerCase().includes(needle) ||
+            [r.word?.reading, r.word?.readings, r.word?.spellings, r.word?.romaji].some(value => value?.toLowerCase().includes(needle)),
         )
       : rows
 
     const enriched: CardPageRow[] = matched.map(r => {
-      const elapsed = r.lastReview ? Math.max(0, elapsedDaysBetween(r.lastReview, now)) : 0
+      const elapsed = r.lastReview ? Math.max(0, elapsedDaysBetween(r.lastReview, now, clock)) : 0
       const retrievability =
         r.stability > 0 && r.lastReview ? forgetting_curve(w, elapsed, r.stability) : 1
       return {
@@ -123,7 +131,7 @@ export class CardService {
         createdAt: r.createdAt,
         rank: r.word?.rank ?? null,
         retrievability,
-        overdueDays: todayIdx - dayIndexOf(r.due),
+        overdueDays: todayIdx - dayIndexOf(r.due, clock),
         lapseRate: r.reps > 0 ? r.lapses / r.reps : 0,
       }
     })
@@ -172,7 +180,7 @@ export class CardService {
       .sort((a, b) => (order.get(a!.id) ?? 0) - (order.get(b!.id) ?? 0))
 
     void order
-    return { cards, total, page: safePage, pageSize, pages, sort, dir, q }
+    return { cards: await this.presenter.cards(cards, clock), total, page: safePage, pageSize, pages, sort, dir, q }
   }
 
   /** 复习队列（含日限额与 Anki 式排序），供 /cards/due 使用 */
@@ -180,9 +188,9 @@ export class CardService {
     return this.dueService.queue(deckId)
   }
 
-  createCard(deckId: number, front: string, back: string) {
-    return this.cardRepository.create(deckId, front, back)
-  }
+  createCard(deckId: number, body: unknown) { return this.cardEditor.create(deckId, body) }
+  getCard(id: number) { return this.cardEditor.get(id) }
+  editCard(id: number, body: unknown) { return this.cardEditor.update(id, body) }
 
   async deleteCard(id: number) {
     await this.cardRepository.remove(id)
@@ -199,7 +207,8 @@ export class CardService {
     // 快照字段用于精确撤销。
     await this.fsrsRepository.createLog(rating, durationMs, card)
 
-    const w = await this.optimizerService.getCurrentW()
+    const w = await this.optimizerService.getCurrentW(card.deckId)
+    const clock = await this.settingsService.get(card.deckId)
     const next = await scheduleReview(
       {
         id: card.id,
@@ -216,6 +225,7 @@ export class CardService {
       rating,
       w,
       now,
+      clock,
     )
 
     const updated = await this.cardRepository.updateScheduling(id, {
@@ -229,7 +239,7 @@ export class CardService {
       due: next.due,
       lastReview: now,
     })
-    return updated
+    return (await this.presenter.cards(await this.cardRepository.listByIds([updated.id]), clock))[0]
   }
 
   /** 撤销某张卡最近一次评分（Anki 的 undo）：还原快照并删掉该条复习日志 */
@@ -251,6 +261,6 @@ export class CardService {
       lastReview: card.lastReview,
     })
     await this.fsrsRepository.deleteLog(log.id)
-    return restored
+    return (await this.presenter.cards(await this.cardRepository.listByIds([restored.id])))[0]
   }
 }

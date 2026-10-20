@@ -1,0 +1,3432 @@
+{
+  "ada066edfd": {
+    "headword": "会う",
+    "reading": "あう",
+    "jmdictId": 1198180,
+    "translation": "见面；遇见",
+    "expectedEnglishPattern": "meet",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1198180",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "ebec658463": {
+    "headword": "青",
+    "reading": "あお",
+    "jmdictId": 1381380,
+    "translation": "蓝色",
+    "expectedEnglishPattern": "blue",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1381380",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "51a671ec17": {
+    "headword": "青い",
+    "reading": "あおい",
+    "jmdictId": 1381390,
+    "translation": "蓝色的",
+    "expectedEnglishPattern": "blue",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1381390",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "2dacb910b2": {
+    "headword": "赤",
+    "reading": "あか",
+    "jmdictId": 2013900,
+    "translation": "红色",
+    "expectedEnglishPattern": "red",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=2013900",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "44ba38cf8b": {
+    "headword": "赤い",
+    "reading": "あかい",
+    "jmdictId": 1383240,
+    "translation": "红色的",
+    "expectedEnglishPattern": "red",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1383240",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "91987ae840": {
+    "headword": "明るい",
+    "reading": "あかるい",
+    "jmdictId": 1532350,
+    "translation": "明亮的",
+    "expectedEnglishPattern": "bright",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1532350",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "8dc7006bda": {
+    "headword": "秋",
+    "reading": "あき",
+    "jmdictId": 1332650,
+    "translation": "秋天",
+    "expectedEnglishPattern": "autumn",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1332650",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "fc3bc1e6f1": {
+    "headword": "開く",
+    "reading": "あく",
+    "jmdictId": 1586270,
+    "translation": "开；打开（自动词）",
+    "expectedEnglishPattern": "open",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1586270",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "321963ed35": {
+    "headword": "開ける",
+    "reading": "あける",
+    "jmdictId": 1202450,
+    "translation": "打开（他动词）",
+    "expectedEnglishPattern": "open",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1202450",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "9661cbac61": {
+    "headword": "上げる",
+    "reading": "あげる",
+    "jmdictId": 1352320,
+    "translation": "举起；提高；给",
+    "expectedEnglishPattern": "raise|give",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1352320",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "d46ae79a26": {
+    "headword": "朝",
+    "reading": "あさ",
+    "jmdictId": 1428280,
+    "translation": "早晨",
+    "expectedEnglishPattern": "morning",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1428280",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "98bc6f72ae": {
+    "headword": "朝ごはん",
+    "reading": "あさごはん",
+    "jmdictId": 1586330,
+    "translation": "早饭",
+    "expectedEnglishPattern": "breakfast",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1586330",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "b3b4041c52": {
+    "headword": "あさって",
+    "reading": "あさって",
+    "jmdictId": 1584640,
+    "translation": "后天",
+    "expectedEnglishPattern": "day after tomorrow",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1584640",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "27df3d5802": {
+    "headword": "足",
+    "reading": "あし",
+    "jmdictId": 1404630,
+    "translation": "脚；腿",
+    "expectedEnglishPattern": "foot|leg",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1404630",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "115ec83476": {
+    "headword": "明日",
+    "reading": "あした",
+    "jmdictId": 1584660,
+    "translation": "明天",
+    "expectedEnglishPattern": "tomorrow",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1584660",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "bee501faf0": {
+    "headword": "あそこ",
+    "reading": "あそこ",
+    "jmdictId": 1000320,
+    "translation": "那里",
+    "expectedEnglishPattern": "there",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1000320",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "2d55571300": {
+    "headword": "遊ぶ",
+    "reading": "あそぶ",
+    "jmdictId": 1542160,
+    "translation": "玩；游玩",
+    "expectedEnglishPattern": "play",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1542160",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "f665c2128a": {
+    "headword": "暖かい",
+    "reading": "あたたかい",
+    "jmdictId": 1586420,
+    "translation": "暖和的",
+    "expectedEnglishPattern": "warm",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1586420",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "b62cb9ce4c": {
+    "headword": "頭",
+    "reading": "あたま",
+    "jmdictId": 1582310,
+    "translation": "头；脑袋",
+    "expectedEnglishPattern": "head",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1582310",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "8ae27e3b51": {
+    "headword": "新しい",
+    "reading": "あたらしい",
+    "jmdictId": 1361490,
+    "translation": "新的",
+    "expectedEnglishPattern": "new",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1361490",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "34e6f7d220": {
+    "headword": "あちら",
+    "reading": "あちら",
+    "jmdictId": 1483185,
+    "translation": "那边；那位（礼貌说法）",
+    "expectedEnglishPattern": "there|that way",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1483185",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "9949d87445": {
+    "headword": "厚い",
+    "reading": "あつい",
+    "jmdictId": 1275320,
+    "translation": "厚的",
+    "expectedEnglishPattern": "thick",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1275320",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "7b4aecdf7b": {
+    "headword": "暑い",
+    "reading": "あつい",
+    "jmdictId": 1343460,
+    "translation": "（天气）热的",
+    "expectedEnglishPattern": "hot",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1343460",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "a379d413fd": {
+    "headword": "熱い",
+    "reading": "あつい",
+    "jmdictId": 1467720,
+    "translation": "（物体、液体）热的；烫的",
+    "expectedEnglishPattern": "hot",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1467720",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "60dd63379e": {
+    "headword": "あっち",
+    "reading": "あっち",
+    "jmdictId": 1483185,
+    "translation": "那边（口语）",
+    "expectedEnglishPattern": "there|that way",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1483185",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "4f134c9b38": {
+    "headword": "後",
+    "reading": "あと",
+    "jmdictId": 1269320,
+    "translation": "之后；后面",
+    "expectedEnglishPattern": "after|behind",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1269320",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "afdf384f68": {
+    "headword": "あなた",
+    "reading": "あなた",
+    "jmdictId": 1223615,
+    "translation": "你",
+    "expectedEnglishPattern": "you",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1223615",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "4aab699864": {
+    "headword": "兄",
+    "reading": "あに",
+    "jmdictId": 1249900,
+    "translation": "哥哥（通常用于说自己的哥哥）",
+    "expectedEnglishPattern": "elder brother|older brother",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1249900",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "8bfeb208b4": {
+    "headword": "姉",
+    "reading": "あね",
+    "jmdictId": 1307630,
+    "translation": "姐姐（通常用于说自己的姐姐）",
+    "expectedEnglishPattern": "elder sister|older sister",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1307630",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "ac4706068b": {
+    "headword": "あの",
+    "reading": "あの",
+    "jmdictId": 1000420,
+    "translation": "那个（修饰名词）",
+    "expectedEnglishPattern": "that",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1000420",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "0cf05b3a0d": {
+    "headword": "アパート",
+    "reading": "アパート",
+    "jmdictId": 1017760,
+    "translation": "公寓；公寓楼",
+    "expectedEnglishPattern": "apartment",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1017760",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "a5aceb6426": {
+    "headword": "あびる",
+    "reading": "あびる",
+    "jmdictId": 1547450,
+    "translation": "淋浴；沐浴",
+    "expectedEnglishPattern": "shower|bathe",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1547450",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "0509cb3b27": {
+    "headword": "危ない",
+    "reading": "あぶない",
+    "jmdictId": 1218380,
+    "translation": "危险的",
+    "expectedEnglishPattern": "dangerous",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1218380",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "4afffe5811": {
+    "headword": "甘い",
+    "reading": "あまい",
+    "jmdictId": 1213400,
+    "translation": "甜的",
+    "expectedEnglishPattern": "sweet",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1213400",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "eac90e8e98": {
+    "headword": "あまり",
+    "reading": "あまり",
+    "jmdictId": 1584930,
+    "translation": "（常与否定连用）不太……",
+    "expectedEnglishPattern": "not very|not much",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1584930",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "5d72771a3c": {
+    "headword": "飴",
+    "reading": "あめ",
+    "jmdictId": 1153520,
+    "translation": "糖果",
+    "expectedEnglishPattern": "candy",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1153520",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "277a58c9df": {
+    "headword": "雨",
+    "reading": "あめ",
+    "jmdictId": 1171900,
+    "translation": "雨",
+    "expectedEnglishPattern": "rain",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1171900",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "f8fa96946f": {
+    "headword": "洗う",
+    "reading": "あらう",
+    "jmdictId": 1390930,
+    "translation": "洗；清洗",
+    "expectedEnglishPattern": "wash",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1390930",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "93461820fe": {
+    "headword": "ありがとう",
+    "reading": "ありがとう",
+    "jmdictId": 1586820,
+    "translation": "谢谢",
+    "expectedEnglishPattern": "thank",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1586820",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "ac08788418": {
+    "headword": "ある",
+    "reading": "ある",
+    "jmdictId": 1296400,
+    "translation": "有；在（用于无生命的事物）",
+    "expectedEnglishPattern": "exist|be|have",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1296400",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "55f3080ce4": {
+    "headword": "歩く",
+    "reading": "あるく",
+    "jmdictId": 1514320,
+    "translation": "走；步行",
+    "expectedEnglishPattern": "walk",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1514320",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "d727a76b22": {
+    "headword": "あれ",
+    "reading": "あれ",
+    "jmdictId": 1000580,
+    "translation": "那个（远离双方的事物）",
+    "expectedEnglishPattern": "that",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1000580",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "e37a087c0f": {
+    "headword": "いい",
+    "reading": "いい",
+    "jmdictId": 2820690,
+    "translation": "好的",
+    "expectedEnglishPattern": "good",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=2820690",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "6d4596ae46": {
+    "headword": "いいえ",
+    "reading": "いいえ",
+    "jmdictId": 1583250,
+    "translation": "不；不是",
+    "expectedEnglishPattern": "no",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1583250",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "ae0cc00f94": {
+    "headword": "言う",
+    "reading": "いう",
+    "jmdictId": 1587040,
+    "translation": "说",
+    "expectedEnglishPattern": "say",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1587040",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "9f074820b1": {
+    "headword": "家",
+    "reading": "いえ",
+    "jmdictId": 1191730,
+    "translation": "家；房屋",
+    "expectedEnglishPattern": "house|home",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1191730",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "a3f296ad9a": {
+    "headword": "いかが",
+    "reading": "いかが",
+    "jmdictId": 2845606,
+    "translation": "如何；怎么样（礼貌说法）",
+    "expectedEnglishPattern": "how",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=2845606",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "66e4692df7": {
+    "headword": "行く",
+    "reading": "いく",
+    "jmdictId": 1578850,
+    "translation": "去；前往",
+    "expectedEnglishPattern": "go",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1578850",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "026ae57b50": {
+    "headword": "いくつ",
+    "reading": "いくつ",
+    "jmdictId": 1219960,
+    "translation": "几个；几岁",
+    "expectedEnglishPattern": "how many|how old",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1219960",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "4fc98c6938": {
+    "headword": "いくら",
+    "reading": "いくら",
+    "jmdictId": 1219980,
+    "translation": "多少钱",
+    "expectedEnglishPattern": "how much",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1219980",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "43c874a6c8": {
+    "headword": "池",
+    "reading": "いけ",
+    "jmdictId": 1421700,
+    "translation": "池塘",
+    "expectedEnglishPattern": "pond",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1421700",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "ca76162587": {
+    "headword": "医者",
+    "reading": "いしゃ",
+    "jmdictId": 1159980,
+    "translation": "医生",
+    "expectedEnglishPattern": "doctor",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1159980",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "d305fa14a8": {
+    "headword": "いす",
+    "reading": "いす",
+    "jmdictId": 1157070,
+    "translation": "椅子",
+    "expectedEnglishPattern": "chair",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1157070",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "cd1bcc2b1b": {
+    "headword": "忙しい",
+    "reading": "いそがしい",
+    "jmdictId": 1519290,
+    "translation": "忙的；忙碌的",
+    "expectedEnglishPattern": "busy",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1519290",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "4dae367794": {
+    "headword": "痛い",
+    "reading": "いたい",
+    "jmdictId": 1432680,
+    "translation": "疼的；痛的",
+    "expectedEnglishPattern": "painful|hurt",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1432680",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "eac7a22620": {
+    "headword": "いただきます",
+    "reading": "いただきます",
+    "jmdictId": 1410800,
+    "translation": "我开动了（用餐前的致谢用语）",
+    "expectedEnglishPattern": "meal|eat",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1410800",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "9d8f862791": {
+    "headword": "一",
+    "reading": "いち",
+    "jmdictId": 1160790,
+    "translation": "一",
+    "expectedEnglishPattern": "one",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1160790",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "1cfccd0cdd": {
+    "headword": "一日",
+    "reading": "いちにち",
+    "jmdictId": 1576260,
+    "translation": "一天；一整天（いちにち）",
+    "expectedEnglishPattern": "one day|whole day",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1576260",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "cb96f363df": {
+    "headword": "いちばん",
+    "reading": "いちばん",
+    "jmdictId": 1165970,
+    "translation": "第一；最……",
+    "expectedEnglishPattern": "first|best|most",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1165970",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "fac6fc0838": {
+    "headword": "いつ",
+    "reading": "いつ",
+    "jmdictId": 1188760,
+    "translation": "什么时候",
+    "expectedEnglishPattern": "when",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1188760",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "2a7c4baf86": {
+    "headword": "五日",
+    "reading": "いつか",
+    "jmdictId": 1268570,
+    "translation": "五号；五天",
+    "expectedEnglishPattern": "fifth|five days",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1268570",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "2dc7289c82": {
+    "headword": "一緒",
+    "reading": "いっしょ",
+    "jmdictId": 1163400,
+    "translation": "一起",
+    "expectedEnglishPattern": "together",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1163400",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "9ac35c3990": {
+    "headword": "五つ",
+    "reading": "いつつ",
+    "jmdictId": 1268070,
+    "translation": "五个",
+    "expectedEnglishPattern": "five",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1268070",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "dea2a1df8b": {
+    "headword": "いつも",
+    "reading": "いつも",
+    "jmdictId": 1188890,
+    "translation": "总是；平时",
+    "expectedEnglishPattern": "always|usual",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1188890",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "0df89f5010": {
+    "headword": "犬",
+    "reading": "いぬ",
+    "jmdictId": 1258330,
+    "translation": "狗",
+    "expectedEnglishPattern": "dog",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1258330",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "ce75c75644": {
+    "headword": "今",
+    "reading": "いま",
+    "jmdictId": 1288850,
+    "translation": "现在",
+    "expectedEnglishPattern": "now",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1288850",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "cb29ccdd2a": {
+    "headword": "意味",
+    "reading": "いみ",
+    "jmdictId": 1156800,
+    "translation": "意思；含义",
+    "expectedEnglishPattern": "meaning",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1156800",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "12047d019b": {
+    "headword": "妹",
+    "reading": "いもうと",
+    "jmdictId": 1524590,
+    "translation": "妹妹",
+    "expectedEnglishPattern": "younger sister",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1524590",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "eda751e069": {
+    "headword": "嫌",
+    "reading": "いや",
+    "jmdictId": 1587610,
+    "translation": "讨厌的；不愿意的",
+    "expectedEnglishPattern": "disagreeable|unpleasant|dislike",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1587610",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "1ff0529d03": {
+    "headword": "入口",
+    "reading": "いりぐち",
+    "jmdictId": 1582820,
+    "translation": "入口",
+    "expectedEnglishPattern": "entrance",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1582820",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "9438889173": {
+    "headword": "いる",
+    "reading": "いる",
+    "jmdictId": 1577980,
+    "translation": "有；在（用于人或动物）",
+    "expectedEnglishPattern": "exist|be|have",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1577980",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "7a84208708": {
+    "headword": "要る",
+    "reading": "いる",
+    "jmdictId": 1546640,
+    "translation": "需要",
+    "expectedEnglishPattern": "need",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1546640",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "6d824d5110": {
+    "headword": "入れる",
+    "reading": "いれる",
+    "jmdictId": 1465610,
+    "translation": "放入",
+    "expectedEnglishPattern": "put in|insert",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1465610",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "523266ea6f": {
+    "headword": "色",
+    "reading": "いろ",
+    "jmdictId": 1357600,
+    "translation": "颜色",
+    "expectedEnglishPattern": "colo",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1357600",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "f74dd1ee9a": {
+    "headword": "いろいろ",
+    "reading": "いろいろ",
+    "jmdictId": 1587850,
+    "translation": "各种各样",
+    "expectedEnglishPattern": "various",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1587850",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "08a3ed212d": {
+    "headword": "上",
+    "reading": "うえ",
+    "jmdictId": 1352130,
+    "translation": "上面",
+    "expectedEnglishPattern": "above|up|top",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1352130",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "93bdc81dd9": {
+    "headword": "後ろ",
+    "reading": "うしろ",
+    "jmdictId": 1269410,
+    "translation": "后面",
+    "expectedEnglishPattern": "behind|back",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1269410",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "d2b2316e45": {
+    "headword": "薄い",
+    "reading": "うすい",
+    "jmdictId": 1475480,
+    "translation": "薄的；淡的",
+    "expectedEnglishPattern": "thin|weak",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1475480",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "036f4180a2": {
+    "headword": "歌",
+    "reading": "うた",
+    "jmdictId": 1193180,
+    "translation": "歌；歌曲",
+    "expectedEnglishPattern": "song",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1193180",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "3464318c23": {
+    "headword": "歌う",
+    "reading": "うたう",
+    "jmdictId": 1588120,
+    "translation": "唱；唱歌",
+    "expectedEnglishPattern": "sing",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1588120",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "63bc7722fa": {
+    "headword": "生まれる",
+    "reading": "うまれる",
+    "jmdictId": 1378690,
+    "translation": "出生",
+    "expectedEnglishPattern": "born",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1378690",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "06ac21dc7d": {
+    "headword": "海",
+    "reading": "うみ",
+    "jmdictId": 1201190,
+    "translation": "海",
+    "expectedEnglishPattern": "sea",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1201190",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "f7e1da43df": {
+    "headword": "売る",
+    "reading": "うる",
+    "jmdictId": 1473950,
+    "translation": "卖",
+    "expectedEnglishPattern": "sell",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1473950",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "7ecfe0d248": {
+    "headword": "煩い",
+    "reading": "うるさい",
+    "jmdictId": 1481920,
+    "translation": "吵闹的；烦人的",
+    "expectedEnglishPattern": "noisy|annoying",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1481920",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "1ef8a05bf3": {
+    "headword": "上着",
+    "reading": "うわぎ",
+    "jmdictId": 1580340,
+    "translation": "外套；上衣",
+    "expectedEnglishPattern": "jacket|outerwear",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1580340",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "5bb390da0b": {
+    "headword": "絵",
+    "reading": "え",
+    "jmdictId": 1202270,
+    "translation": "画；图画",
+    "expectedEnglishPattern": "picture|painting",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1202270",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "92b1621231": {
+    "headword": "映画",
+    "reading": "えいが",
+    "jmdictId": 1173720,
+    "translation": "电影",
+    "expectedEnglishPattern": "movie|film",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1173720",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "8a88cfbcb8": {
+    "headword": "映画館",
+    "reading": "えいがかん",
+    "jmdictId": 1173750,
+    "translation": "电影院",
+    "expectedEnglishPattern": "cinema|movie theater|movie theatre",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1173750",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "16adc7bd03": {
+    "headword": "英語",
+    "reading": "えいご",
+    "jmdictId": 1174420,
+    "translation": "英语",
+    "expectedEnglishPattern": "English",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1174420",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "8ac60a4060": {
+    "headword": "ええ",
+    "reading": "ええ",
+    "jmdictId": 1001140,
+    "translation": "是；对（应答语）",
+    "expectedEnglishPattern": "yes",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1001140",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "d5f359c20b": {
+    "headword": "駅",
+    "reading": "えき",
+    "jmdictId": 1175140,
+    "translation": "车站",
+    "expectedEnglishPattern": "station",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1175140",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "eb1695baf6": {
+    "headword": "エレベーター",
+    "reading": "エレベーター",
+    "jmdictId": 1030630,
+    "translation": "电梯",
+    "expectedEnglishPattern": "elevator|lift",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1030630",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "381da4d060": {
+    "headword": "鉛筆",
+    "reading": "えんぴつ",
+    "jmdictId": 1178590,
+    "translation": "铅笔",
+    "expectedEnglishPattern": "pencil",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1178590",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "7f02ae8fa1": {
+    "headword": "おいしい",
+    "reading": "おいしい",
+    "jmdictId": 1486650,
+    "translation": "好吃的；美味的",
+    "expectedEnglishPattern": "delicious|tasty",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1486650",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "60813fffd1": {
+    "headword": "多い",
+    "reading": "おおい",
+    "jmdictId": 1407460,
+    "translation": "多的",
+    "expectedEnglishPattern": "many|numerous",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1407460",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "8fa5a63fc7": {
+    "headword": "大きい",
+    "reading": "おおきい",
+    "jmdictId": 1588880,
+    "translation": "大的",
+    "expectedEnglishPattern": "big|large",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1588880",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "3a2de0afca": {
+    "headword": "大きな",
+    "reading": "おおきな",
+    "jmdictId": 1412890,
+    "translation": "大的（后接名词）",
+    "expectedEnglishPattern": "big|large",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1412890",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "57ed89b240": {
+    "headword": "大勢",
+    "reading": "おおぜい",
+    "jmdictId": 1414220,
+    "translation": "很多人",
+    "expectedEnglishPattern": "people|crowd",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1414220",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "2007947770": {
+    "headword": "お母さん",
+    "reading": "おかあさん",
+    "jmdictId": 1002650,
+    "translation": "妈妈；母亲（礼貌称呼）",
+    "expectedEnglishPattern": "mother",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1002650",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "669019c625": {
+    "headword": "お菓子",
+    "reading": "おかし",
+    "jmdictId": 1001710,
+    "translation": "点心；糖果",
+    "expectedEnglishPattern": "confection|sweet|candy",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1001710",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "3e015d0a8b": {
+    "headword": "お金",
+    "reading": "おかね",
+    "jmdictId": 1001820,
+    "translation": "钱",
+    "expectedEnglishPattern": "money",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1001820",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "248a353e09": {
+    "headword": "起きる",
+    "reading": "おきる",
+    "jmdictId": 1223640,
+    "translation": "起床；起来",
+    "expectedEnglishPattern": "wake|rise|get up",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1223640",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "96845304fd": {
+    "headword": "置く",
+    "reading": "おく",
+    "jmdictId": 1421850,
+    "translation": "放；放置",
+    "expectedEnglishPattern": "put|place",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1421850",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "6c4661d672": {
+    "headword": "奥さん",
+    "reading": "おくさん",
+    "jmdictId": 1179330,
+    "translation": "夫人；太太（通常称他人的妻子）",
+    "expectedEnglishPattern": "wife",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1179330",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "f843b00173": {
+    "headword": "お酒",
+    "reading": "おさけ",
+    "jmdictId": 1329015,
+    "translation": "酒",
+    "expectedEnglishPattern": "alcohol|sake|wine",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1329015",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "101d46a061": {
+    "headword": "お皿",
+    "reading": "おさら",
+    "jmdictId": 1299685,
+    "translation": "盘子",
+    "expectedEnglishPattern": "plate|dish",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1299685",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "1b89f0f993": {
+    "headword": "お祖父さん",
+    "reading": "おじいさん",
+    "jmdictId": 1002320,
+    "translation": "爷爷；外公；老爷爷",
+    "expectedEnglishPattern": "grandfather|elderly man",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1002320",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "f2fa049fdd": {
+    "headword": "教える",
+    "reading": "おしえる",
+    "jmdictId": 1236900,
+    "translation": "教；告诉",
+    "expectedEnglishPattern": "teach|tell",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1236900",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "ce8facdf69": {
+    "headword": "押す",
+    "reading": "おす",
+    "jmdictId": 1180470,
+    "translation": "推；按",
+    "expectedEnglishPattern": "push|press",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1180470",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "a082687f7a": {
+    "headword": "遅い",
+    "reading": "おそい",
+    "jmdictId": 1421970,
+    "translation": "慢的；晚的",
+    "expectedEnglishPattern": "slow|late",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1421970",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "edca336b1f": {
+    "headword": "お茶",
+    "reading": "おちゃ",
+    "jmdictId": 1002430,
+    "translation": "茶",
+    "expectedEnglishPattern": "tea",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1002430",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "75a36b034c": {
+    "headword": "お手洗い",
+    "reading": "おてあらい",
+    "jmdictId": 1002100,
+    "translation": "洗手间",
+    "expectedEnglishPattern": "toilet|lavatory|bathroom",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1002100",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "89807c7c22": {
+    "headword": "お父さん",
+    "reading": "おとうさん",
+    "jmdictId": 1002590,
+    "translation": "爸爸；父亲（礼貌称呼）",
+    "expectedEnglishPattern": "father",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1002590",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "db32745bbc": {
+    "headword": "弟",
+    "reading": "おとうと",
+    "jmdictId": 1581930,
+    "translation": "弟弟",
+    "expectedEnglishPattern": "younger brother",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1581930",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "2fd7d45c8d": {
+    "headword": "男",
+    "reading": "おとこ",
+    "jmdictId": 1419990,
+    "translation": "男人",
+    "expectedEnglishPattern": "man|male",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1419990",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "6f664d3ded": {
+    "headword": "男の子",
+    "reading": "おとこのこ",
+    "jmdictId": 1420010,
+    "translation": "男孩",
+    "expectedEnglishPattern": "boy",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1420010",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "f0f3826045": {
+    "headword": "一昨日",
+    "reading": "おととい",
+    "jmdictId": 1576050,
+    "translation": "前天",
+    "expectedEnglishPattern": "day before yesterday",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1576050",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "b75778f0ce": {
+    "headword": "一昨年",
+    "reading": "おととし",
+    "jmdictId": 1576060,
+    "translation": "前年",
+    "expectedEnglishPattern": "year before last",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1576060",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "6f5049e2d4": {
+    "headword": "大人",
+    "reading": "おとな",
+    "jmdictId": 1414170,
+    "translation": "成年人；大人",
+    "expectedEnglishPattern": "adult",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1414170",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "3707072a6b": {
+    "headword": "おなか",
+    "reading": "おなか",
+    "jmdictId": 1002610,
+    "translation": "肚子；腹部",
+    "expectedEnglishPattern": "stomach|belly|abdomen",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1002610",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "7c134ec812": {
+    "headword": "同じ",
+    "reading": "おなじ",
+    "jmdictId": 1451750,
+    "translation": "相同的；一样的",
+    "expectedEnglishPattern": "same",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1451750",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "c6f43a8cc3": {
+    "headword": "お兄さん",
+    "reading": "おにいさん",
+    "jmdictId": 1001830,
+    "translation": "哥哥（礼貌称呼）",
+    "expectedEnglishPattern": "elder brother|older brother",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1001830",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "af378a4c86": {
+    "headword": "お姉さん",
+    "reading": "おねえさん",
+    "jmdictId": 1001990,
+    "translation": "姐姐（礼貌称呼）",
+    "expectedEnglishPattern": "elder sister|older sister",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1001990",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "4df6eda2a2": {
+    "headword": "お願いします",
+    "reading": "おねがいします",
+    "jmdictId": 1001720,
+    "translation": "拜托了；麻烦您了",
+    "expectedEnglishPattern": "please",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1001720",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "12d9487797": {
+    "headword": "おばあさん",
+    "reading": "おばあさん",
+    "jmdictId": 1002330,
+    "translation": "奶奶；外婆；老奶奶",
+    "expectedEnglishPattern": "grandmother|elderly woman",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1002330",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "03d7b15720": {
+    "headword": "伯母さん",
+    "reading": "おばさん",
+    "jmdictId": 2261500,
+    "translation": "伯母；姨母；姑母等年长女性亲属",
+    "expectedEnglishPattern": "aunt",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=2261500",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "36bff8d879": {
+    "headword": "おはよう",
+    "reading": "おはよう",
+    "jmdictId": 1612820,
+    "translation": "早上好",
+    "expectedEnglishPattern": "morning",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1612820",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "f347485004": {
+    "headword": "お風呂",
+    "reading": "おふろ",
+    "jmdictId": 2220600,
+    "translation": "洗澡；浴池",
+    "expectedEnglishPattern": "bath",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=2220600",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "7a073616e5": {
+    "headword": "お弁当",
+    "reading": "おべんとう",
+    "jmdictId": 1513065,
+    "translation": "盒饭；便当",
+    "expectedEnglishPattern": "lunch|bento",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1513065",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "dad2d16220": {
+    "headword": "覚える",
+    "reading": "おぼえる",
+    "jmdictId": 1206050,
+    "translation": "记住；学会",
+    "expectedEnglishPattern": "remember|learn",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1206050",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "ae5d1778d1": {
+    "headword": "おまわりさん",
+    "reading": "おまわりさん",
+    "jmdictId": 1002120,
+    "translation": "警察（亲切称呼）",
+    "expectedEnglishPattern": "police",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1002120",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "cdfb776826": {
+    "headword": "重い",
+    "reading": "おもい",
+    "jmdictId": 1335750,
+    "translation": "重的",
+    "expectedEnglishPattern": "heavy",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1335750",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "2568873ebd": {
+    "headword": "おもしろい",
+    "reading": "おもしろい",
+    "jmdictId": 1533580,
+    "translation": "有趣的",
+    "expectedEnglishPattern": "interesting|amusing",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1533580",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "3c5bb8f223": {
+    "headword": "泳ぐ",
+    "reading": "およぐ",
+    "jmdictId": 1174340,
+    "translation": "游泳",
+    "expectedEnglishPattern": "swim",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1174340",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "ae00442122": {
+    "headword": "降りる",
+    "reading": "おりる",
+    "jmdictId": 1589500,
+    "translation": "下来；下车",
+    "expectedEnglishPattern": "descend|get off",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1589500",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "d7960dc78d": {
+    "headword": "終る",
+    "reading": "おわる",
+    "jmdictId": 1589600,
+    "translation": "结束",
+    "expectedEnglishPattern": "end|finish",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1589600",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "cdea017272": {
+    "headword": "音楽",
+    "reading": "おんがく",
+    "jmdictId": 1183720,
+    "translation": "音乐",
+    "expectedEnglishPattern": "music",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1183720",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "980a922ad3": {
+    "headword": "女",
+    "reading": "おんな",
+    "jmdictId": 1344930,
+    "translation": "女人",
+    "expectedEnglishPattern": "woman|female",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1344930",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "e6afab391a": {
+    "headword": "女の子",
+    "reading": "おんなのこ",
+    "jmdictId": 1344970,
+    "translation": "女孩",
+    "expectedEnglishPattern": "girl",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1344970",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "31a803c7f5": {
+    "headword": "外国",
+    "reading": "がいこく",
+    "jmdictId": 1203620,
+    "translation": "外国",
+    "expectedEnglishPattern": "foreign country",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1203620",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "70f1678111": {
+    "headword": "外国人",
+    "reading": "がいこくじん",
+    "jmdictId": 1203650,
+    "translation": "外国人",
+    "expectedEnglishPattern": "foreigner",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1203650",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "2120ff505c": {
+    "headword": "会社",
+    "reading": "かいしゃ",
+    "jmdictId": 1198550,
+    "translation": "公司",
+    "expectedEnglishPattern": "company",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1198550",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "7cb27c411e": {
+    "headword": "階段",
+    "reading": "かいだん",
+    "jmdictId": 1203090,
+    "translation": "楼梯",
+    "expectedEnglishPattern": "stairs|stairway",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1203090",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "a771d4f949": {
+    "headword": "買い物",
+    "reading": "かいもの",
+    "jmdictId": 1589730,
+    "translation": "购物",
+    "expectedEnglishPattern": "shopping",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1589730",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "bdb125e5c6": {
+    "headword": "買う",
+    "reading": "かう",
+    "jmdictId": 1473740,
+    "translation": "买",
+    "expectedEnglishPattern": "buy",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1473740",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "8ea4b03d7f": {
+    "headword": "返す",
+    "reading": "かえす",
+    "jmdictId": 1512130,
+    "translation": "归还（他动词）",
+    "expectedEnglishPattern": "return",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1512130",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "1d22f1d023": {
+    "headword": "帰る",
+    "reading": "かえる",
+    "jmdictId": 1221270,
+    "translation": "回去；回来",
+    "expectedEnglishPattern": "return|go back",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1221270",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "687082e55c": {
+    "headword": "かかる",
+    "reading": "かかる",
+    "jmdictId": 1207590,
+    "translation": "花费（时间或金钱）",
+    "expectedEnglishPattern": "take|cost",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1207590",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "e2d6576c76": {
+    "headword": "かぎ",
+    "reading": "かぎ",
+    "jmdictId": 1260490,
+    "translation": "钥匙",
+    "expectedEnglishPattern": "key",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1260490",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "f7c7f35d9e": {
+    "headword": "書く",
+    "reading": "かく",
+    "jmdictId": 1343950,
+    "translation": "写",
+    "expectedEnglishPattern": "write",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1343950",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "452102ad0a": {
+    "headword": "学生",
+    "reading": "がくせい",
+    "jmdictId": 1206900,
+    "translation": "学生",
+    "expectedEnglishPattern": "student",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1206900",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "0ce2b98d3b": {
+    "headword": "かける",
+    "reading": "かける",
+    "jmdictId": 1207610,
+    "translation": "打（电话）",
+    "expectedEnglishPattern": "call|telephone",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1207610",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "6f54881e59": {
+    "headword": "傘",
+    "reading": "かさ",
+    "jmdictId": 1301940,
+    "translation": "伞",
+    "expectedEnglishPattern": "umbrella",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1301940",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "1122cac409": {
+    "headword": "貸す",
+    "reading": "かす",
+    "jmdictId": 1411160,
+    "translation": "借出；借给",
+    "expectedEnglishPattern": "lend",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1411160",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "c1a28465a2": {
+    "headword": "風",
+    "reading": "かぜ",
+    "jmdictId": 1499720,
+    "translation": "风",
+    "expectedEnglishPattern": "wind",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1499720",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "c9b5da4d10": {
+    "headword": "風邪",
+    "reading": "かぜ",
+    "jmdictId": 1583720,
+    "translation": "感冒",
+    "expectedEnglishPattern": "cold",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1583720",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "1c9db63bdc": {
+    "headword": "家族",
+    "reading": "かぞく",
+    "jmdictId": 1192150,
+    "translation": "家人；家庭",
+    "expectedEnglishPattern": "family",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1192150",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "e34295f3e1": {
+    "headword": "方",
+    "reading": "かた",
+    "jmdictId": 1516925,
+    "translation": "人（礼貌说法）；方法",
+    "expectedEnglishPattern": "person|way",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1516925",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "dd8ac16bd2": {
+    "headword": "学校",
+    "reading": "がっこう",
+    "jmdictId": 1206730,
+    "translation": "学校",
+    "expectedEnglishPattern": "school",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1206730",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "613c41bd1d": {
+    "headword": "カップ",
+    "reading": "カップ",
+    "jmdictId": 1037670,
+    "translation": "杯子",
+    "expectedEnglishPattern": "cup",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1037670",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "66eeeb818b": {
+    "headword": "家庭",
+    "reading": "かてい",
+    "jmdictId": 1192280,
+    "translation": "家庭",
+    "expectedEnglishPattern": "household|family|home",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1192280",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "4092bfd9bb": {
+    "headword": "角",
+    "reading": "かど",
+    "jmdictId": 1206110,
+    "translation": "拐角；角落",
+    "expectedEnglishPattern": "corner",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1206110",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "6e6a06687d": {
+    "headword": "かばん",
+    "reading": "かばん",
+    "jmdictId": 1208910,
+    "translation": "包；书包",
+    "expectedEnglishPattern": "bag",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1208910",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "749f78c9d1": {
+    "headword": "花瓶",
+    "reading": "かびん",
+    "jmdictId": 1194870,
+    "translation": "花瓶",
+    "expectedEnglishPattern": "vase",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1194870",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "cd08f9cdc2": {
+    "headword": "紙",
+    "reading": "かみ",
+    "jmdictId": 1311530,
+    "translation": "纸",
+    "expectedEnglishPattern": "paper",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1311530",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "9d648d38ad": {
+    "headword": "カメラ",
+    "reading": "カメラ",
+    "jmdictId": 1038350,
+    "translation": "照相机",
+    "expectedEnglishPattern": "camera",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1038350",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "0dbf9ef8ca": {
+    "headword": "火曜日",
+    "reading": "かようび",
+    "jmdictId": 1194290,
+    "translation": "星期二",
+    "expectedEnglishPattern": "Tuesday",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1194290",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "d2546ac97b": {
+    "headword": "辛い",
+    "reading": "からい",
+    "jmdictId": 1365850,
+    "translation": "辣的",
+    "expectedEnglishPattern": "spicy|hot",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1365850",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "a556e5edce": {
+    "headword": "体",
+    "reading": "からだ",
+    "jmdictId": 1409140,
+    "translation": "身体",
+    "expectedEnglishPattern": "body",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1409140",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "8cd440a181": {
+    "headword": "借りる",
+    "reading": "かりる",
+    "jmdictId": 1323560,
+    "translation": "借入；借用",
+    "expectedEnglishPattern": "borrow",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1323560",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "a8b9eb425d": {
+    "headword": "軽い",
+    "reading": "かるい",
+    "jmdictId": 1252560,
+    "translation": "轻的",
+    "expectedEnglishPattern": "light",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1252560",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "9decc44f4e": {
+    "headword": "カレー",
+    "reading": "カレー",
+    "jmdictId": 1039140,
+    "translation": "咖喱",
+    "expectedEnglishPattern": "curry",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1039140",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "6382448bd3": {
+    "headword": "カレンダー",
+    "reading": "カレンダー",
+    "jmdictId": 1039220,
+    "translation": "日历",
+    "expectedEnglishPattern": "calendar",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1039220",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "bcf12e002d": {
+    "headword": "川",
+    "reading": "かわ",
+    "jmdictId": 1390020,
+    "translation": "河；河流",
+    "expectedEnglishPattern": "river",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1390020",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "bad3423a93": {
+    "headword": "かわいい",
+    "reading": "かわいい",
+    "jmdictId": 1577200,
+    "translation": "可爱的",
+    "expectedEnglishPattern": "cute",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1577200",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "fdc787af58": {
+    "headword": "漢字",
+    "reading": "かんじ",
+    "jmdictId": 1213170,
+    "translation": "汉字",
+    "expectedEnglishPattern": "Chinese character|kanji",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1213170",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "22836046e2": {
+    "headword": "木",
+    "reading": "き",
+    "jmdictId": 1534520,
+    "translation": "树；木头",
+    "expectedEnglishPattern": "tree|wood",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1534520",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "5d679a1af2": {
+    "headword": "黄色",
+    "reading": "きいろ",
+    "jmdictId": 1576760,
+    "translation": "黄色",
+    "expectedEnglishPattern": "yellow",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1576760",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "0b36c8d6c6": {
+    "headword": "黄色い",
+    "reading": "きいろい",
+    "jmdictId": 1182030,
+    "translation": "黄色的",
+    "expectedEnglishPattern": "yellow",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1182030",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "6030b50276": {
+    "headword": "消える",
+    "reading": "きえる",
+    "jmdictId": 1350040,
+    "translation": "消失；熄灭",
+    "expectedEnglishPattern": "disappear|go out",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1350040",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "dc19a213cd": {
+    "headword": "聞く",
+    "reading": "きく",
+    "jmdictId": 1591110,
+    "translation": "听；问",
+    "expectedEnglishPattern": "hear|listen|ask",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1591110",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "fa320a51ea": {
+    "headword": "北",
+    "reading": "きた",
+    "jmdictId": 1520670,
+    "translation": "北；北方",
+    "expectedEnglishPattern": "north",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1520670",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "4fb1c0d758": {
+    "headword": "ギター",
+    "reading": "ギター",
+    "jmdictId": 1042820,
+    "translation": "吉他",
+    "expectedEnglishPattern": "guitar",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1042820",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "7d1cf1538b": {
+    "headword": "汚い",
+    "reading": "きたない",
+    "jmdictId": 1178940,
+    "translation": "脏的",
+    "expectedEnglishPattern": "dirty",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1178940",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "5620a00afc": {
+    "headword": "喫茶店",
+    "reading": "きっさてん",
+    "jmdictId": 1226440,
+    "translation": "咖啡店",
+    "expectedEnglishPattern": "coffee|cafe|café",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1226440",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "e101e41f54": {
+    "headword": "切手",
+    "reading": "きって",
+    "jmdictId": 1385070,
+    "translation": "邮票",
+    "expectedEnglishPattern": "stamp",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1385070",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "4fee5be397": {
+    "headword": "切符",
+    "reading": "きっぷ",
+    "jmdictId": 1385170,
+    "translation": "票；车票",
+    "expectedEnglishPattern": "ticket",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1385170",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "a94a4be08f": {
+    "headword": "昨日",
+    "reading": "きのう",
+    "jmdictId": 1579260,
+    "translation": "昨天",
+    "expectedEnglishPattern": "yesterday",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1579260",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "8f81565ad7": {
+    "headword": "九",
+    "reading": "きゅう",
+    "jmdictId": 1578150,
+    "translation": "九",
+    "expectedEnglishPattern": "nine",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1578150",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "b4faf372f3": {
+    "headword": "牛肉",
+    "reading": "ぎゅうにく",
+    "jmdictId": 1231580,
+    "translation": "牛肉",
+    "expectedEnglishPattern": "beef",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1231580",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "797ae8d562": {
+    "headword": "牛乳",
+    "reading": "ぎゅうにゅう",
+    "jmdictId": 1231590,
+    "translation": "牛奶",
+    "expectedEnglishPattern": "milk",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1231590",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "0400a204bd": {
+    "headword": "今日",
+    "reading": "きょう",
+    "jmdictId": 1579110,
+    "translation": "今天",
+    "expectedEnglishPattern": "today",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1579110",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "85eb994887": {
+    "headword": "教室",
+    "reading": "きょうしつ",
+    "jmdictId": 1237150,
+    "translation": "教室",
+    "expectedEnglishPattern": "classroom",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1237150",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "976c4f7174": {
+    "headword": "兄弟",
+    "reading": "きょうだい",
+    "jmdictId": 1249960,
+    "translation": "兄弟姐妹",
+    "expectedEnglishPattern": "sibling|brother",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1249960",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "ec4e1dfc87": {
+    "headword": "去年",
+    "reading": "きょねん",
+    "jmdictId": 1231690,
+    "translation": "去年",
+    "expectedEnglishPattern": "last year",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1231690",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "cf23f5fba1": {
+    "headword": "切る",
+    "reading": "きる",
+    "jmdictId": 1384830,
+    "translation": "切；剪",
+    "expectedEnglishPattern": "cut",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1384830",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "45fbcb8670": {
+    "headword": "着る",
+    "reading": "きる",
+    "jmdictId": 1423000,
+    "translation": "穿（上衣等）",
+    "expectedEnglishPattern": "wear|put on",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1423000",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "43cd9825f0": {
+    "headword": "きれい",
+    "reading": "きれい",
+    "jmdictId": 1591900,
+    "translation": "漂亮的；干净的",
+    "expectedEnglishPattern": "pretty|clean|beautiful",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1591900",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "36016e0c51": {
+    "headword": "キロ",
+    "reading": "キロ",
+    "jmdictId": 1042610,
+    "translation": "千克；千米（单位简称）",
+    "expectedEnglishPattern": "kilo",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1042610",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "a59efa3057": {
+    "headword": "銀行",
+    "reading": "ぎんこう",
+    "jmdictId": 1243490,
+    "translation": "银行",
+    "expectedEnglishPattern": "bank",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1243490",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "86f67e2dc3": {
+    "headword": "食べる",
+    "reading": "たべる",
+    "jmdictId": 1358280,
+    "translation": "吃",
+    "expectedEnglishPattern": "eat",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1358280",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "e0bcec9bd9": {
+    "headword": "飲む",
+    "reading": "のむ",
+    "jmdictId": 1169870,
+    "translation": "喝",
+    "expectedEnglishPattern": "drink",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1169870",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "69a792520f": {
+    "headword": "水",
+    "reading": "みず",
+    "jmdictId": 1371260,
+    "translation": "水",
+    "expectedEnglishPattern": "water",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1371260",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "0e8f798dbf": {
+    "headword": "本",
+    "reading": "ほん",
+    "jmdictId": 1522150,
+    "translation": "书",
+    "expectedEnglishPattern": "book",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1522150",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "eb7e675902": {
+    "headword": "読む",
+    "reading": "よむ",
+    "jmdictId": 1456360,
+    "translation": "读；阅读",
+    "expectedEnglishPattern": "read",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1456360",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "85b37b6884": {
+    "headword": "見る",
+    "reading": "みる",
+    "jmdictId": 1259290,
+    "translation": "看",
+    "expectedEnglishPattern": "see|watch",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1259290",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "cbbfc8cad6": {
+    "headword": "猫",
+    "reading": "ねこ",
+    "jmdictId": 1467640,
+    "translation": "猫",
+    "expectedEnglishPattern": "cat",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1467640",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "72c525f37a": {
+    "headword": "友達",
+    "reading": "ともだち",
+    "jmdictId": 1540170,
+    "translation": "朋友",
+    "expectedEnglishPattern": "friend",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1540170",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "814bdc2cec": {
+    "headword": "先生",
+    "reading": "せんせい",
+    "jmdictId": 1387990,
+    "translation": "老师；医生等专业人士的敬称",
+    "expectedEnglishPattern": "teacher|doctor",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1387990",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "d5c2e69813": {
+    "headword": "私",
+    "reading": "わたくし",
+    "jmdictId": 2842390,
+    "translation": "我（わたくし，郑重说法）",
+    "expectedEnglishPattern": "\\bI\\b|myself",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=2842390",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "1763fc412a": {
+    "headword": "上手",
+    "reading": "じょうず",
+    "jmdictId": 1353320,
+    "translation": "擅长的；熟练的",
+    "expectedEnglishPattern": "skillful|skilful|good at",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1353320",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "619dae70e9": {
+    "headword": "下手",
+    "reading": "へた",
+    "jmdictId": 1185200,
+    "translation": "不擅长的；不熟练的",
+    "expectedEnglishPattern": "unskillful|unskilful|poor at",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1185200",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "20cbecd474": {
+    "headword": "好き",
+    "reading": "すき",
+    "jmdictId": 1277450,
+    "translation": "喜欢",
+    "expectedEnglishPattern": "like|fond",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1277450",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "9ee7cd3382": {
+    "headword": "大好き",
+    "reading": "だいすき",
+    "jmdictId": 1413660,
+    "translation": "非常喜欢",
+    "expectedEnglishPattern": "like|fond",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1413660",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "feae64eac4": {
+    "headword": "すみません",
+    "reading": "すみません",
+    "jmdictId": 1295060,
+    "translation": "对不起；不好意思；劳驾",
+    "expectedEnglishPattern": "sorry|excuse",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1295060",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "4a11eb5fb4": {
+    "headword": "ごめんなさい",
+    "reading": "ごめんなさい",
+    "jmdictId": 1270680,
+    "translation": "对不起",
+    "expectedEnglishPattern": "pardon|sorry",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1270680",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "0a65b39cf7": {
+    "headword": "こんにちは",
+    "reading": "こんにちは",
+    "jmdictId": 1289400,
+    "translation": "你好（白天的问候语）",
+    "expectedEnglishPattern": "hello|good day",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1289400",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "6c0551dd8a": {
+    "headword": "こんばんは",
+    "reading": "こんばんは",
+    "jmdictId": 1289480,
+    "translation": "晚上好",
+    "expectedEnglishPattern": "evening",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1289480",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "a2c1e54c17": {
+    "headword": "はじめまして",
+    "reading": "はじめまして",
+    "jmdictId": 1625780,
+    "translation": "初次见面，请多关照",
+    "expectedEnglishPattern": "meet|first time",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1625780",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "0a1f511640": {
+    "headword": "さようなら",
+    "reading": "さようなら",
+    "jmdictId": 1291050,
+    "translation": "再见",
+    "expectedEnglishPattern": "bye",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1291050",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "a9191729e3": {
+    "headword": "ごちそうさま",
+    "reading": "ごちそうさま",
+    "jmdictId": 1270520,
+    "translation": "多谢款待（饭后致谢）",
+    "expectedEnglishPattern": "meal|feast",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1270520",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "a812b1ac7f": {
+    "headword": "名前",
+    "reading": "なまえ",
+    "jmdictId": 1531710,
+    "translation": "名字；姓名",
+    "expectedEnglishPattern": "name",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1531710",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "573bc15b1d": {
+    "headword": "仕事",
+    "reading": "しごと",
+    "jmdictId": 1304970,
+    "translation": "工作",
+    "expectedEnglishPattern": "work|job",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1304970",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "d5c916ca85": {
+    "headword": "時間",
+    "reading": "じかん",
+    "jmdictId": 1315920,
+    "translation": "时间",
+    "expectedEnglishPattern": "time",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1315920",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "3c039918ba": {
+    "headword": "電話",
+    "reading": "でんわ",
+    "jmdictId": 1443840,
+    "translation": "电话",
+    "expectedEnglishPattern": "telephone|phone",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1443840",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "62b5c13164": {
+    "headword": "電車",
+    "reading": "でんしゃ",
+    "jmdictId": 1443530,
+    "translation": "电车；列车",
+    "expectedEnglishPattern": "train",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1443530",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "ebf194a316": {
+    "headword": "自転車",
+    "reading": "じてんしゃ",
+    "jmdictId": 1318290,
+    "translation": "自行车",
+    "expectedEnglishPattern": "bicycle",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1318290",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "d6b85573f3": {
+    "headword": "車",
+    "reading": "くるま",
+    "jmdictId": 1323080,
+    "translation": "车；汽车",
+    "expectedEnglishPattern": "car|vehicle",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1323080",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "6ff51bace3": {
+    "headword": "空",
+    "reading": "そら",
+    "jmdictId": 1245290,
+    "translation": "天空",
+    "expectedEnglishPattern": "sky",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1245290",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "e8a5cbdf0a": {
+    "headword": "山",
+    "reading": "やま",
+    "jmdictId": 1302680,
+    "translation": "山",
+    "expectedEnglishPattern": "mountain",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1302680",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "78c044b951": {
+    "headword": "雪",
+    "reading": "ゆき",
+    "jmdictId": 1386500,
+    "translation": "雪",
+    "expectedEnglishPattern": "snow",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1386500",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "f16244c585": {
+    "headword": "春",
+    "reading": "はる",
+    "jmdictId": 1341000,
+    "translation": "春天",
+    "expectedEnglishPattern": "spring",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1341000",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "641ddbf693": {
+    "headword": "夏",
+    "reading": "なつ",
+    "jmdictId": 1191320,
+    "translation": "夏天",
+    "expectedEnglishPattern": "summer",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1191320",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "eb9acca7ba": {
+    "headword": "冬",
+    "reading": "ふゆ",
+    "jmdictId": 1446070,
+    "translation": "冬天",
+    "expectedEnglishPattern": "winter",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1446070",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "5d7a8d133b": {
+    "headword": "昼",
+    "reading": "ひる",
+    "jmdictId": 1426250,
+    "translation": "白天；中午",
+    "expectedEnglishPattern": "daytime|noon",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1426250",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "1a0aec6793": {
+    "headword": "夜",
+    "reading": "よる",
+    "jmdictId": 1536350,
+    "translation": "夜晚",
+    "expectedEnglishPattern": "night|evening",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1536350",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "039a696225": {
+    "headword": "毎日",
+    "reading": "まいにち",
+    "jmdictId": 1524720,
+    "translation": "每天",
+    "expectedEnglishPattern": "every day|daily",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1524720",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "fd1c93832f": {
+    "headword": "毎週",
+    "reading": "まいしゅう",
+    "jmdictId": 1524690,
+    "translation": "每周",
+    "expectedEnglishPattern": "every week|weekly",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1524690",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "771fbe6b4d": {
+    "headword": "毎月",
+    "reading": "まいげつ",
+    "jmdictId": 1584350,
+    "translation": "每月",
+    "expectedEnglishPattern": "every month|monthly",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1584350",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "83700909d4": {
+    "headword": "毎年",
+    "reading": "まいねん",
+    "jmdictId": 1584360,
+    "translation": "每年",
+    "expectedEnglishPattern": "every year|annual",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1584360",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "04e80a2ba1": {
+    "headword": "月曜日",
+    "reading": "げつようび",
+    "jmdictId": 1255890,
+    "translation": "星期一",
+    "expectedEnglishPattern": "Monday",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1255890",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "44d9d70862": {
+    "headword": "水曜日",
+    "reading": "すいようび",
+    "jmdictId": 1372190,
+    "translation": "星期三",
+    "expectedEnglishPattern": "Wednesday",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1372190",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "d10bb92f3e": {
+    "headword": "木曜日",
+    "reading": "もくようび",
+    "jmdictId": 1534890,
+    "translation": "星期四",
+    "expectedEnglishPattern": "Thursday",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1534890",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "b00c4af0a2": {
+    "headword": "金曜日",
+    "reading": "きんようび",
+    "jmdictId": 1243320,
+    "translation": "星期五",
+    "expectedEnglishPattern": "Friday",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1243320",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "86e7fb81c6": {
+    "headword": "土曜日",
+    "reading": "どようび",
+    "jmdictId": 1445590,
+    "translation": "星期六",
+    "expectedEnglishPattern": "Saturday",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1445590",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "d8c3a3f0d0": {
+    "headword": "日曜日",
+    "reading": "にちようび",
+    "jmdictId": 1464900,
+    "translation": "星期日",
+    "expectedEnglishPattern": "Sunday",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1464900",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "34108268e1": {
+    "headword": "二",
+    "reading": "に",
+    "jmdictId": 1461140,
+    "translation": "二",
+    "expectedEnglishPattern": "two",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1461140",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "5cb07674a3": {
+    "headword": "三",
+    "reading": "さん",
+    "jmdictId": 1579350,
+    "translation": "三",
+    "expectedEnglishPattern": "three",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1579350",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "da4b805e0b": {
+    "headword": "四",
+    "reading": "し",
+    "jmdictId": 1579470,
+    "translation": "四（し）",
+    "expectedEnglishPattern": "four",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1579470",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "47c1fdbe2f": {
+    "headword": "五",
+    "reading": "ご",
+    "jmdictId": 1268060,
+    "translation": "五",
+    "expectedEnglishPattern": "five",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1268060",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "f9ccc7bfdf": {
+    "headword": "六",
+    "reading": "ろく",
+    "jmdictId": 1585310,
+    "translation": "六",
+    "expectedEnglishPattern": "six",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1585310",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "988db98632": {
+    "headword": "七",
+    "reading": "しち",
+    "jmdictId": 1319210,
+    "translation": "七（しち）",
+    "expectedEnglishPattern": "seven",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1319210",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "6eeff514e0": {
+    "headword": "八",
+    "reading": "はち",
+    "jmdictId": 1583090,
+    "translation": "八",
+    "expectedEnglishPattern": "eight",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1583090",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "db9f5d4422": {
+    "headword": "十",
+    "reading": "じゅう",
+    "jmdictId": 1579840,
+    "translation": "十",
+    "expectedEnglishPattern": "ten",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1579840",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "13696bc9b5": {
+    "headword": "百",
+    "reading": "ひゃく",
+    "jmdictId": 1488000,
+    "translation": "百",
+    "expectedEnglishPattern": "hundred",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1488000",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "1729d60f09": {
+    "headword": "千",
+    "reading": "せん",
+    "jmdictId": 1388740,
+    "translation": "千",
+    "expectedEnglishPattern": "thousand",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1388740",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "a0ff0f67c8": {
+    "headword": "万",
+    "reading": "まん",
+    "jmdictId": 1584460,
+    "translation": "万；一万",
+    "expectedEnglishPattern": "ten thousand",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1584460",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "5c89b3094a": {
+    "headword": "食べ物",
+    "reading": "たべもの",
+    "jmdictId": 1358340,
+    "translation": "食物",
+    "expectedEnglishPattern": "food",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1358340",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "5e8fc8669c": {
+    "headword": "飲み物",
+    "reading": "のみもの",
+    "jmdictId": 1600430,
+    "translation": "饮料",
+    "expectedEnglishPattern": "drink|beverage",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1600430",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "4d66739694": {
+    "headword": "卵",
+    "reading": "たまご",
+    "jmdictId": 1549140,
+    "translation": "鸡蛋；蛋",
+    "expectedEnglishPattern": "egg",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1549140",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "efac1fc502": {
+    "headword": "肉",
+    "reading": "にく",
+    "jmdictId": 1463520,
+    "translation": "肉",
+    "expectedEnglishPattern": "meat",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1463520",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "c518fb9116": {
+    "headword": "豚肉",
+    "reading": "ぶたにく",
+    "jmdictId": 1457440,
+    "translation": "猪肉",
+    "expectedEnglishPattern": "pork",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1457440",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "3669c65744": {
+    "headword": "鶏肉",
+    "reading": "とりにく",
+    "jmdictId": 1253020,
+    "translation": "鸡肉",
+    "expectedEnglishPattern": "chicken",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1253020",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "dbd7cd319c": {
+    "headword": "魚",
+    "reading": "さかな",
+    "jmdictId": 1578010,
+    "translation": "鱼",
+    "expectedEnglishPattern": "fish",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1578010",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "936289666e": {
+    "headword": "野菜",
+    "reading": "やさい",
+    "jmdictId": 1537370,
+    "translation": "蔬菜",
+    "expectedEnglishPattern": "vegetable",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1537370",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "6b454b895e": {
+    "headword": "果物",
+    "reading": "くだもの",
+    "jmdictId": 1193060,
+    "translation": "水果",
+    "expectedEnglishPattern": "fruit",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1193060",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "098e9e7e67": {
+    "headword": "パン",
+    "reading": "パン",
+    "jmdictId": 1103090,
+    "translation": "面包",
+    "expectedEnglishPattern": "bread",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1103090",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "a2694d259e": {
+    "headword": "御飯",
+    "reading": "ごはん",
+    "jmdictId": 1270590,
+    "translation": "米饭；饭；一餐",
+    "expectedEnglishPattern": "rice|meal",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1270590",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "67126059f1": {
+    "headword": "コーヒー",
+    "reading": "コーヒー",
+    "jmdictId": 1049180,
+    "translation": "咖啡",
+    "expectedEnglishPattern": "coffee",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1049180",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "1288e600be": {
+    "headword": "紅茶",
+    "reading": "こうちゃ",
+    "jmdictId": 1280770,
+    "translation": "红茶",
+    "expectedEnglishPattern": "black tea",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1280770",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "b366a3d677": {
+    "headword": "塩",
+    "reading": "しお",
+    "jmdictId": 1576630,
+    "translation": "盐",
+    "expectedEnglishPattern": "salt",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1576630",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "8af5030b7a": {
+    "headword": "砂糖",
+    "reading": "さとう",
+    "jmdictId": 1291600,
+    "translation": "糖；砂糖",
+    "expectedEnglishPattern": "sugar",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1291600",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "9476d7966d": {
+    "headword": "しょうゆ",
+    "reading": "しょうゆ",
+    "jmdictId": 1595020,
+    "translation": "酱油",
+    "expectedEnglishPattern": "soy sauce",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1595020",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "734d275fd9": {
+    "headword": "病院",
+    "reading": "びょういん",
+    "jmdictId": 1490220,
+    "translation": "医院",
+    "expectedEnglishPattern": "hospital",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1490220",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "95ccaa32f5": {
+    "headword": "薬",
+    "reading": "くすり",
+    "jmdictId": 1538160,
+    "translation": "药",
+    "expectedEnglishPattern": "medicine|drug",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1538160",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "0c8a588e53": {
+    "headword": "店",
+    "reading": "みせ",
+    "jmdictId": 1582120,
+    "translation": "商店",
+    "expectedEnglishPattern": "shop|store",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1582120",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "de5a452667": {
+    "headword": "図書館",
+    "reading": "としょかん",
+    "jmdictId": 1370420,
+    "translation": "图书馆",
+    "expectedEnglishPattern": "library",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1370420",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "5b303264b9": {
+    "headword": "大学",
+    "reading": "だいがく",
+    "jmdictId": 1413240,
+    "translation": "大学",
+    "expectedEnglishPattern": "university",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1413240",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "8b86921749": {
+    "headword": "郵便局",
+    "reading": "ゆうびんきょく",
+    "jmdictId": 1542430,
+    "translation": "邮局",
+    "expectedEnglishPattern": "post office",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1542430",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "05cf590971": {
+    "headword": "公園",
+    "reading": "こうえん",
+    "jmdictId": 1273270,
+    "translation": "公园",
+    "expectedEnglishPattern": "park",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1273270",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "e78074927c": {
+    "headword": "部屋",
+    "reading": "へや",
+    "jmdictId": 1499320,
+    "translation": "房间",
+    "expectedEnglishPattern": "room",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1499320",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "672321bac9": {
+    "headword": "机",
+    "reading": "つくえ",
+    "jmdictId": 1220210,
+    "translation": "书桌；桌子",
+    "expectedEnglishPattern": "desk",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1220210",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "7734194821": {
+    "headword": "窓",
+    "reading": "まど",
+    "jmdictId": 1401400,
+    "translation": "窗户",
+    "expectedEnglishPattern": "window",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1401400",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "677d3c5fac": {
+    "headword": "ドア",
+    "reading": "ドア",
+    "jmdictId": 1087820,
+    "translation": "门",
+    "expectedEnglishPattern": "door",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1087820",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "91cf4ea2fd": {
+    "headword": "ベッド",
+    "reading": "ベッド",
+    "jmdictId": 1119650,
+    "translation": "床",
+    "expectedEnglishPattern": "bed",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1119650",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "68571540e1": {
+    "headword": "服",
+    "reading": "ふく",
+    "jmdictId": 1500940,
+    "translation": "衣服",
+    "expectedEnglishPattern": "clothes|clothing",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1500940",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "9dd0572f05": {
+    "headword": "靴",
+    "reading": "くつ",
+    "jmdictId": 1246700,
+    "translation": "鞋",
+    "expectedEnglishPattern": "shoe",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1246700",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "20a1278928": {
+    "headword": "靴下",
+    "reading": "くつした",
+    "jmdictId": 1246740,
+    "translation": "袜子",
+    "expectedEnglishPattern": "sock",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1246740",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "cfc75623ae": {
+    "headword": "帽子",
+    "reading": "ぼうし",
+    "jmdictId": 1519170,
+    "translation": "帽子",
+    "expectedEnglishPattern": "hat|cap",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1519170",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "72eb77e07a": {
+    "headword": "眼鏡",
+    "reading": "めがね",
+    "jmdictId": 1577670,
+    "translation": "眼镜",
+    "expectedEnglishPattern": "glasses|spectacle",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1577670",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "b8317395af": {
+    "headword": "新聞",
+    "reading": "しんぶん",
+    "jmdictId": 1362360,
+    "translation": "报纸",
+    "expectedEnglishPattern": "newspaper",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1362360",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "a371cc6a54": {
+    "headword": "雑誌",
+    "reading": "ざっし",
+    "jmdictId": 1299400,
+    "translation": "杂志",
+    "expectedEnglishPattern": "magazine",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1299400",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "8ec35978bd": {
+    "headword": "辞書",
+    "reading": "じしょ",
+    "jmdictId": 1318970,
+    "translation": "词典",
+    "expectedEnglishPattern": "dictionary",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1318970",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "5101640e7e": {
+    "headword": "写真",
+    "reading": "しゃしん",
+    "jmdictId": 1321900,
+    "translation": "照片",
+    "expectedEnglishPattern": "photograph|photo",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1321900",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "c7e14d8454": {
+    "headword": "テレビ",
+    "reading": "テレビ",
+    "jmdictId": 1080510,
+    "translation": "电视",
+    "expectedEnglishPattern": "television",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1080510",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "670f2dd0dc": {
+    "headword": "ラジオ",
+    "reading": "ラジオ",
+    "jmdictId": 1138860,
+    "translation": "收音机；广播",
+    "expectedEnglishPattern": "radio",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1138860",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "244e138920": {
+    "headword": "走る",
+    "reading": "はしる",
+    "jmdictId": 1402540,
+    "translation": "跑",
+    "expectedEnglishPattern": "run",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1402540",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "932afda20b": {
+    "headword": "立つ",
+    "reading": "たつ",
+    "jmdictId": 1597040,
+    "translation": "站立",
+    "expectedEnglishPattern": "stand",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1597040",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "c9a15e8777": {
+    "headword": "座る",
+    "reading": "すわる",
+    "jmdictId": 1291800,
+    "translation": "坐",
+    "expectedEnglishPattern": "sit",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1291800",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "0c6e923ef9": {
+    "headword": "寝る",
+    "reading": "ねる",
+    "jmdictId": 1360010,
+    "translation": "睡觉；躺下",
+    "expectedEnglishPattern": "sleep|lie down|go to bed",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1360010",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "9ea671262d": {
+    "headword": "働く",
+    "reading": "はたらく",
+    "jmdictId": 1451150,
+    "translation": "工作",
+    "expectedEnglishPattern": "work",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1451150",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "3e3efcb45f": {
+    "headword": "休む",
+    "reading": "やすむ",
+    "jmdictId": 1227560,
+    "translation": "休息；请假",
+    "expectedEnglishPattern": "rest|absent",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1227560",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "65783b95dd": {
+    "headword": "勉強",
+    "reading": "べんきょう",
+    "jmdictId": 1512670,
+    "translation": "学习",
+    "expectedEnglishPattern": "study",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1512670",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "d23f06249a": {
+    "headword": "練習",
+    "reading": "れんしゅう",
+    "jmdictId": 1559160,
+    "translation": "练习",
+    "expectedEnglishPattern": "practice|practise",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1559160",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "c88e0ba104": {
+    "headword": "使う",
+    "reading": "つかう",
+    "jmdictId": 1305990,
+    "translation": "使用",
+    "expectedEnglishPattern": "use",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1305990",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "6e922a750e": {
+    "headword": "作る",
+    "reading": "つくる",
+    "jmdictId": 1597890,
+    "translation": "做；制作",
+    "expectedEnglishPattern": "make",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1597890",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "6a39701228": {
+    "headword": "待つ",
+    "reading": "まつ",
+    "jmdictId": 1410590,
+    "translation": "等；等待",
+    "expectedEnglishPattern": "wait",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1410590",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "16fda19d79": {
+    "headword": "持つ",
+    "reading": "もつ",
+    "jmdictId": 1315720,
+    "translation": "拿；持有",
+    "expectedEnglishPattern": "hold|have",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1315720",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "0ca0de9dea": {
+    "headword": "忘れる",
+    "reading": "わすれる",
+    "jmdictId": 1519210,
+    "translation": "忘记",
+    "expectedEnglishPattern": "forget",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1519210",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "ecee43eb04": {
+    "headword": "分かる",
+    "reading": "わかる",
+    "jmdictId": 1606560,
+    "translation": "懂；明白",
+    "expectedEnglishPattern": "understand",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1606560",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "1fcb2fece8": {
+    "headword": "知る",
+    "reading": "しる",
+    "jmdictId": 1420470,
+    "translation": "知道",
+    "expectedEnglishPattern": "know",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1420470",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "9d5bde24ec": {
+    "headword": "話す",
+    "reading": "はなす",
+    "jmdictId": 1562350,
+    "translation": "说；说话",
+    "expectedEnglishPattern": "speak|talk",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1562350",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "a95b0a87ad": {
+    "headword": "習う",
+    "reading": "ならう",
+    "jmdictId": 1333070,
+    "translation": "学习；向人学",
+    "expectedEnglishPattern": "learn",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1333070",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "501df34d31": {
+    "headword": "掃除",
+    "reading": "そうじ",
+    "jmdictId": 1399790,
+    "translation": "打扫；清扫",
+    "expectedEnglishPattern": "clean|sweep",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1399790",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "4d0ca7b320": {
+    "headword": "洗濯",
+    "reading": "せんたく",
+    "jmdictId": 1390980,
+    "translation": "洗衣",
+    "expectedEnglishPattern": "wash|laundry",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1390980",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "9b2d455dfe": {
+    "headword": "楽しい",
+    "reading": "たのしい",
+    "jmdictId": 1207240,
+    "translation": "快乐的；有趣的",
+    "expectedEnglishPattern": "enjoyable|fun|pleasant",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1207240",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "0a3894175f": {
+    "headword": "難しい",
+    "reading": "むずかしい",
+    "jmdictId": 1460850,
+    "translation": "难的",
+    "expectedEnglishPattern": "difficult",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1460850",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "ead1ae2736": {
+    "headword": "易しい",
+    "reading": "やさしい",
+    "jmdictId": 1157000,
+    "translation": "容易的",
+    "expectedEnglishPattern": "easy|simple",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1157000",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "33b86212ca": {
+    "headword": "安い",
+    "reading": "やすい",
+    "jmdictId": 1153670,
+    "translation": "便宜的",
+    "expectedEnglishPattern": "cheap|inexpensive",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1153670",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "c74892f565": {
+    "headword": "高い",
+    "reading": "たかい",
+    "jmdictId": 1283190,
+    "translation": "高的；贵的",
+    "expectedEnglishPattern": "high|tall|expensive",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1283190",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "fcea29f192": {
+    "headword": "長い",
+    "reading": "ながい",
+    "jmdictId": 1429750,
+    "translation": "长的",
+    "expectedEnglishPattern": "long",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1429750",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "8568eded6e": {
+    "headword": "短い",
+    "reading": "みじかい",
+    "jmdictId": 1418620,
+    "translation": "短的",
+    "expectedEnglishPattern": "short",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1418620",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "a21ba677f2": {
+    "headword": "近い",
+    "reading": "ちかい",
+    "jmdictId": 1242130,
+    "translation": "近的",
+    "expectedEnglishPattern": "near|close",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1242130",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "f840779b9e": {
+    "headword": "遠い",
+    "reading": "とおい",
+    "jmdictId": 1177800,
+    "translation": "远的",
+    "expectedEnglishPattern": "far|distant",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1177800",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "4db42e0181": {
+    "headword": "早い",
+    "reading": "はやい",
+    "jmdictId": 1404975,
+    "translation": "早的",
+    "expectedEnglishPattern": "early",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1404975",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "406d15f6e9": {
+    "headword": "速い",
+    "reading": "はやい",
+    "jmdictId": 1404975,
+    "translation": "快的",
+    "expectedEnglishPattern": "fast|quick",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1404975",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "0d38b01113": {
+    "headword": "少ない",
+    "reading": "すくない",
+    "jmdictId": 1348910,
+    "translation": "少的",
+    "expectedEnglishPattern": "few|little",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1348910",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "d99745fbb6": {
+    "headword": "強い",
+    "reading": "つよい",
+    "jmdictId": 1236070,
+    "translation": "强的",
+    "expectedEnglishPattern": "strong|powerful",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1236070",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "83da293775": {
+    "headword": "弱い",
+    "reading": "よわい",
+    "jmdictId": 1324520,
+    "translation": "弱的",
+    "expectedEnglishPattern": "weak",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1324520",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "13b6dbec03": {
+    "headword": "悪い",
+    "reading": "わるい",
+    "jmdictId": 1151260,
+    "translation": "坏的",
+    "expectedEnglishPattern": "bad",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1151260",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "aa60dd4a11": {
+    "headword": "古い",
+    "reading": "ふるい",
+    "jmdictId": 1265070,
+    "translation": "旧的",
+    "expectedEnglishPattern": "old",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1265070",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "640761cb8b": {
+    "headword": "若い",
+    "reading": "わかい",
+    "jmdictId": 1324300,
+    "translation": "年轻的",
+    "expectedEnglishPattern": "young",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1324300",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "688bc67044": {
+    "headword": "寒い",
+    "reading": "さむい",
+    "jmdictId": 1210360,
+    "translation": "冷的（天气等）",
+    "expectedEnglishPattern": "cold",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1210360",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "a23d308800": {
+    "headword": "冷たい",
+    "reading": "つめたい",
+    "jmdictId": 1556730,
+    "translation": "冷的；凉的（触感）",
+    "expectedEnglishPattern": "cold",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1556730",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "67f5908e10": {
+    "headword": "涼しい",
+    "reading": "すずしい",
+    "jmdictId": 1554370,
+    "translation": "凉爽的",
+    "expectedEnglishPattern": "cool|refreshing",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1554370",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "442c4aa1ca": {
+    "headword": "元気",
+    "reading": "げんき",
+    "jmdictId": 1260720,
+    "translation": "健康；有精神",
+    "expectedEnglishPattern": "healthy|health|energy|vigour|vigor",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1260720",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "2f62b9db5e": {
+    "headword": "大丈夫",
+    "reading": "だいじょうぶ",
+    "jmdictId": 1414150,
+    "translation": "没关系；不要紧",
+    "expectedEnglishPattern": "all right|alright|OK|okay|safe",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1414150",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "84887dde48": {
+    "headword": "便利",
+    "reading": "べんり",
+    "jmdictId": 1512610,
+    "translation": "方便的",
+    "expectedEnglishPattern": "convenient|useful",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1512610",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "50b217ed0b": {
+    "headword": "有名",
+    "reading": "ゆうめい",
+    "jmdictId": 1541620,
+    "translation": "有名的",
+    "expectedEnglishPattern": "famous",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1541620",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "178469ba7a": {
+    "headword": "静か",
+    "reading": "しずか",
+    "jmdictId": 1381820,
+    "translation": "安静的",
+    "expectedEnglishPattern": "quiet",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1381820",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "c17f97fafc": {
+    "headword": "賑やか",
+    "reading": "にぎやか",
+    "jmdictId": 1463480,
+    "translation": "热闹的",
+    "expectedEnglishPattern": "bustling|lively",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1463480",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "a1cda8cb11": {
+    "headword": "半分",
+    "reading": "はんぶん",
+    "jmdictId": 1479890,
+    "translation": "一半",
+    "expectedEnglishPattern": "half",
+    "reference": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&sid=&q=1479890",
+    "reviewedAt": "2026-10-19",
+    "notes": "中文学习释义为人工概括；用词典义项核对，非声称为 JMdict 中文翻译。"
+  },
+  "d106dac023": {
+    "headword": "嫌い",
+    "reading": "きらい",
+    "jmdictId": 1257240,
+    "translation": "讨厌；不喜欢",
+    "expectedEnglishPattern": "dislik|hating",
+    "reviewedAt": "2026-10-19",
+    "reference": "https://www.edrdg.org/",
+    "notes": "人工中文学习释义，核对 JMdict 英文义项。"
+  }
+}

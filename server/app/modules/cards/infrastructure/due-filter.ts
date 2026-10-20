@@ -1,4 +1,5 @@
 import type { Prisma } from '@prisma/client'
+import type { DayClock } from 'app/shared/day-boundary'
 import { dueWindowOf } from 'app/shared/day-boundary'
 
 // Anki 的卡片状态：0 New / 1 Learning / 2 Review / 3 Relearning
@@ -11,8 +12,8 @@ export const STATE_RELEARNING = 3
 // 跨天卡（Review 以及 interval>=1 的 interday learning）：过了日切点当天全部可见。
 const intraday = { interval: 0, state: { in: [STATE_NEW, STATE_LEARNING, STATE_RELEARNING] } }
 
-export const dueVisibleWhere = (now: Date = new Date()): Prisma.CardWhereInput => {
-  const w = dueWindowOf(now)
+export const dueVisibleWhere = (now: Date = new Date(), clock?: DayClock): Prisma.CardWhereInput => {
+  const w = dueWindowOf(now, clock)
   return {
     OR: [
       { ...intraday, due: { lte: new Date(w.learnAheadMs) } },
@@ -21,4 +22,4 @@ export const dueVisibleWhere = (now: Date = new Date()): Prisma.CardWhereInput =
   }
 }
 
-export const dueWindow = (now: Date = new Date()) => dueWindowOf(now)
+export const dueWindow = (now: Date = new Date(), clock?: DayClock) => dueWindowOf(now, clock)

@@ -1,0 +1,24 @@
+{
+  "preserved_tables": {
+    "cards": 10594,
+    "word_tags": 32876,
+    "fsrs_params": 1,
+    "review_logs": 128726,
+    "profiles": 1,
+    "knowledge_entities": 19471,
+    "personal_knowledge_states": 18322,
+    "app_settings": 1,
+    "wordnet_synsets": 117791,
+    "wordnet_senses": 207235,
+    "word_pronunciations": 99118,
+    "ielts_usages": 86,
+    "decks": 2,
+    "word_senses": 24270,
+    "words": 19471
+  },
+  "english_params_and_metadata_preserved": true,
+  "japanese_default_params": true,
+  "backup": "server/data-backup/flashnext-pre-deck-settings-20261019.db",
+  "deployed_read_only_browser_check": "passed",
+  "deployed_api_check": "passed"
+}

@@ -1,5 +1,6 @@
 import { Service } from 'typedi'
 import { prisma } from 'app/shared/prisma'
+import type { DayClock } from 'app/shared/day-boundary'
 import { dueVisibleWhere } from './due-filter'
 
 const CARD_FIELDS = {
@@ -19,20 +20,20 @@ export class CardRepository {
     return prisma.card.findMany({
       where: { deckId },
       orderBy: { createdAt: 'desc' },
-      include: { word: { include: { tags: true, pronunciations: { where: { status: 'accepted' } } } } },
+      include: { media: { include: { asset: true }, orderBy: [{ side: 'asc' }, { position: 'asc' }] }, word: { omit: { sourceMetadata: true }, include: { tags: true, pronunciations: { where: { status: 'accepted' } } } } },
     })
   }
 
   // 只取排序/限额所需字段，避免把整张卡拉进内存排序
-  listDueCandidates(deckId: number, now: Date = new Date()) {
+  listDueCandidates(deckId: number, now: Date = new Date(), clock?: DayClock) {
     return prisma.card.findMany({
-      where: { deckId, AND: [dueVisibleWhere(now)] },
+      where: { deckId, AND: [dueVisibleWhere(now, clock)] },
       select: CARD_FIELDS,
     })
   }
 
-  countDue(deckId: number, now: Date = new Date()) {
-    return prisma.card.count({ where: { deckId, AND: [dueVisibleWhere(now)] } })
+  countDue(deckId: number, now: Date = new Date(), clock?: DayClock) {
+    return prisma.card.count({ where: { deckId, AND: [dueVisibleWhere(now, clock)] } })
   }
 
   // 排序/分页用的轻量行：不含释义全文与标签，word 只取 rank
@@ -51,7 +52,7 @@ export class CardRepository {
         due: true,
         lastReview: true,
         createdAt: true,
-        word: { select: { rank: true, translation: true, phonetic: true } },
+        word: { select: { rank: true, translation: true, phonetic: true, reading: true, readings: true, spellings: true, romaji: true } },
       },
     })
   }
@@ -60,7 +61,9 @@ export class CardRepository {
     return prisma.card.findMany({
       where: { id: { in: ids } },
       include: {
+        media: { include: { asset: true }, orderBy: [{ side: 'asc' }, { position: 'asc' }] },
         word: {
+          omit: { sourceMetadata: true },
           include: {
             tags: true,
             senses: { orderBy: { senseIdx: 'asc' }, take: 3 },

@@ -32,7 +32,7 @@ async function main() {
   const prisma = new PrismaClient()
   try {
     const plan = await prisma.$transaction(async tx => {
-      const words = await tx.word.findMany({ where: { headword: { in: Object.keys(overrides) } }, include: { cards: true, knowledgeEntity: true } })
+      const words = await tx.word.findMany({ where: { language: 'en', headword: { in: Object.keys(overrides) } }, include: { cards: true, knowledgeEntity: true } })
       const plan = planRepair(words)
       if (report) fs.writeFileSync(report, JSON.stringify({ apply: false, ...plan }, null, 2))
       if (apply) {

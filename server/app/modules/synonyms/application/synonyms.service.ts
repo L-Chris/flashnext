@@ -14,7 +14,7 @@ const POS_SQL = `CASE
 
 // 成员 = 当前带 coca/cet/ielts 标签的词，且词性与 synset 词性一致（实时求交集，不物化到表）
 const MEMBER_JOIN = `FROM wordnet_senses s
-  JOIN words w ON s.lemma = ${NORM}
+  JOIN words w ON w.language = 'en' AND s.lemma = ${NORM}
   JOIN word_tags t ON t.word_id = w.id AND t.scheme IN ('coca', 'cet', 'ielts')
   JOIN wordnet_synsets syn ON syn.id = s.synset_id AND syn.pos = ${POS_SQL}`
 
@@ -151,7 +151,7 @@ export class SynonymsService {
         Array<{ id: number; headword: string; rank: number | null; pos: string; translation: string }>
       >(
         `SELECT id, headword, rank, pos, translation FROM words
-         WHERE ${NORM.replace(/w\./g, '')} IN (${chunk.map(() => '?').join(',')})`,
+         WHERE language = 'en' AND ${NORM.replace(/w\./g, '')} IN (${chunk.map(() => '?').join(',')})`,
         ...chunk,
       )
       out.push(...rows)

@@ -104,7 +104,7 @@ const main = async () => {
   const prisma = new PrismaClient()
 
   const targets = await prisma.word.findMany({
-    where: { OR: [{ translation: '' }, { phonetic: '' }, { pos: '' }] },
+    where: { language: 'en', OR: [{ translation: '' }, { phonetic: '' }, { pos: '' }] },
     select: { id: true, headword: true, pos: true, phonetic: true, translation: true },
   })
   console.log(`words with missing fields: ${targets.length}`)

@@ -56,8 +56,11 @@ model Deck {
   id          Int      @id @default(autoincrement())
   name        String
   description String   @default("")
+  language    String   @default("en")
   createdAt   DateTime @default(now()) @map("created_at")
   cards       Card[]
+  settings    DeckSetting?
+  fsrsParams  DeckFsrsParam?
 
   @@map("decks")
 }
@@ -126,7 +129,15 @@ model AppSetting {
 model Word {
   id          Int       @id @default(autoincrement())
   knowledgeEntityId Int? @unique @map("knowledge_entity_id")
-  headword    String    @unique
+  language    String    @default("en")
+  lexicalKey  String?   @unique @map("lexical_key")
+  headword    String
+  reading     String    @default("")
+  readings    String    @default("[]")
+  spellings   String    @default("[]")
+  romaji      String    @default("")
+  definitionStatus String @default("ready") @map("definition_status")
+  sourceMetadata String @default("{}") @map("source_metadata")
   rank        Int?      @unique
   pos         String    @default("")
   phonetic    String    @default("")
@@ -140,6 +151,7 @@ model Word {
   ieltsUsages IeltsUsage[]
   pronunciations WordPronunciation[]
 
+  @@index([language, headword])
   @@map("words")
 }
 
@@ -185,8 +197,15 @@ model IeltsUsage {
 model WordSense {
   id       Int    @id @default(autoincrement())
   wordId   Int    @map("word_id")
+  source   String @default("legacy")
+  sourceKey String? @unique @map("source_key")
+  sourceRevision String @default("") @map("source_revision")
+  pos      String @default("")
+  tags     String @default("[]")
   senseIdx Int    @map("sense_idx")
   gloss    String @default("")
+  glossLanguage String @default("en") @map("gloss_language")
+  exampleDetails String @default("[]") @map("example_details")
   examples String @default("[]")
   zh       String @default("[]")
   word     Word   @relation(fields: [wordId], references: [id], onDelete: Cascade)
@@ -214,6 +233,8 @@ model Card {
   wordId        Int?      @map("word_id")
   front         String
   back          String
+  contentFormat String   @default("plain") @map("content_format")
+  media         CardMedia[]
   stability     Float     @default(0)
   difficulty    Float     @default(0)
   state         Int       @default(0)
@@ -231,4 +252,60 @@ model Card {
   @@index([due])
   @@index([wordId])
   @@map("cards")
+}
+
+model DeckSetting {
+  deckId       Int      @id @map("deck_id")
+  newPerDay    Int      @map("new_per_day")
+  reviewPerDay Int      @map("review_per_day")
+  timezone     String
+  rolloverHour Int      @map("rollover_hour")
+  audioAutoplay Boolean @default(false) @map("audio_autoplay")
+  showNewCardAnswerImmediately Boolean @default(false) @map("show_new_card_answer_immediately")
+  autoRevealAnswerSeconds Int? @default(10) @map("auto_reveal_answer_seconds")
+  version      Int      @default(0)
+  updatedAt    DateTime @updatedAt @map("updated_at")
+  deck         Deck     @relation(fields: [deckId], references: [id], onDelete: Cascade)
+
+  @@map("deck_settings")
+}
+
+model DeckFsrsParam {
+  deckId            Int       @id @map("deck_id")
+  w                 String
+  source            String    @default("default")
+  updatedAt         DateTime  @default(now()) @map("updated_at")
+  revlogMigratedAt  DateTime? @map("revlog_migrated_at")
+  version           Int       @default(0)
+  deck              Deck      @relation(fields: [deckId], references: [id], onDelete: Cascade)
+
+  @@map("deck_fsrs_params")
+}
+
+model MediaAsset {
+  id           String   @id @default(uuid())
+  storageKey   String   @unique @map("storage_key")
+  sha256       String   @unique
+  mimeType     String   @map("mime_type")
+  bytes        Int
+  originalName String   @map("original_name")
+  createdAt    DateTime @default(now()) @map("created_at")
+  cards        CardMedia[]
+
+  @@map("media_assets")
+}
+
+model CardMedia {
+  id       Int       @id @default(autoincrement())
+  cardId   Int       @map("card_id")
+  mediaId  String    @map("media_id")
+  side     String
+  position Int       @default(0)
+  card     Card      @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  asset    MediaAsset @relation(fields: [mediaId], references: [id], onDelete: Restrict)
+
+  @@unique([cardId, side, position])
+  @@unique([cardId, side, mediaId])
+  @@index([mediaId])
+  @@map("card_media")
 }

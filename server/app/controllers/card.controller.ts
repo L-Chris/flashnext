@@ -1,10 +1,13 @@
-import { Get, Post, Delete, JsonController, Body, Param, QueryParam, HttpError } from 'routing-controllers'
+import { Get, Post, Patch, Delete, JsonController, Body, Param, QueryParam, HttpError } from 'routing-controllers'
+import { deckIdOf } from 'app/shared/deck-id'
 import { Service } from 'typedi'
 import { CardService, normalizeCardPageQuery } from 'app/modules/cards/application/card.service'
 
 class CreateCardBody {
   front: string
   back: string
+  contentFormat?: string
+  media?: Array<{ mediaId: string; side: string; position: number }>
 }
 
 class ReviewCardBody {
@@ -43,8 +46,7 @@ export class DeckCardController {
 
   @Post('/')
   async create(@Param('deckId') deckId: number, @Body() body: CreateCardBody) {
-    if (!body.front || !body.back) throw new HttpError(400, 'front and back required')
-    const data = await this.cardService.createCard(Number(deckId), body.front, body.back)
+    const data = await this.cardService.createCard(deckIdOf(String(deckId)), body)
     return { data }
   }
 }
@@ -53,6 +55,12 @@ export class DeckCardController {
 @Service()
 export class CardController {
   constructor(private cardService: CardService) {}
+
+  @Get('/:id')
+  async get(@Param('id') id: string) { return { data: await this.cardService.getCard(deckIdOf(id)) } }
+
+  @Patch('/:id')
+  async edit(@Param('id') id: string, @Body() body: object) { return { data: await this.cardService.editCard(deckIdOf(id), body) } }
 
   @Delete('/:id')
   async remove(@Param('id') id: number) {

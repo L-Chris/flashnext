@@ -1,3 +1,4 @@
+import { CardPresenter, reviewOptionsOf } from './card-presenter'
 import { Service } from 'typedi'
 import { CardRepository } from '../infrastructure/card.repository'
 import {
@@ -11,7 +12,7 @@ import { FsrsRepository } from 'app/modules/fsrs/infrastructure/fsrs.repository'
 import { OptimizerService } from 'app/modules/fsrs/application/optimizer.service'
 import { elapsedDaysBetween } from 'app/shared/day-boundary'
 import { DESIRED_RETENTION } from 'configs/constants'
-import { SettingsService } from 'app/modules/settings/application/settings.service'
+import { SettingsService, type DeckSettings } from 'app/modules/settings/application/settings.service'
 
 interface Bucket {
   id: number
@@ -25,24 +26,20 @@ export class DueService {
     private fsrsRepository: FsrsRepository,
     private optimizerService: OptimizerService,
     private settingsService: SettingsService,
+    private presenter: CardPresenter,
   ) {}
 
   /** 今天已消耗的新卡数 / 复习数（以复习当时卡片状态为准，同 Anki） */
-  async usageToday(deckId: number, now: Date = new Date()) {
-    const w = dueWindow(now)
-    const [ids, logs] = await Promise.all([
-      this.cardRepository.listIds(deckId),
-      this.fsrsRepository.listLogsBetween(new Date(w.cutStartMs), new Date(w.dayEndMs)),
-    ])
-    const idSet = new Set(ids.map(row => row.id))
+  async usageToday(deckId: number, now: Date = new Date(), settings?: DeckSettings) {
+    const limits = settings || await this.settingsService.get(deckId)
+    const w = dueWindow(now, limits)
+    const logs = await this.fsrsRepository.listLogsBetween(deckId, new Date(w.cutStartMs), new Date(w.dayEndMs))
     let newCount = 0
     let reviewCount = 0
     for (const log of logs) {
-      if (!idSet.has(log.cardId)) continue
       if (log.state === STATE_NEW) newCount += 1
       else if (log.state === STATE_REVIEW || log.state === STATE_RELEARNING) reviewCount += 1
     }
-    const limits = await this.settingsService.get()
     return {
       newCount,
       reviewCount,
@@ -62,10 +59,10 @@ export class DueService {
    * Anki 的 gather 顺序 = intraday learning → interday learning → review → new，
    * 复习卡内部按 retrievability 升序（FSRS 模式下 Anki 的默认排序）。
    */
-  private async collect(deckId: number, now: Date) {
+  private async collect(deckId: number, now: Date, settings: DeckSettings) {
     const [candidates, w] = await Promise.all([
-      this.cardRepository.listDueCandidates(deckId, now),
-      this.optimizerService.getCurrentW(),
+      this.cardRepository.listDueCandidates(deckId, now, settings),
+      this.optimizerService.getCurrentW(deckId),
     ])
     const { forgetting_curve } = await import('ts-fsrs')
 
@@ -82,7 +79,7 @@ export class DueService {
         intraday.push({ id: c.id, sort: c.due.getTime() })
         continue
       }
-      const elapsed = Math.max(0, elapsedDaysBetween(c.lastReview ?? c.createdAt, now))
+      const elapsed = Math.max(0, elapsedDaysBetween(c.lastReview ?? c.createdAt, now, settings))
       const r = c.stability > 0 ? forgetting_curve(w, elapsed, c.stability) : DESIRED_RETENTION
       review.push({ id: c.id, sort: r })
     }
@@ -113,8 +110,9 @@ export class DueService {
 
   /** 牌组列表用：今天还能复习多少张（已扣除日限额） */
   async summary(deckId: number, now: Date = new Date()) {
-    const buckets = await this.collect(deckId, now)
-    const usage = await this.usageToday(deckId, now)
+    const settings = await this.settingsService.get(deckId)
+    const buckets = await this.collect(deckId, now, settings)
+    const usage = await this.usageToday(deckId, now, settings)
     const { picked, hiddenByLimit } = DueService.applyLimits(buckets, usage)
     return {
       dueCount: picked.length,
@@ -129,8 +127,9 @@ export class DueService {
   }
 
   async queue(deckId: number, now: Date = new Date()) {
-    const buckets = await this.collect(deckId, now)
-    const usage = await this.usageToday(deckId, now)
+    const settings = await this.settingsService.get(deckId)
+    const buckets = await this.collect(deckId, now, settings)
+    const usage = await this.usageToday(deckId, now, settings)
     const { picked, hiddenByLimit } = DueService.applyLimits(buckets, usage)
 
     const order = new Map(picked.map((p, i) => [p.id, i] as const))
@@ -138,7 +137,8 @@ export class DueService {
     full.sort((a, b) => (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0))
 
     return {
-      cards: full,
+      cards: await this.presenter.cards(full, settings),
+      reviewOptions: reviewOptionsOf(settings),
       usage,
       counts: {
         intraday: buckets.intraday.length,

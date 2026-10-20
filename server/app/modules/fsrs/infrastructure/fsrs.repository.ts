@@ -1,43 +1,43 @@
 import { Service } from 'typedi'
+import { HttpError } from 'routing-controllers'
 import { prisma } from 'app/shared/prisma'
+import { ensureDeckConfig } from '../../../../scripts/lib/deck-config'
 
 export interface RevlogRow {
-  id: number
-  cardId: number
-  rating: number
-  reviewAt: Date
-  state: number
-  interval: number
-  stability: number
-  difficulty: number
-  durationMs: number
-  repsBefore: number
-  lapsesBefore: number
-  learningStepsBefore: number
-  dueBefore: Date | null
+  id: number; cardId: number; rating: number; reviewAt: Date; state: number;
+  interval: number; stability: number; difficulty: number; durationMs: number;
+  repsBefore: number; lapsesBefore: number; learningStepsBefore: number; dueBefore: Date | null
 }
+export interface ConfigVersion { settings: number; params: number }
 
-const REVLOG_CSV_HEADER = 'review_time,card_id,review_rating,review_duration,review_state'
+export async function listDeckLogs(db: Pick<typeof prisma, 'card' | 'reviewLog'>, deckId: number, window?: { from: Date; to: Date }) {
+  const cards = await db.card.findMany({ where: { deckId }, select: { id: true } })
+  const logs: RevlogRow[] = []
+  for (let i = 0; i < cards.length; i += 500) {
+    logs.push(...await db.reviewLog.findMany({ where: {
+      cardId: { in: cards.slice(i, i + 500).map(c => c.id) },
+      ...(window ? { reviewAt: { gte: window.from, lt: window.to } } : {}),
+    } }))
+  }
+  return logs.sort((a, b) => a.cardId - b.cardId || a.reviewAt.getTime() - b.reviewAt.getTime() || a.id - b.id)
+}
 
 @Service()
 export class FsrsRepository {
-  getParamRow() {
-    return prisma.fsrsParam.findUnique({ where: { id: 1 } })
+  async getParamRow(deckId: number) {
+    const row = await prisma.deckFsrsParam.findUnique({ where: { deckId } })
+    if (row) return row
+    if (!await prisma.deck.findUnique({ where: { id: deckId } })) throw new HttpError(404, '牌组不存在')
+    return (await ensureDeckConfig(prisma, deckId)).params
   }
 
-  saveParams(w: number[], source: string) {
-    return prisma.fsrsParam.upsert({
-      where: { id: 1 },
-      update: { w: JSON.stringify(w), source, updatedAt: new Date() },
-      create: { id: 1, w: JSON.stringify(w), source },
-    })
-  }
-
-  markRevlogMigrated() {
-    return prisma.fsrsParam.upsert({
-      where: { id: 1 },
-      update: { revlogMigratedAt: new Date() },
-      create: { id: 1, w: '[]', revlogMigratedAt: new Date() },
+  async saveParams(deckId: number, w: number[], source: string, expected?: ConfigVersion) {
+    return prisma.$transaction(async tx => {
+      const settings = await tx.deckSetting.findUnique({ where: { deckId } })
+      const current = await tx.deckFsrsParam.findUnique({ where: { deckId } })
+      if (!settings || !current) throw new HttpError(404, '牌组已删除')
+      if (expected && (expected.settings !== settings.version || expected.params !== current.version)) throw new HttpError(409, '牌组设置或参数已改变，请重新训练')
+      return tx.deckFsrsParam.update({ where: { deckId }, data: { w: JSON.stringify(w), source, updatedAt: new Date(), version: { increment: 1 } } })
     })
   }
 
@@ -85,57 +85,22 @@ export class FsrsRepository {
     return prisma.reviewLog.delete({ where: { id } })
   }
 
-  countLogs() {
-    return prisma.reviewLog.count()
+  async countLogs(deckId: number) {
+    const rows = await prisma.$queryRaw<Array<{ n: bigint }>>`SELECT COUNT(*) AS n FROM review_logs r JOIN cards c ON c.id=r.card_id WHERE c.deck_id=${deckId}`
+    return Number(rows[0].n)
   }
 
-  listLogsBetween(from: Date, to: Date) {
-    return prisma.reviewLog.findMany({
-      where: { reviewAt: { gte: from, lt: to } },
-      select: { cardId: true, state: true },
-    })
-  }
+  listLogsBetween(deckId: number, from: Date, to: Date) { return listDeckLogs(prisma, deckId, { from, to }) }
+  listAllLogs(deckId: number) { return listDeckLogs(prisma, deckId) }
 
-  listAllLogs() {
-    return prisma.reviewLog.findMany({
-      orderBy: [{ cardId: 'asc' }, { reviewAt: 'asc' }],
-    })
-  }
-
-  updateLogStates(updates: Array<{ id: number; state: number; interval: number; stability: number; difficulty: number }>) {
-    return Promise.all(
-      updates.map(u =>
-        prisma.reviewLog.update({
-          where: { id: u.id },
-          data: { state: u.state, interval: u.interval, stability: u.stability, difficulty: u.difficulty },
-        }),
-      ),
-    )
-  }
-
-  /**
-   * fsrs-rs `convertCsvToFsrsItems` 要求的 revlog CSV。
-   * review_state = 复习当时卡片所处状态（0 new / 1 learning / 2 review / 3 relearning）。
-   */
-  async buildRevlogCsv(cardIds?: Set<number>): Promise<{ csv: string; rows: number }> {
-    const logs = await prisma.reviewLog.findMany({
-      orderBy: [{ cardId: 'asc' }, { reviewAt: 'asc' }],
-    })
-    const parts = [REVLOG_CSV_HEADER]
+  async buildRevlogCsv(deckId: number, cardIds?: Set<number>) {
+    const logs = await this.listAllLogs(deckId)
+    const parts = ['review_time,card_id,review_rating,review_duration,review_state']
     let rows = 0
-    let prevCardId: number | null = null
-    let seenInCard = 0
     for (const log of logs) {
       if (cardIds && !cardIds.has(log.cardId)) continue
-      if (log.cardId !== prevCardId) {
-        prevCardId = log.cardId
-        seenInCard = 0
-      }
-      // 首次复习记为 New，其后按存储的状态；避免全 0 历史把 revlog 裁空
-      const state = seenInCard === 0 && log.state === 0 ? 0 : log.state
-      parts.push(`${log.reviewAt.getTime()},${log.cardId},${log.rating},${log.durationMs},${state}`)
-      seenInCard += 1
-      rows += 1
+      parts.push(`${log.reviewAt.getTime()},${log.cardId},${log.rating},${log.durationMs},${log.state}`)
+      rows++
     }
     return { csv: parts.join('\n') + '\n', rows }
   }

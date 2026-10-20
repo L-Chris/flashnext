@@ -44,6 +44,7 @@ COPY --from=server-builder /app/server/node_modules/.prisma/client ./node_module
 COPY --from=server-builder /app/server/dist ./dist
 COPY server/prisma ./prisma
 COPY server/scripts ./scripts
+COPY server/app/shared/day-boundary.js ./app/shared/day-boundary.js
 COPY --from=web-builder /app/web/dist ./web/dist
 
 EXPOSE 3000

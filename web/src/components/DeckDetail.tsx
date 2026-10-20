@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { api } from '../api/client'
-import type { CardPage, CardSortKey, Deck } from '../types'
+import type { Card, CardPage, CardSortKey, Deck } from '../types'
 import CardForm from './CardForm'
 import CardTable, {
   ColumnConfigModal,
@@ -32,7 +32,8 @@ const DEFAULT_DIR: Record<CardSortKey, 'asc' | 'desc'> = {
 }
 
 export default function DeckDetail({ deck, onBack, onReview }: Props) {
-  const [addOpen, setAddOpen] = useState(false)
+  const [editor, setEditor] = useState<Card | 'new' | null>(null)
+  const [error, setError] = useState('')
   const [search, setSearch] = useState('')
   const [colOpen, setColOpen] = useState(false)
   const [columns, setColumns] = useState(loadColumnVisibility)
@@ -48,9 +49,10 @@ export default function DeckDetail({ deck, onBack, onReview }: Props) {
 
   const load = useCallback(async () => {
     setLoading(true)
+    setError('')
     try {
       setPage(await api.listCards(deck.id, query))
-    } finally {
+    } catch (e) { setError(e instanceof Error ? e.message : '加载失败') } finally {
       setLoading(false)
     }
   }, [deck.id, query])
@@ -75,15 +77,11 @@ export default function DeckDetail({ deck, onBack, onReview }: Props) {
     )
   }
 
-  const handleCreateCard = async (front: string, back: string) => {
-    await api.createCard(deck.id, front, back)
-    await load()
-  }
 
   return (
     <div>
-      <div className="mb-4 grid grid-cols-[1fr_auto_1fr] items-center gap-2">
-        <span className="flex items-center gap-2 justify-self-start">
+      <div className="mb-4 flex flex-wrap items-center gap-3 md:grid md:grid-cols-[1fr_auto_1fr] md:gap-2">
+        <span className="order-2 flex w-full items-center gap-2 md:order-none md:w-auto md:justify-self-start">
           <button
             onClick={onBack}
             title="返回"
@@ -98,11 +96,11 @@ export default function DeckDetail({ deck, onBack, onReview }: Props) {
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="搜索词 / 释义"
-            className="w-32 rounded-lg border border-zinc-300 bg-white px-3 py-1.5 text-sm outline-none focus:border-indigo-500 dark:border-zinc-700 dark:bg-zinc-900 md:w-56"
+            className="min-w-0 flex-1 rounded-lg border border-zinc-300 bg-white px-3 py-1.5 text-sm outline-none focus:border-indigo-500 dark:border-zinc-700 dark:bg-zinc-900 md:w-56 md:flex-none"
           />
         </span>
-        <h2 className="text-xl font-semibold">{deck.name}</h2>
-        <span className="flex gap-2 justify-self-end">
+        <h2 title={deck.name} className="min-w-0 flex-1 truncate text-xl font-semibold">{deck.name}</h2>
+        <span className="flex shrink-0 gap-2 md:justify-self-end">
           <button
             onClick={() => setColOpen(true)}
             title="配置表格列"
@@ -111,7 +109,7 @@ export default function DeckDetail({ deck, onBack, onReview }: Props) {
             列
           </button>
           <button
-            onClick={() => setAddOpen(true)}
+            onClick={() => setEditor('new')}
             className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500"
           >
             添加
@@ -136,18 +134,20 @@ export default function DeckDetail({ deck, onBack, onReview }: Props) {
         />
       )}
 
-      <CardForm
+      {editor !== null && <CardForm
         deckId={deck.id}
-        open={addOpen}
-        onClose={() => setAddOpen(false)}
-        onSubmit={handleCreateCard}
-      />
+        card={editor === 'new' ? undefined : editor}
+        onClose={() => setEditor(null)}
+        onSaved={() => { setEditor(null); void load() }}
+      />}
+      {error && <p role="alert" className="mb-3 text-sm text-red-600">{error} <button onClick={() => void load()} className="underline">重试</button></p>}
 
       {page && (
         <CardTable
           page={page}
           loading={loading}
           visible={columns}
+          onEdit={setEditor}
           onSort={handleSort}
           onPage={p => setQuery(q => ({ ...q, page: p }))}
           onPageSize={size => setQuery(q => ({ ...q, pageSize: size, page: 1 }))}

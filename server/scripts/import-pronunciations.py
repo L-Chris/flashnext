@@ -7,7 +7,8 @@ p=argparse.ArgumentParser();p.add_argument('--db',required=True);p.add_argument(
 payload=json.loads(Path(a.input).read_text());assert payload['profile']==PROFILE
 rows=payload['rows'];c=sqlite3.connect(f'file:{Path(a.db).resolve()}?mode={"rw" if a.apply else "ro"}',uri=True,timeout=30);c.row_factory=sqlite3.Row
 c.execute('pragma foreign_keys=on')
-words={r['id']:dict(r) for r in c.execute('select * from words')};groups=collections.defaultdict(list)
+english_filter=" where language='en'" if any(r[1]=='language' for r in c.execute('pragma table_info(words)')) else ''
+words={r['id']:dict(r) for r in c.execute('select * from words'+english_filter)};groups=collections.defaultdict(list)
 for r in rows:
  assert r['wordId'] in words and words[r['wordId']]['headword']==r['headword'], 'word identity changed; regenerate candidates'
  assert r['status'] in ['accepted','review']
@@ -48,7 +49,7 @@ if a.apply:
   c.execute("delete from word_pronunciations where source in ('kaikki','reviewed-20260922') and source_key not in (select key from incoming_keys)")
   c.executemany('''insert into word_pronunciations(word_id,source_key,source,revision,pos,usage,accent,raw_ipa,display_ipa,status,note) values (?,?,?,?,?,?,?,?,?,?,?)
    on conflict(source_key) do update set revision=excluded.revision,display_ipa=excluded.display_ipa,status=excluded.status,note=excluded.note''',[(r['wordId'],r['sourceKey'],r['source'],r['revision'],r['pos'],r['usage'],r['accent'],r['rawIpa'],r['displayIpa'],r['status'],r['note']) for r in rows])
-  c.execute('update words set phonetic_legacy=phonetic where phonetic_legacy is null')
+  c.execute('update words set phonetic_legacy=phonetic where phonetic_legacy is null'+(" and language='en'" if english_filter else ''))
   for u in usage_changes:c.execute('update ielts_usages set phonetic_legacy=coalesce(phonetic_legacy,phonetic),phonetic=?,phonetic_profile=? where id=?',(u['new'],u['profile'],u['id']))
   for x in changes:c.execute('update words set phonetic=?,phonetic_profile=? where id=?',(x['new'],x['profile'],x['wordId']))
   c.executemany('update cards set back=? where id=?',card_changes)

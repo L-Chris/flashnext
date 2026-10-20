@@ -7,7 +7,7 @@ import DeckDetail from './components/DeckDetail'
 import ReviewView from './components/ReviewView'
 import WordsView from './components/WordsView'
 import SynonymsView from './components/SynonymsView'
-import FsrsPanel from './components/FsrsPanel'
+import DeckSettingsDialog from './components/DeckSettingsDialog'
 
 type Route =
   | { type: 'decks' }
@@ -60,7 +60,7 @@ export default function App() {
   const [decks, setDecks] = useState<Deck[]>([])
   const [theme, setTheme] = useState<Theme>(initialTheme)
   const [deckAddOpen, setDeckAddOpen] = useState(false)
-  const [fsrsOpen, setFsrsOpen] = useState(false)
+  const [settingsDeck, setSettingsDeck] = useState<Deck | null>(null)
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark')
@@ -89,11 +89,6 @@ export default function App() {
 
   const handleCreateDeck = async (name: string, description: string) => {
     await api.createDeck(name, description)
-    await loadDecks()
-  }
-
-  const handleDeleteDeck = async (id: number) => {
-    await api.deleteDeck(id)
     await loadDecks()
   }
 
@@ -187,61 +182,26 @@ export default function App() {
                   >
                     添加
                   </button>
-                  <button
-                    onClick={() => setFsrsOpen(true)}
-                    title="设置"
-                    aria-label="设置"
-                    className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-300 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-800 dark:border-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
-                  >
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1-1.55 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.55-1 1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34h.09a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87v.09a1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.55 1Z"
-                      />
-                    </svg>
-                  </button>
                 </span>
               </div>
               <DeckList
                 decks={decks}
                 onOpen={deck => navigate({ type: 'deck', id: deck.id })}
-                onDelete={handleDeleteDeck}
+                onSettings={setSettingsDeck}
               />
               <DeckForm
                 open={deckAddOpen}
                 onClose={() => setDeckAddOpen(false)}
                 onSubmit={handleCreateDeck}
               />
-              {fsrsOpen && (
-                <div
-                  className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
-                  onClick={() => setFsrsOpen(false)}
-                >
-                  <div
-                    onClick={e => e.stopPropagation()}
-                    className="max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-xl border border-zinc-200 bg-white p-4 shadow-xl dark:border-zinc-800 dark:bg-zinc-900"
-                  >
-                    <div className="mb-3 flex items-center justify-between">
-                      <h3 className="text-sm font-semibold">设置</h3>
-                      <button
-                        onClick={() => setFsrsOpen(false)}
-                        aria-label="关闭"
-                        className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"
-                      >
-                        &times;
-                      </button>
-                    </div>
-                    <FsrsPanel />
-                  </div>
-                </div>
+              {settingsDeck && (
+                <DeckSettingsDialog key={settingsDeck.id} deck={settingsDeck} onClose={() => setSettingsDeck(null)} onSaved={loadDecks} />
               )}
             </>
           )}
 
           {route.type === 'deck' && routeDeck && (
-            <DeckDetail
+            <DeckDetail key={routeDeck.id}
               deck={routeDeck}
               onBack={() => navigate({ type: 'decks' })}
               onReview={() => navigate({ type: 'review', id: routeDeck.id })}
@@ -249,7 +209,7 @@ export default function App() {
           )}
 
           {route.type === 'review' && routeDeck && (
-            <ReviewView
+            <ReviewView key={routeDeck.id}
               deck={routeDeck}
               onExit={() => navigate({ type: 'deck', id: routeDeck.id })}
             />

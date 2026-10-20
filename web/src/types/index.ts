@@ -27,6 +27,7 @@ export interface DueCounts {
 }
 
 export interface Deck {
+  language?: string
   id: number
   name: string
   description: string
@@ -38,6 +39,7 @@ export interface Deck {
 
 export interface DueQueue {
   cards: Card[]
+  reviewOptions?: ReviewOptions
   usage: DueUsage
   counts: DueCounts
 }
@@ -58,6 +60,8 @@ export interface WordSense {
   wordId: number
   senseIdx: number
   gloss: string
+  glossLanguage?: string
+  exampleDetails?: string
   examples: string
   zh: string
 }
@@ -71,6 +75,9 @@ export interface WordTag {
 }
 
 export interface Word {
+  language?: string
+  reading?: string
+  romaji?: string
   id: number
   headword: string
   rank: number | null
@@ -80,12 +87,52 @@ export interface Word {
   tags: WordTag[]
 }
 
+export type ContentFormat = 'plain' | 'markdown_math'
+export type CardSide = 'front' | 'back'
+export interface MediaAsset {
+  id: string
+  mimeType: string
+  bytes: number
+  originalName: string
+  createdAt: string
+  url: string
+}
+export interface CardMedia extends MediaAsset {
+  mediaId: string
+  side: CardSide
+  position: number
+}
+export interface CardContentBody {
+  front: string
+  back: string
+  contentFormat: ContentFormat
+  media: Array<{ mediaId: string; side: CardSide; position: number }>
+}
+export interface ReviewOptions {
+  audioAutoplay: boolean
+  showNewCardAnswerImmediately: boolean
+  autoRevealAnswerSeconds: number | null
+  settingsVersion: number
+}
+export interface ContentDiagnostic { message: string; offset: number; line: number; column: number }
+export interface RenderedFace { html: string; errors: ContentDiagnostic[] }
+export interface ContentPreview {
+  contentFormat: ContentFormat
+  front: RenderedFace
+  back: RenderedFace
+  valid: boolean
+  renderer: { name: string; version: string; cssUrl: string }
+}
+
 export interface Card {
   id: number
   deckId: number
   wordId: number | null
   front: string
   back: string
+  contentFormat?: ContentFormat
+  media?: CardMedia[]
+  presentation?: { audioAutoplay: boolean; answerRevealAfterMs: number | null; settingsVersion: number }
   stability: number
   difficulty: number
   state: number
@@ -97,6 +144,10 @@ export interface Card {
   lastReview: string | null
   createdAt: string
   word?: {
+    language?: string
+    reading?: string
+    pos?: string
+    romaji?: string
     id: number
     headword: string
     rank?: number | null
@@ -199,6 +250,7 @@ export interface SchemeInfo {
 }
 
 export interface CoverageRow {
+  readyCount?: number
   level: number | null
   label: string
   description?: string
@@ -269,6 +321,13 @@ export interface RebuildResult {
 }
 
 export interface DailyLimits {
+  audioAutoplay: boolean
+  showNewCardAnswerImmediately: boolean
+  autoRevealAnswerSeconds: number | null
+  deckId: number
+  timezone: string
+  rolloverHour: number
+  version: number
   newPerDay: number
   reviewPerDay: number
 }

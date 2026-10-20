@@ -47,75 +47,52 @@ const timezoneOffsetMinutes = (tz, ms) => {
 /** 供 fsrs-rs convertCsvToFsrsItems 使用的 offsetProvider */
 const fsrsOffsetProvider = (ms, tz) => timezoneOffsetMinutes(tz, ms)
 
-/**
- * 时间戳所属的“复习日”序号（Anki 的 day offset）。
- * @param {number|Date} at
- * @returns {number}
- */
-const dayIndexOf = at => {
+/** @typedef {{ timezone: string, rolloverHour: number }} DayClock */
+/** @type {DayClock} */
+const DEFAULT_CLOCK = { timezone: TZ_NAME, rolloverHour: ROLLOVER_HOUR }
+
+/** @param {number|Date} at @param {DayClock} [clock] */
+const dayIndexOf = (at, clock = DEFAULT_CLOCK) => {
   const ms = at instanceof Date ? at.getTime() : at
-  const shifted = ms + timezoneOffsetMinutes(TZ_NAME, ms) * 60000 - ROLLOVER_HOUR * 3600000
-  return Math.floor(shifted / DAY_MS)
+  const localDay = Math.floor((ms + timezoneOffsetMinutes(clock.timezone, ms) * 60000) / DAY_MS)
+  return ms < cutStartOfIndex(localDay, clock) ? localDay - 1 : localDay
 }
 
-/**
- * dayIndex 对应的日切点绝对时间戳（本地 ROLLOVER_HOUR 点）。
- * DST 安全：迭代两次收敛（无 DST 时一次即收敛）。
- * @param {number} index
- * @returns {number}
+/** @type {Map<string, number>} */
+const cutoffs = new Map()
+
+/** Resolve a local cutoff; first occurrence in a DST fold, roll forward in a gap.
+ * @param {number} index @param {DayClock} [clock]
  */
-const cutStartOfIndex = index => {
-  let guess = index * DAY_MS + ROLLOVER_HOUR * 3600000
-  for (let i = 0; i < 3; i += 1) {
-    const next =
-      index * DAY_MS +
-      ROLLOVER_HOUR * 3600000 -
-      timezoneOffsetMinutes(TZ_NAME, guess) * 60000
-    if (next === guess) break
-    guess = next
-  }
-  return guess
+const cutStartOfIndex = (index, clock = DEFAULT_CLOCK) => {
+  const key = `${clock.timezone}:${clock.rolloverHour}:${index}`
+  if (cutoffs.has(key)) return cutoffs.get(key)
+  const target = index * DAY_MS + clock.rolloverHour * 3600000
+  const offsets = new Set([-2, -1, 0, 1, 2].map(d => timezoneOffsetMinutes(clock.timezone, target + d * DAY_MS)))
+  const candidates = [...offsets].map(offset => target - offset * 60000)
+  const exact = candidates.filter(ms => ms + timezoneOffsetMinutes(clock.timezone, ms) * 60000 === target)
+  const after = candidates.filter(ms => ms + timezoneOffsetMinutes(clock.timezone, ms) * 60000 > target)
+  const resolved = exact.length ? Math.min(...exact) : Math.min(...after)
+  if (!Number.isFinite(resolved)) throw new Error('Cannot resolve local day cutoff')
+  if (cutoffs.size > 4096) cutoffs.delete(cutoffs.keys().next().value)
+  cutoffs.set(key, resolved)
+  return resolved
 }
 
-/** @param {number|Date} at @returns {number} at 所属复习日的 cutStart 时间戳 */
-const cutStartOf = at => cutStartOfIndex(dayIndexOf(at))
-
-/** @param {number|Date} at @returns {number} 下一个日切点（= 当天可见队列的开区间上界） */
-const nextCutStartOf = at => cutStartOfIndex(dayIndexOf(at) + 1)
-
-/**
- * Anki 语义的 elapsed_days（替代 ts-fsrs 的 dateDiffInDays，后者按 UTC 自然日）。
- * @param {number|Date} from
- * @param {number|Date} to
- * @returns {number}
- */
-const elapsedDaysBetween = (from, to) => dayIndexOf(to) - dayIndexOf(from)
-
-/**
- * 队列可见性窗口（对应 Anki 的“当天到期全部可见” + learn ahead）。
- * @param {number|Date} [at]
- * @returns {{ dayEndMs: number, learnAheadMs: number, cutStartMs: number }}
- */
-const dueWindowOf = at => {
+/** @param {number|Date} at @param {DayClock} [clock] */
+const cutStartOf = (at, clock = DEFAULT_CLOCK) => cutStartOfIndex(dayIndexOf(at, clock), clock)
+/** @param {number|Date} at @param {DayClock} [clock] */
+const nextCutStartOf = (at, clock = DEFAULT_CLOCK) => cutStartOfIndex(dayIndexOf(at, clock) + 1, clock)
+/** @param {number|Date} from @param {number|Date} to @param {DayClock} [clock] */
+const elapsedDaysBetween = (from, to, clock = DEFAULT_CLOCK) => dayIndexOf(to, clock) - dayIndexOf(from, clock)
+/** @param {number|Date} [at] @param {DayClock} [clock] */
+const dueWindowOf = (at, clock = DEFAULT_CLOCK) => {
   const ms = at instanceof Date ? at.getTime() : at === undefined ? Date.now() : at
-  return {
-    cutStartMs: cutStartOf(ms),
-    dayEndMs: nextCutStartOf(ms),
-    learnAheadMs: ms + LEARN_AHEAD_MINUTES * 60000,
-  }
+  return { cutStartMs: cutStartOf(ms, clock), dayEndMs: nextCutStartOf(ms, clock), learnAheadMs: ms + LEARN_AHEAD_MINUTES * 60000 }
 }
 
 module.exports = {
-  DAY_MS,
-  TZ_NAME,
-  ROLLOVER_HOUR,
-  LEARN_AHEAD_MINUTES,
-  timezoneOffsetMinutes,
-  fsrsOffsetProvider,
-  dayIndexOf,
-  cutStartOfIndex,
-  cutStartOf,
-  nextCutStartOf,
-  elapsedDaysBetween,
-  dueWindowOf,
+  DAY_MS, TZ_NAME, ROLLOVER_HOUR, LEARN_AHEAD_MINUTES, DEFAULT_CLOCK,
+  timezoneOffsetMinutes, fsrsOffsetProvider, dayIndexOf, cutStartOfIndex, cutStartOf,
+  nextCutStartOf, elapsedDaysBetween, dueWindowOf,
 }

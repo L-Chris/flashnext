@@ -47,12 +47,14 @@ export class KnowledgeService {
     let linked = 0
     let states = 0
     for (const word of words) {
-      const entity = await prisma.knowledgeEntity.upsert({
-        where: { canonicalKey: `en:word:${word.headword.toLowerCase()}` },
+      const entity = word.knowledgeEntityId
+        ? await prisma.knowledgeEntity.update({ where: { id: word.knowledgeEntityId }, data: { title: word.headword, summary: word.translation } })
+        : await prisma.knowledgeEntity.upsert({
+        where: { canonicalKey: `${word.lexicalKey || `${word.language}:word:${word.headword}`}` },
         update: { title: word.headword, summary: word.translation },
         create: {
           kind: 'word',
-          canonicalKey: `en:word:${word.headword.toLowerCase()}`,
+          canonicalKey: `${word.lexicalKey || `${word.language}:word:${word.headword}`}`,
           title: word.headword,
           summary: word.translation,
         },
@@ -103,7 +105,7 @@ export class KnowledgeService {
     if (normalized.length === 0) return []
 
     const rows = await prisma.word.findMany({
-      where: { headword: { in: normalized } },
+      where: { language: 'en', headword: { in: normalized } },
       include: {
         tags: true,
         knowledgeEntity: {
@@ -137,12 +139,12 @@ export class KnowledgeService {
   }
 
   async getVocabularyProfile() {
-    const total = await prisma.word.count()
+    const total = await prisma.word.count({ where: { language: 'en' } })
     const grouped = await prisma.personalKnowledgeState.groupBy({
       by: ['status'],
       where: {
         profileId: DEFAULT_PROFILE_ID,
-        entity: { kind: 'word' },
+        entity: { kind: 'word', words: { some: { language: 'en' } } },
       },
       _count: { _all: true },
     })
