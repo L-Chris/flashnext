@@ -56,7 +56,8 @@ export class DueService {
 
   /**
    * 分桶：日内学习卡 / 复习(含跨天学习) / 新卡。
-   * Anki 的 gather 顺序 = intraday learning → interday learning → review → new，
+   * 已到期日内学习 → 复习/跨天学习 → 新卡 → 提前学习窗口内的未到期卡。
+   * learn-ahead 仅在其他可学卡之后使用，不能把刚评分的卡立刻提到队首。
    * 复习卡内部按 retrievability 升序（FSRS 模式下 Anki 的默认排序）。
    */
   private async collect(deckId: number, now: Date, settings: DeckSettings) {
@@ -67,6 +68,7 @@ export class DueService {
     const { forgetting_curve } = await import('ts-fsrs')
 
     const intraday: Bucket[] = []
+    const upcoming: Bucket[] = []
     const review: Bucket[] = []
     const fresh: Bucket[] = []
 
@@ -76,7 +78,8 @@ export class DueService {
         continue
       }
       if (DueService.isIntraday(c.state, c.interval)) {
-        intraday.push({ id: c.id, sort: c.due.getTime() })
+        const bucket = c.due.getTime() <= now.getTime() ? intraday : upcoming
+        bucket.push({ id: c.id, sort: c.due.getTime() })
         continue
       }
       const elapsed = Math.max(0, elapsedDaysBetween(c.lastReview ?? c.createdAt, now, settings))
@@ -85,20 +88,22 @@ export class DueService {
     }
 
     intraday.sort((a, b) => a.sort - b.sort)
+    upcoming.sort((a, b) => a.sort - b.sort)
     review.sort((a, b) => a.sort - b.sort)
     fresh.sort((a, b) => a.sort - b.sort)
 
-    return { intraday, review, fresh }
+    return { intraday, upcoming, review, fresh }
   }
 
   private static applyLimits(
-    buckets: { intraday: Bucket[]; review: Bucket[]; fresh: Bucket[] },
+    buckets: { intraday: Bucket[]; upcoming: Bucket[]; review: Bucket[]; fresh: Bucket[] },
     usage: { reviewRemaining: number; newRemaining: number },
   ) {
     const picked = [
       ...buckets.intraday,
       ...buckets.review.slice(0, usage.reviewRemaining),
       ...buckets.fresh.slice(0, usage.newRemaining),
+      ...buckets.upcoming,
     ]
     return {
       picked,
@@ -118,7 +123,7 @@ export class DueService {
       dueCount: picked.length,
       usage,
       counts: {
-        intraday: buckets.intraday.length,
+        intraday: buckets.intraday.length + buckets.upcoming.length,
         review: buckets.review.length,
         fresh: buckets.fresh.length,
         hiddenByLimit,
@@ -141,7 +146,7 @@ export class DueService {
       reviewOptions: reviewOptionsOf(settings),
       usage,
       counts: {
-        intraday: buckets.intraday.length,
+        intraday: buckets.intraday.length + buckets.upcoming.length,
         review: buckets.review.length,
         fresh: buckets.fresh.length,
         queued: picked.length,
