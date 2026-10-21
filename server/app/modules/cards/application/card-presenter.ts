@@ -21,8 +21,6 @@ export class CardPresenter {
       const isNew = card.state === 0 && card.reps === 0
       const answerRevealAfterMs = isNew && clock.showNewCardAnswerImmediately ? 0 : clock.autoRevealAnswerSeconds === null ? null : clock.autoRevealAnswerSeconds * 1000
       return { ...card,
-        // Keep dictionary data/search intact; Japanese study cards only show kana readings.
-        word: card.word?.language === 'ja' ? { ...card.word, romaji: '' } : card.word,
         media: (card.media || []).map(link => ({ mediaId: link.mediaId, side: link.side, position: link.position, ...mediaView(link.asset) })),
         presentation: { audioAutoplay: clock.audioAutoplay, answerRevealAfterMs, settingsVersion: clock.version },
       }

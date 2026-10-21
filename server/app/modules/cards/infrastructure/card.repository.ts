@@ -14,13 +14,16 @@ const CARD_FIELDS = {
   wordId: true,
 } as const
 
+// Study responses omit dictionary-only fields; romaji remains available to search.
+const WORD_DISPLAY_OMIT = { sourceMetadata: true, romaji: true } as const
+
 @Service()
 export class CardRepository {
   listByDeck(deckId: number) {
     return prisma.card.findMany({
       where: { deckId },
       orderBy: { createdAt: 'desc' },
-      include: { media: { include: { asset: true }, orderBy: [{ side: 'asc' }, { position: 'asc' }] }, word: { omit: { sourceMetadata: true }, include: { tags: true, pronunciations: { where: { status: 'accepted' } } } } },
+      include: { media: { include: { asset: true }, orderBy: [{ side: 'asc' }, { position: 'asc' }] }, word: { omit: WORD_DISPLAY_OMIT, include: { tags: true, pronunciations: { where: { status: 'accepted' } } } } },
     })
   }
 
@@ -36,7 +39,7 @@ export class CardRepository {
     return prisma.card.count({ where: { deckId, AND: [dueVisibleWhere(now, clock)] } })
   }
 
-  // 排序/分页用的轻量行：不含释义全文与标签，word 只取 rank
+  // 排序/搜索用的轻量行：保留罗马音供搜索，响应通过 listByIds 单独加载。
   listLightByDeck(deckId: number) {
     return prisma.card.findMany({
       where: { deckId },
@@ -63,7 +66,7 @@ export class CardRepository {
       include: {
         media: { include: { asset: true }, orderBy: [{ side: 'asc' }, { position: 'asc' }] },
         word: {
-          omit: { sourceMetadata: true },
+          omit: WORD_DISPLAY_OMIT,
           include: {
             tags: true,
             senses: { orderBy: { senseIdx: 'asc' }, take: 3 },
