@@ -1,0 +1,31 @@
+{
+  "image": "193dea868afb360ac81dfb7c7625291e9e315cc4a0c8cae96b1cdfaca141c23c",
+  "browserTestsPassed": 12,
+  "readOnly": true,
+  "results": [
+    {
+      "word": "primate",
+      "width": 1200,
+      "duplicateMeaningsHidden": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "word": "permit",
+      "width": 1200,
+      "duplicateMeaningsHidden": false,
+      "noHorizontalOverflow": true
+    },
+    {
+      "word": "primate",
+      "width": 390,
+      "duplicateMeaningsHidden": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "word": "permit",
+      "width": 390,
+      "duplicateMeaningsHidden": false,
+      "noHorizontalOverflow": true
+    }
+  ]
+}

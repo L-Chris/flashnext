@@ -1,0 +1,40 @@
+{
+  "samples": [
+    {
+      "word": "elusive",
+      "cardId": 31718,
+      "phonetic": "ɪˈluːsɪv"
+    },
+    {
+      "word": "alumni",
+      "cardId": 31577,
+      "phonetic": "əˈlʌmnaɪ"
+    },
+    {
+      "word": "converse",
+      "cardId": 32048,
+      "phonetic": "ˈkɒnvɜːs"
+    },
+    {
+      "word": "upsurge",
+      "cardId": 32549,
+      "phonetic": "ʌpˈsɜːdʒ"
+    },
+    {
+      "word": "numerate",
+      "cardId": 31573,
+      "phonetic": "ˈnjuːməreɪt"
+    },
+    {
+      "word": "primate",
+      "cardId": 31402,
+      "phonetic": "ˈpraɪmeɪt"
+    },
+    {
+      "word": "hybridise",
+      "cardId": 31565,
+      "phonetic": "ˈhaɪbrɪdaɪz"
+    }
+  ],
+  "readOnly": true
+}

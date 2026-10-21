@@ -1,4 +1,4 @@
-import { reviewWordBack } from '../utils/word-card'
+import { pronunciationNotesCoverMeanings, reviewWordBack } from '../utils/word-card'
 import Pronunciations from './Pronunciations'
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { api } from '../api/client'
@@ -20,12 +20,13 @@ const RATING_BUTTONS: Array<{ rating: Rating; label: string; className: string }
 
 function WordAnswer({ card }: { card: Card }) {
   const { phonetic, meanings, isWordBack, reading, pos } = reviewWordBack(card.back, card.word)
+  const hideDuplicateMeanings = isWordBack && card.word?.language !== 'ja' && pronunciationNotesCoverMeanings(meanings, card.word?.pronunciations)
   return <div className="mt-4 text-xl text-emerald-700 dark:text-emerald-400">
     {card.word?.language !== 'ja' && (phonetic || card.word?.pronunciations?.length) && <div className="text-center"><Pronunciations items={isWordBack ? card.word?.pronunciations : undefined} fallback={phonetic} /></div>}
     {reading && <p lang="ja" className="mb-2 text-center">{reading}</p>}
     {pos && <p className="mb-2 text-center text-sm text-zinc-500">{pos}</p>}
     {reading && card.word?.romaji && <details className="mb-2 text-center text-xs text-zinc-500"><summary className="cursor-pointer">罗马音</summary>{card.word.romaji}</details>}
-    {meanings && <div className={`grid grid-cols-[max-content_1fr] gap-x-3 gap-y-1 text-left ${phonetic ? 'mt-5' : ''}`}>
+    {meanings && !hideDuplicateMeanings && <div data-testid="word-meanings" className={`grid grid-cols-[max-content_1fr] gap-x-3 gap-y-1 text-left ${phonetic ? 'mt-5' : ''}`}>
       {meanings.split('\n').map((line, index) => {
         const match = line.match(/^([a-z&]+\.\s*)(.*)$/)
         return match ? <Fragment key={index}><span className="text-emerald-600/80 dark:text-emerald-500/80">{match[1].trim()}</span><span>{match[2]}</span></Fragment> : <span key={index} className="col-span-2 whitespace-pre-wrap">{line}</span>

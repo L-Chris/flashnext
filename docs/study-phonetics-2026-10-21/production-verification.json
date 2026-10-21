@@ -1,0 +1,107 @@
+{
+  "scopeWords": 1964,
+  "verifiedWords": 1959,
+  "pendingWords": 5,
+  "tables": {
+    "word_tags": {
+      "before": 32876,
+      "after": 32876,
+      "protectedColumnsUnchanged": true
+    },
+    "fsrs_params": {
+      "before": 1,
+      "after": 1,
+      "protectedColumnsUnchanged": true
+    },
+    "review_logs": {
+      "before": 129123,
+      "after": 129123,
+      "protectedColumnsUnchanged": true
+    },
+    "profiles": {
+      "before": 1,
+      "after": 1,
+      "protectedColumnsUnchanged": true
+    },
+    "knowledge_entities": {
+      "before": 19471,
+      "after": 19471,
+      "protectedColumnsUnchanged": true
+    },
+    "personal_knowledge_states": {
+      "before": 18322,
+      "after": 18322,
+      "protectedColumnsUnchanged": true
+    },
+    "wordnet_synsets": {
+      "before": 117791,
+      "after": 117791,
+      "protectedColumnsUnchanged": true
+    },
+    "wordnet_senses": {
+      "before": 207235,
+      "after": 207235,
+      "protectedColumnsUnchanged": true
+    },
+    "word_pronunciations": {
+      "before": 99118,
+      "after": 101512,
+      "protectedColumnsUnchanged": true
+    },
+    "ielts_usages": {
+      "before": 86,
+      "after": 86,
+      "protectedColumnsUnchanged": true
+    },
+    "decks": {
+      "before": 2,
+      "after": 2,
+      "protectedColumnsUnchanged": true
+    },
+    "word_senses": {
+      "before": 24270,
+      "after": 24270,
+      "protectedColumnsUnchanged": true
+    },
+    "words": {
+      "before": 19471,
+      "after": 19471,
+      "protectedColumnsUnchanged": true
+    },
+    "deck_fsrs_params": {
+      "before": 2,
+      "after": 2,
+      "protectedColumnsUnchanged": true
+    },
+    "media_assets": {
+      "before": 343,
+      "after": 343,
+      "protectedColumnsUnchanged": true
+    },
+    "cards": {
+      "before": 10594,
+      "after": 10594,
+      "protectedColumnsUnchanged": true
+    },
+    "deck_settings": {
+      "before": 2,
+      "after": 2,
+      "protectedColumnsUnchanged": true
+    },
+    "card_media": {
+      "before": 343,
+      "after": 343,
+      "protectedColumnsUnchanged": true
+    },
+    "app_settings": {
+      "before": 1,
+      "after": 1,
+      "protectedColumnsUnchanged": true
+    }
+  },
+  "changedWords": 1427,
+  "changedCards": 1338,
+  "newPronunciations": 2394,
+  "foreignKeysOk": true,
+  "integrityOk": true
+}

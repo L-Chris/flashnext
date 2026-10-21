@@ -8,7 +8,10 @@ c=sqlite3.connect(f'file:{Path(a.db).resolve()}?mode=ro',uri=True)
 english_filter=" where language='en'" if any(r[1]=='language' for r in c.execute('pragma table_info(words)')) else ''
 words={w:i for i,w in c.execute('select id,headword from words'+english_filter)}
 overrides=json.loads((Path(__file__).parent/'resources/pronunciation-overrides.json').read_text())
-overridden={x['word'] for x in overrides}
+study_file=Path(__file__).parent/'resources/study-pronunciation-overrides-20261021.json'
+study_overrides=json.loads(study_file.read_text()) if study_file.exists() else []
+study_words={x['word'] for x in study_overrides}
+overridden={x['word'] for x in overrides} | study_words
 rows={};digest=hashlib.sha256();counts=collections.Counter()
 with open(a.data,'rb') as f:
  for n,line in enumerate(f,1):
@@ -37,6 +40,12 @@ for x in overrides:
  if w in words:
   key='reviewed-20260922:'+hashlib.sha256(json.dumps(x,sort_keys=True).encode()).hexdigest()
   rows[key]={'sourceKey':key,'wordId':words[w],'headword':w,'source':'reviewed-20260922','revision':'2026-09-22','pos':x['pos'],'usage':x['usage'],'accent':'UK','rawIpa':x['ipa'],'displayIpa':x['ipa'],'status':'accepted','note':x['reference'],'priority':x['priority']}
+for x in study_overrides:
+ w=x['word']
+ if w in words:
+  identity={k:x[k] for k in ['word','pos','ipa','usage','reference']}
+  key='reviewed-study-20261021:'+hashlib.sha256(json.dumps(identity,sort_keys=True,ensure_ascii=False).encode()).hexdigest()
+  rows[key]={'sourceKey':key,'wordId':words[w],'headword':w,'source':'reviewed-study-20261021','revision':'2026-10-21','pos':x['pos'],'usage':x['usage'],'accent':'UK','rawIpa':x.get('raw',x['ipa']),'displayIpa':x['ipa'],'status':'accepted','note':x['reference'],'priority':x['priority']}
 for r in rows.values():counts[r['status']]+=1
 out={'profile':PROFILE,'sha256':revision,'rows':list(rows.values()),'counts':counts}
 Path(a.output).parent.mkdir(parents=True,exist_ok=True);Path(a.output).write_text(json.dumps(out,ensure_ascii=False))
