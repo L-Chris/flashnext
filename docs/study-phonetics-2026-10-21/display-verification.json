@@ -1,8 +1,0 @@
-{
-  "multiPronunciationCardWords": 829,
-  "withAlternativeSoundsGrouped": 695,
-  "withDistinctUsageGroups": 167,
-  "maxUsageGroups": 3,
-  "missingOrHiddenSoundsOrHints": [],
-  "scope": "Read-only rendering validation of accepted pronunciations on existing cards; does not certify dictionary sense accuracy."
-}

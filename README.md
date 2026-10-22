@@ -8,6 +8,8 @@ FlashNext 不再只把数据建模为「牌组 → 卡片 → 复习」，而是
 
 Flutter App 的每牌组设置、公式、音频和自动显示答案接入见 [App 开发交接文档](https://github.com/L-Chris/flashnext-app/blob/main/docs/handoff/app-study-features-2026-10-20.md)。后端与 Web 已实现对应接口和交互；App 的后续实现不包含新增卡片功能。
 
+维护文档与本地产物的保存规则见 [文档说明](docs/README.md)，英语词卡音频生成与导入见 [英语音频维护](docs/english-audio.md)。
+
 当前第一阶段以英语词汇为主要落地领域：在保留完整 Anki/FSRS 式复习能力的同时，引入统一知识实体和个人知识状态，并提供面向阅读器、Agent、MCP 等外部系统的语义化查询接口。后续计划扩展数学知识、阅读记录、技能与其他结构化知识。
 
 ## 核心架构

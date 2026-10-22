@@ -1,0 +1,85 @@
+[
+  {
+    "word": "stellar",
+    "targetIpa": "ˈstelə(r)",
+    "transcript": "Stella",
+    "dictionaryIpa": "/ˈstɛl.ə/",
+    "condition": "British English, non-rhotic isolated word",
+    "source": "local Kaikki English, revision e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry",
+    "reference": "https://en.wiktionary.org/wiki/stellar#Pronunciation"
+  },
+  {
+    "word": "dissent",
+    "targetIpa": "dɪˈsent",
+    "transcript": "descent",
+    "dictionaryIpa": "/dɪˈsɛnt/",
+    "condition": "British English homophones; same phonemes and stress",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry",
+    "reference": "https://en.wiktionary.org/wiki/dissent#Pronunciation"
+  },
+  {
+    "word": "plank",
+    "targetIpa": "plæŋk",
+    "transcript": "Planck",
+    "dictionaryIpa": "/ˈplæŋk/",
+    "condition": "British English; Kaikki explicitly lists Planck (UK)",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry",
+    "reference": "https://en.wiktionary.org/wiki/plank#Pronunciation"
+  },
+  {
+    "word": "turnout",
+    "targetIpa": "ˈtɜːnaʊt",
+    "transcript": "turn out",
+    "dictionaryIpa": "/ˈtɜː(ɹ)naʊt/",
+    "kind": "dictionary-word-boundary",
+    "condition": "ASR word-boundary segmentation only; must retain noun initial stress, not verb phrase final stress",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; noun IPA and explicit alternative spelling turn-out",
+    "reference": "https://en.wiktionary.org/wiki/turnout#Pronunciation"
+  },
+  {
+    "word": "complementary",
+    "targetIpa": "ˌkɒmplɪˈmentri",
+    "transcript": "complimentary",
+    "dictionaryIpa": "/ˌkɒmplɪˈmɛnt(ə)ɹi/",
+    "condition": "British English homophones; same phonemes and stress",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry",
+    "reference": "https://en.wiktionary.org/wiki/complementary#Pronunciation"
+  },
+  {
+    "word": "mar",
+    "targetIpa": "mɑː(r)",
+    "transcript": "Ma",
+    "dictionaryIpa": "/mɑː/",
+    "condition": "British English, non-rhotic isolated word; not the letter-name abbreviation M.A.",
+    "source": "Cambridge publishes ma UK /mɑː/ and mar UK /mɑː r/ with optional linking r; local Kaikki mar UK /mɑː(ɹ)/",
+    "reference": "https://dictionary.cambridge.org/pronunciation/english/ma",
+    "targetReference": "https://dictionary.cambridge.org/pronunciation/english/mar"
+  },
+  {
+    "word": "heed",
+    "targetIpa": "hiːd",
+    "transcript": "he'd",
+    "dictionaryIpa": "/ˈhiːd/",
+    "condition": "British English homophones; preserve final /d/",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry",
+    "reference": "https://en.wiktionary.org/wiki/heed#Pronunciation"
+  },
+  {
+    "word": "gorilla",
+    "targetIpa": "ɡəˈrɪlə",
+    "transcript": "guerrilla",
+    "dictionaryIpa": "/ɡəˈɹɪl.ə/",
+    "condition": "British English homophones; same phonemes and stress",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry",
+    "reference": "https://en.wiktionary.org/wiki/gorilla#Pronunciation"
+  },
+  {
+    "word": "larva",
+    "targetIpa": "ˈlɑːvə",
+    "transcript": "lava",
+    "dictionaryIpa": "/ˈlɑː.və/",
+    "condition": "British English, non-rhotic; not the distinct American rhotic larva",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit reciprocal homophones on larva and lava",
+    "reference": "https://en.wiktionary.org/wiki/larva#Pronunciation"
+  }
+]

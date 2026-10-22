@@ -12,7 +12,7 @@
 
 例如 `converse` 区分“相反事物”和“交谈”，`upsurge` 区分动词和名词重音，`numerate` 保留动词与形容词差异；`fungi` 关联 fungus 的复数，`primate` 分开记录动物和主教的读法。原始音标及来源记录保留，显示层不增加“待核验”提示。
 
-逐条依据及默认读音优先级保存于 [发音校订资源](../../server/scripts/resources/study-pronunciation-overrides-20261021.json)。全部差异见 [production-migration.json](production-migration.json)，字段保护结果见 [production-verification.json](production-verification.json)。
+逐条依据及默认读音优先级保存于 [发音校订资源](../../server/scripts/resources/study-pronunciation-overrides-20261021.json)。全部差异见 `production-migration.json`（本地报告），字段保护结果见 `production-verification.json`（本地报告）。
 
 ## 尚未填入的五个词
 
@@ -22,7 +22,7 @@
 - `imagist`：未把 imagism 的读音移用到该词；搜索缓存中的书籍摘录尚不能完整复核。
 - `short-day`：词典英音栏目没有整词音标，未直接删改美音中的 r 来补缺。
 
-这五个词原音标为空；保持词条、卡片和学习数据，后续音频生成须先处理其读音依据。详情见 [pending.json](pending.json)。
+这五个词原音标为空；保持词条、卡片和学习数据，后续音频生成须先处理其读音依据。详情见 `pending.json`（本地报告）。
 
 ## 导入保护与复现
 
@@ -56,7 +56,7 @@ python3 server/scripts/tests/study-pronunciations.py
 
 后续 Web 展示调整让多读音默认显示各自已有的词性、词义或时态说明，覆盖复习背面和牌组列表的读音列。例如 primate 显示“灵长目动物”及“首席主教、大主教”，read 显示原形／现在时及过去式／过去分词。词性和完整用法说明相同的读音合并，用“或”连接；相同音标的记录去重，保持各用法与音标的对应。通用的“名词读法”等说明只保留词性缩写。单读音保持简洁，复习背面默认显示全部分组；列表超过两组时提供展开按钮，点击不会触发整张卡片展开。
 
-这是展示层调整，不增改数据库、学习记录或音频。已有卡片中 829 个词有多条已采用的音标，其中 695 个词可以合并至少一组备选读音，167 个词仍保留多组不同说明（两个计数有交集）。逐词只读渲染核查未发现音标或已有用法说明丢失，见 [display-verification.json](display-verification.json)。这一检查验证展示完整性，不等同于重新核验所有词典义项；原记录只有词性时，界面不会自动编造义项或中文翻译。
+这是展示层调整，不增改数据库、学习记录或音频。已有卡片中 829 个词有多条已采用的音标，其中 695 个词可以合并至少一组备选读音，167 个词仍保留多组不同说明（两个计数有交集）。逐词只读渲染核查未发现音标或已有用法说明丢失，见 `display-verification.json`（本地报告）。这一检查验证展示完整性，不等同于重新核验所有词典义项；原记录只有词性时，界面不会自动编造义项或中文翻译。
 
 Web 构建及 9 项浏览器测试通过，覆盖桌面／手机、同词性不同义、时态区别、同音标多词性、变体去重、默认读音排序、候选过滤、列表展开、口音隔离、单读音及自定义卡背。这一展示更新需要重新构建 Web：
 
@@ -68,7 +68,7 @@ FLASHNEXT_TEST_BASE_URL=http://127.0.0.1:19006 npx playwright test tests/pronunc
 
 浏览器测试使用完整 API 拦截和模拟队列，不读写实际学习数据。
 
-部署后，使用真实 primate、read、permit、bow、fungi、converse、tear、desert 卡片，在 1200px 和 390px 视口完成 16 次只读浏览器检查，均无横向溢出。复习队列由浏览器拦截替换，接口仅允许 GET，不提交评分或学习记录；详情见 [display-browser-verification.json](display-browser-verification.json)。Docker 服务健康检查正常。
+部署后，使用真实 primate、read、permit、bow、fungi、converse、tear、desert 卡片，在 1200px 和 390px 视口完成 16 次只读浏览器检查，均无横向溢出。复习队列由浏览器拦截替换，接口仅允许 GET，不提交评分或学习记录；详情见 `display-browser-verification.json`（本地报告）。Docker 服务健康检查正常。
 
 ### 重复释义去重
 
@@ -76,4 +76,4 @@ FLASHNEXT_TEST_BASE_URL=http://127.0.0.1:19006 npx playwright test tests/pronunc
 
 对现有卡片做只读检查，本次只有 primate 满足完整覆盖条件。Web 构建及更新后的 12 项浏览器测试通过，包含桌面／手机隐藏重复释义和保留补充释义的检查。此项只修改 Web 展示，不改数据库内容。
 
-部署后再用真实 primate 和 permit 完成桌面／手机共 4 次检查：前者隐藏重复释义，后者保留补充释义，均无横向溢出。结果见 [duplicate-meaning-verification.json](duplicate-meaning-verification.json)。
+部署后再用真实 primate 和 permit 完成桌面／手机共 4 次检查：前者隐藏重复释义，后者保留补充释义，均无横向溢出。结果见 `duplicate-meaning-verification.json`（本地报告）。

@@ -41,13 +41,14 @@ def mp3_info(path):
     return info
 
 
-def import_batch(db, batch, media_dir, report_path, apply=False, backup=None, limit=None, ready_only=False):
+def import_batch(db, batch, media_dir, report_path, apply=False, backup=None, limit=None, ready_only=False,
+                 *, version=VERSION, language='ja', check_word=check_identity, validate_audio=validate_result):
     if limit is not None and (not isinstance(limit, int) or isinstance(limit, bool) or limit < 1):
         raise ValueError('limit must be a positive integer')
     db, batch, media_dir = Path(db).resolve(), Path(batch).resolve(), Path(media_dir).resolve()
     plan = json.loads((batch / 'plan.json').read_text())
     expected_hash = plan.pop('planHash')
-    if plan['version'] != VERSION or digest(plan) != expected_hash:
+    if plan['version'] != version or digest(plan) != expected_hash:
         raise ValueError('Invalid or changed batch plan')
     rows = plan['rows'][:limit] if limit else plan['rows']
     if ready_only:
@@ -70,15 +71,15 @@ def import_batch(db, batch, media_dir, report_path, apply=False, backup=None, li
     committed = False
     owned_paths = set()
     journal = None
-    result = dict(version=VERSION, applied=False, planHash=expected_hash, selectedCards=len(card_ids), readyOnly=ready_only,
+    result = dict(version=version, applied=False, planHash=expected_hash, selectedCards=len(card_ids), readyOnly=ready_only,
                   newAssets=0, newLinks=0, skippedExistingBackAudio=0, reusedAssets=0, records=[])
     try:
         # Validate every artifact and identity before creating any files or rows.
         c.execute('begin')
         for row in rows:
-            check_identity(c, row)
+            check_word(c, row)
             value = json.loads((batch / 'results' / f"{row['wordId']}.json").read_text())
-            audio = validate_result(row, plan['config'], batch, value)
+            audio = validate_audio(row, plan['config'], batch, value)
             if value['wordId'] != row['wordId'] or value['reading'] != row['reading'] or value['bytes'] != audio.stat().st_size:
                 raise ValueError('Audio identity or length does not match its evidence')
             mp3_info(audio)
@@ -112,7 +113,7 @@ def import_batch(db, batch, media_dir, report_path, apply=False, backup=None, li
         c.execute('begin immediate' if apply else 'begin')
         predicted_assets = set()
         for row in rows:
-            check_identity(c, row)
+            check_word(c, row)
             value, audio = artifacts[row['wordId']]
             record = dict(wordId=row['wordId'], lexicalKey=row['lexicalKey'], headword=row['headword'],
                           reading=row['reading'], sha256=value['sha256'], evidenceFile=str((batch / 'results' / f"{row['wordId']}.json").relative_to(batch)), cards=[])
@@ -143,7 +144,7 @@ def import_batch(db, batch, media_dir, report_path, apply=False, backup=None, li
                         asset_info = staged[value['sha256']]
                         c.execute('INSERT INTO media_assets(id,storage_key,sha256,mime_type,bytes,original_name,created_at) VALUES (?,?,?,?,?,?,?)',
                                   (media_id, asset_info['storageKey'], value['sha256'], 'audio/mpeg', value['bytes'],
-                                   f"{row['headword']}（{row['reading']}）.mp3", int(time.time() * 1000)))
+                                   (f"{row['headword']}（英音）.mp3" if language == 'en' else f"{row['headword']}（{row['reading']}）.mp3"), int(time.time() * 1000)))
                         owned_paths.add(asset_info['path'])
                 positions = {r['position'] for r in backs}
                 position = next(n for n in range(1001) if n not in positions)
@@ -156,7 +157,7 @@ def import_batch(db, batch, media_dir, report_path, apply=False, backup=None, li
         if apply:
             journal_dir = db.parent / 'audio-imports'
             journal_dir.mkdir(parents=True, exist_ok=True)
-            journal = journal_dir / f"ja-{plan['deckId']}-{expected_hash[:12]}-{uuid.uuid4().hex[:10]}.json"
+            journal = journal_dir / f"{language}-{plan['deckId']}-{expected_hash[:12]}-{uuid.uuid4().hex[:10]}.json"
             result.update(backup=str(backup), journal=str(journal), config=plan['config'],
                           plan=plan, evidence={str(row['wordId']): artifacts[row['wordId']][0] for row in rows},
                           newAssetIds=[x['id'] for x in staged.values() if x['path'] in owned_paths])

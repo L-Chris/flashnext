@@ -13,3 +13,9 @@ __pycache__/
 
 web/test-results/
 web/playwright-report/
+
+# Local audit/import reports; retain reusable scripts and documentation.
+docs/*-20[0-9][0-9]-[0-9][0-9]-[0-9][0-9]/*.json
+docs/*-20[0-9][0-9]-[0-9][0-9]-[0-9][0-9]/*.csv
+docs/english-audio-2026-10-21/
+docs/local/

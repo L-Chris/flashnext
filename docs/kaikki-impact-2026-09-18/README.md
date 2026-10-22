@@ -8,7 +8,7 @@
 - 全量扫描 `server/scripts/data/kaikki.org-dictionary-English.jsonl`：3,245,973,435 字节、1,492,836 行。SHA-256：`e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25`。本地修改时间不能证明上游快照日期。
 - 覆盖率按 headword 区分大小写精确匹配，尚未递归解析拼写变体及词形。计数单位为词，每词至少有一项即计入，不代表其所有义项完整。
 - 另外针对性抽查 34 个词及变体，涵盖多义、同形异义、主题词、专名、短语、英美拼写；不是随机抽样，不能据此估计全库错误率。
-- 复现脚本：[audit.py](audit.py)；完整计数与抽查摘要：[results.json](results.json)。抽查原始条目保存在被 Git 忽略的数据目录 `server/scripts/data/kaikki-impact-2026-09-18/sample-records.json`。
+- 复现脚本：[audit.py](audit.py)；完整计数与抽查摘要：`results.json`（本地报告）。抽查原始条目保存在被 Git 忽略的数据目录 `server/scripts/data/kaikki-impact-2026-09-18/sample-records.json`。
 
 ## 实测覆盖
 

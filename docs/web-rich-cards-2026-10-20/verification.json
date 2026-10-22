@@ -1,9 +1,0 @@
-{
-  "browser_scenarios_passed": 10,
-  "legacy_english_japanese_display": "passed",
-  "original_staging_data_unchanged_after_cleanup": true,
-  "production_browser_smoke": "passed",
-  "deployment_scope": "Web static assets only",
-  "database_migration": false,
-  "app_changes": false
-}

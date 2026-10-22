@@ -78,7 +78,7 @@ python3 server/scripts/import-japanese-audio.py \
 
 已实测 `/genai/v1beta/models/gemini/tts-lite:generateContent`、不带 provider 的别名及真实模型名：均命中同一实际模型并收到相同的上游每日配额错误，别名解析有效，但配额耗尽时无法验证成功音频。核对已安装版本 2.2.6 的官方源码后，`/genai` 的 speech 转换会拼接 text，丢失逐词 `speech_metadata`，只处理旧版 prebuilt voice 字段，因此本批 TTS 保留原生透传。原生透传本身仍由 Bifrost 选择 provider Key 并记录日志。测试与脱敏结果在忽略目录 `server/scripts/data/bifrost-genai-audit-2026-10-20/`；未更改模型、计费或 provider 配置。
 
-服务端返回的配额恢复时刻约为北京时间 15:00，已启动一次性的 systemd 后台任务 `flashnext-japanese-audio-20261020.service`，留出一分钟余量，约 15:01 开始续跑。任务由 `resume-japanese-audio.py` 执行，复用已通过结果；全部目标通过后才运行完整导入，跳过首批已有附件，并执行生产文件、数据库及浏览器检查。任务不会调整计费、provider 或模型配置，也不会创建 331 个候选词的卡片。当前状态以 `continuation.json` 和本目录 `verification.json` 为准；如词条身份变动、仍有读音失败或核对异常，任务停止并记录 `needs_review`。
+服务端返回的配额恢复时刻约为北京时间 15:00，已启动一次性的 systemd 后台任务 `flashnext-japanese-audio-20261020.service`，留出一分钟余量，约 15:01 开始续跑。任务由 `resume-japanese-audio.py` 执行，复用已通过结果；全部目标通过后才运行完整导入，跳过首批已有附件，并执行生产文件、数据库及浏览器检查。任务不会调整计费、provider 或模型配置，也不会创建 331 个候选词的卡片。当前状态以 `continuation.json` 和本地批次目录中的 `verification.json` 为准；如词条身份变动、仍有读音失败或核对异常，任务停止并记录 `needs_review`。
 
 上述 Lite 等待任务已按用户要求停止，其状态为 `superseded`。替代任务为 `flashnext-japanese-audio-flash-20261020.service`，当前立即使用新的两个模型补齐，无需等待 Lite 配额。新批次的手动生成命令：
 
@@ -129,4 +129,4 @@ node server/scripts/tests/japanese-audio-browser.cjs \
   http://127.0.0.1:19007 /dev/shm/flashnext-ja-audio-stage-20261020/pilot-import.json
 ```
 
-最终生产统计和校验结果见本目录 `verification.json`。
+最终生产统计和校验结果见本地批次目录中的 `verification.json`。
