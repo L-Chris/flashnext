@@ -545,6 +545,22 @@ node scripts/import-anki.js "1-考研-英语单词"   # 牌组名可省略，默
 POST /api/knowledge/sync/words
 ```
 
+## Flutter App（Android）
+
+同级目录 [`../flashnext-app/`](../flashnext-app/)，Flutter + Riverpod + dio + go_router + freezed。v1 为在线复习客户端：
+牌组列表、复习闭环（翻面/四档评分含答题耗时/撤销/每日限额提示）、设置页（服务器地址+连接自测）、明暗主题跟随系统。
+
+```bash
+cd ../flashnext-app
+flutter pub get
+dart run build_runner build --delete-conflicting-outputs   # 修改 models 后
+flutter analyze && flutter test
+flutter build apk --release    # 产物 build/app/outputs/flutter-apk/app-release.apk
+```
+
+默认服务器 `https://mem.home.rethinkos.com`（Let's Encrypt 通配符证书，Android 原生信任；
+需内网或 Tailscale 可达）。国内构建镜像：gradle 走腾讯镜像、maven 走 aliyun（见 `../flashnext-app/android/`）。
+
 ## 本地开发
 
 ```bash
