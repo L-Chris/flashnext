@@ -28,6 +28,8 @@ export interface DueCounts {
 
 export interface Deck {
   language?: string
+  subject?: string
+  tags?: KnowledgeTag[]
   id: number
   name: string
   description: string
@@ -35,6 +37,17 @@ export interface Deck {
   dueCount: number
   counts?: DueCounts
   usage?: DueUsage
+}
+
+export interface KnowledgeTag { scheme: string; key: string; label: string }
+export interface KnowledgeTopic { key: string; label: string; cardCount: number }
+export interface KnowledgeInfo {
+  id: number
+  key: string
+  title: string
+  tags: KnowledgeTag[]
+  prerequisites: Array<{ key: string; title: string }>
+  sources: Array<{ title: string; url: string }>
 }
 
 export interface DueQueue {
@@ -128,6 +141,8 @@ export interface Card {
   id: number
   deckId: number
   wordId: number | null
+  learningOrder?: number | null
+  knowledge?: KnowledgeInfo | null
   front: string
   back: string
   contentFormat?: ContentFormat
@@ -209,6 +224,7 @@ export type CardSortKey =
   | 'state'
   | 'interval'
   | 'headword'
+  | 'learningOrder'
 
 export interface CardPageQuery {
   sort: CardSortKey
@@ -216,6 +232,7 @@ export interface CardPageQuery {
   page: number
   pageSize: number
   q?: string
+  topic?: string
 }
 
 export interface CardPage {

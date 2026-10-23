@@ -24,6 +24,7 @@ export const CARD_SORT_KEYS = [
   'state',
   'interval',
   'headword',
+  'learningOrder',
 ] as const
 
 export type CardSortKey = (typeof CARD_SORT_KEYS)[number]
@@ -34,6 +35,7 @@ export interface CardPageQuery {
   page: number
   pageSize: number
   q: string
+  topic: string
 }
 
 const PAGE_SIZES = [20, 50, 100, 200]
@@ -44,6 +46,7 @@ export const normalizeCardPageQuery = (raw: {
   page?: string
   pageSize?: string
   q?: string
+  topic?: string
 }): CardPageQuery => {
   const sort = (CARD_SORT_KEYS as readonly string[]).includes(raw.sort || '')
     ? (raw.sort as CardSortKey)
@@ -51,7 +54,7 @@ export const normalizeCardPageQuery = (raw: {
   const dir = raw.dir === 'asc' ? 'asc' : 'desc'
   const pageSize = PAGE_SIZES.includes(Number(raw.pageSize)) ? Number(raw.pageSize) : 50
   const page = Math.max(1, Number(raw.page) || 1)
-  return { sort, dir, page, pageSize, q: (raw.q || '').trim() }
+  return { sort, dir, page, pageSize, q: (raw.q || '').trim(), topic: (raw.topic || '').trim() }
 }
 
 export interface CardPageRow {
@@ -70,6 +73,7 @@ export interface CardPageRow {
   retrievability: number
   overdueDays: number
   lapseRate: number
+  learningOrder: number | null
 }
 
 @Service()
@@ -93,10 +97,10 @@ export class CardService {
    * R 用当前 w 的遗忘曲线；新卡/学习卡没有「保持率」语义，记为 1。
    */
   async listCardsPaged(deckId: number, query: CardPageQuery) {
-    const { sort, dir, page, pageSize, q } = query
+    const { sort, dir, page, pageSize, q, topic } = query
     const needle = q.toLowerCase()
     const [rows, w, clock] = await Promise.all([
-      this.cardRepository.listLightByDeck(deckId),
+      this.cardRepository.listLightByDeck(deckId, topic),
       this.optimizerService.getCurrentW(deckId),
       this.settingsService.get(deckId),
     ])
@@ -108,6 +112,7 @@ export class CardService {
       ? rows.filter(
           r =>
             r.front.toLowerCase().includes(needle) ||
+            (r.knowledgeEntity?.summary || '').toLowerCase().includes(needle) ||
             (r.word?.translation || '').toLowerCase().includes(needle) ||
             [r.word?.reading, r.word?.readings, r.word?.spellings, r.word?.romaji].some(value => value?.toLowerCase().includes(needle)),
         )
@@ -120,6 +125,7 @@ export class CardService {
       return {
         id: r.id,
         front: r.front,
+        learningOrder: r.learningOrder,
         state: r.state,
         stability: r.stability,
         difficulty: r.difficulty,
@@ -139,6 +145,7 @@ export class CardService {
     const valueOf = (row: CardPageRow): number | string => {
       switch (sort) {
         case 'rank': return row.rank ?? Number.MAX_SAFE_INTEGER
+        case 'learningOrder': return row.learningOrder ?? Number.MAX_SAFE_INTEGER
         case 'stability': return row.stability
         case 'difficulty': return row.difficulty
         case 'retrievability': return row.retrievability
@@ -180,7 +187,7 @@ export class CardService {
       .sort((a, b) => (order.get(a!.id) ?? 0) - (order.get(b!.id) ?? 0))
 
     void order
-    return { cards: await this.presenter.cards(cards, clock), total, page: safePage, pageSize, pages, sort, dir, q }
+    return { cards: await this.presenter.cards(cards, clock), total, page: safePage, pageSize, pages, sort, dir, q, topic }
   }
 
   /** 复习队列（含日限额与 Anki 式排序），供 /cards/due 使用 */

@@ -17,10 +17,16 @@ export class CardPresenter {
     if (knownSettings) settings.set(knownSettings.deckId, knownSettings)
     await Promise.all([...new Set<number>(cards.map(c => c.deckId))].filter(id => !settings.has(id)).map(async id => settings.set(id, await this.settingsService.get(id))))
     return cards.map(card => {
+      const { knowledgeEntity, ...view } = card
+      let metadata: Record<string, any> = {}
+      try { metadata = JSON.parse(knowledgeEntity?.metadata || '{}') || {} } catch { /* old metadata remains readable */ }
       const clock = settings.get(card.deckId)!
       const isNew = card.state === 0 && card.reps === 0
       const answerRevealAfterMs = isNew && clock.showNewCardAnswerImmediately ? 0 : clock.autoRevealAnswerSeconds === null ? null : clock.autoRevealAnswerSeconds * 1000
-      return { ...card,
+      return { ...view,
+        knowledge: knowledgeEntity ? { id: knowledgeEntity.id, key: knowledgeEntity.canonicalKey,
+          title: knowledgeEntity.title, tags: knowledgeEntity.tags || [],
+          prerequisites: metadata.prerequisites || [], sources: metadata.sources || [] } : null,
         media: (card.media || []).map(link => ({ mediaId: link.mediaId, side: link.side, position: link.position, ...mediaView(link.asset) })),
         presentation: { audioAutoplay: clock.audioAutoplay, answerRevealAfterMs, settingsVersion: clock.version },
       }

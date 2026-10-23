@@ -177,6 +177,31 @@ def matches_word(entry, word):
     return word_key(word) in {word_key(x) for x in [entry['headword'], *entry.get('aliases', [])]}
 
 
+def verified_alias_entries(entries, word, kaikki):
+    """A variant/synonym label must not inherit another spelling's pronunciation."""
+    from .pronunciation import normalize
+    verified = []
+    for entry in entries:
+        if not matches_word(entry, word):
+            continue
+        if word_key(entry['headword']) == word_key(word):
+            verified.append(entry)
+            continue
+        keys = set()
+        for local in kaikki.get('entries', {}).get(word, []):
+            if local['pos'] != entry['pos']:
+                continue
+            for sound in local.get('sounds') or []:
+                accent, ipa, reason = normalize(sound.get('ipa',''),sound.get('tags',[]),sound.get('note',''))
+                if accent == 'UK' and ipa:
+                    key = comparable_ipa('/'+ipa+'/')
+                    if key:keys.add(key)
+        sounds = [s for s in entry['sounds'] if comparable_ipa('/'+s['ipa']+'/') in keys]
+        if sounds:
+            verified.append(dict(entry,sounds=sounds,evidence=f"local-kaikki:{kaikki['revision']}:{word}:{entry['pos']}"))
+    return verified
+
+
 def word_poses(value):
     aliases = {'n': 'noun', 'pl': 'noun', 'a': 'adj', 'adj': 'adj', 'v': 'verb', 'vt': 'verb', 'vi': 'verb',
                'adv': 'adv', 'prep': 'prep', 'pron': 'pron', 'num': 'num', 'conj': 'conj', 'interj': 'intj', 'det': 'det'}

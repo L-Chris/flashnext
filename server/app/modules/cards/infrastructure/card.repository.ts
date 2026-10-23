@@ -2,6 +2,9 @@ import { Service } from 'typedi'
 import { prisma } from 'app/shared/prisma'
 import type { DayClock } from 'app/shared/day-boundary'
 import { dueVisibleWhere } from './due-filter'
+import { AUDIO_PLAYBACK_PROFILE } from 'app/modules/media/application/audio-playback'
+
+const MEDIA_ASSET = { include: { playbacks: { where: { profile: AUDIO_PLAYBACK_PROFILE } } } } as const
 
 const CARD_FIELDS = {
   id: true,
@@ -12,6 +15,7 @@ const CARD_FIELDS = {
   lastReview: true,
   createdAt: true,
   wordId: true,
+  learningOrder: true,
 } as const
 
 // Study responses omit dictionary-only fields; romaji remains available to search.
@@ -23,7 +27,7 @@ export class CardRepository {
     return prisma.card.findMany({
       where: { deckId },
       orderBy: { createdAt: 'desc' },
-      include: { media: { include: { asset: true }, orderBy: [{ side: 'asc' }, { position: 'asc' }] }, word: { omit: WORD_DISPLAY_OMIT, include: { tags: true, pronunciations: { where: { status: 'accepted' } } } } },
+      include: { knowledgeEntity: { include: { tags: true } }, media: { include: { asset: MEDIA_ASSET }, orderBy: [{ side: 'asc' }, { position: 'asc' }] }, word: { omit: WORD_DISPLAY_OMIT, include: { tags: true, pronunciations: { where: { status: 'accepted' } } } } },
     })
   }
 
@@ -40,12 +44,14 @@ export class CardRepository {
   }
 
   // 排序/搜索用的轻量行：保留罗马音供搜索，响应通过 listByIds 单独加载。
-  listLightByDeck(deckId: number) {
+  listLightByDeck(deckId: number, topic = '') {
     return prisma.card.findMany({
-      where: { deckId },
+      where: { deckId, ...(topic ? { knowledgeEntity: { tags: { some: { scheme: 'probability-topic', key: topic } } } } : {}) },
       select: {
         id: true,
         front: true,
+        learningOrder: true,
+        knowledgeEntity: { select: { title: true, summary: true } },
         state: true,
         stability: true,
         difficulty: true,
@@ -64,7 +70,8 @@ export class CardRepository {
     return prisma.card.findMany({
       where: { id: { in: ids } },
       include: {
-        media: { include: { asset: true }, orderBy: [{ side: 'asc' }, { position: 'asc' }] },
+        knowledgeEntity: { include: { tags: true } },
+        media: { include: { asset: MEDIA_ASSET }, orderBy: [{ side: 'asc' }, { position: 'asc' }] },
         word: {
           omit: WORD_DISPLAY_OMIT,
           include: {

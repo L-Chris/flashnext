@@ -74,7 +74,7 @@ export class DueService {
 
     for (const c of candidates) {
       if (c.state === STATE_NEW) {
-        fresh.push({ id: c.id, sort: c.id })
+        fresh.push({ id: c.id, sort: c.learningOrder ?? Number.MAX_SAFE_INTEGER })
         continue
       }
       if (DueService.isIntraday(c.state, c.interval)) {
@@ -90,7 +90,7 @@ export class DueService {
     intraday.sort((a, b) => a.sort - b.sort)
     upcoming.sort((a, b) => a.sort - b.sort)
     review.sort((a, b) => a.sort - b.sort)
-    fresh.sort((a, b) => a.sort - b.sort)
+    fresh.sort((a, b) => a.sort - b.sort || a.id - b.id)
 
     return { intraday, upcoming, review, fresh }
   }

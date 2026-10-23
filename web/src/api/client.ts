@@ -10,6 +10,7 @@ import type {
   CoverageRow,
   DailyLimits,
   Deck,
+  KnowledgeTopic,
   DueQueue,
   EnsureResult,
   FsrsStatus,
@@ -37,6 +38,7 @@ export const api = {
   getGlobalSettings: () => request<GlobalSettings>('/api/settings'),
   saveGlobalSettings: (timezone: string) => request<GlobalSettings>('/api/settings', { method: 'POST', body: JSON.stringify({ timezone }) }),
   listDecks: () => request<Deck[]>('/api/decks'),
+  listTopics: (deckId: number) => request<KnowledgeTopic[]>(`/api/decks/${deckId}/topics`),
 
   createDeck: (name: string, description: string) =>
     request<Deck>('/api/decks', { method: 'POST', body: JSON.stringify({ name, description }) }),
@@ -50,6 +52,7 @@ export const api = {
     if (query.page) params.set('page', String(query.page))
     if (query.pageSize) params.set('pageSize', String(query.pageSize))
     if (query.q) params.set('q', query.q)
+    if (query.topic) params.set('topic', query.topic)
     const qs = params.toString()
     return request<CardPage>(`/api/decks/${deckId}/cards${qs ? `?${qs}` : ''}`)
   },

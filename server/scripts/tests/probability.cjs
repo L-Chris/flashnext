@@ -1,0 +1,88 @@
+const test = require('node:test')
+const assert = require('node:assert/strict')
+const fs = require('node:fs')
+const path = require('node:path')
+const os = require('node:os')
+const { execFileSync } = require('node:child_process')
+const { PrismaClient } = require('@prisma/client')
+const esbuild = require('esbuild')
+require('reflect-metadata')
+const { prepare, importPlan } = require('../lib/probability')
+const { ensureDeckConfig } = require('../lib/deck-config')
+const resource = JSON.parse(fs.readFileSync(path.join(__dirname, '../resources/probability-high-school.json')))
+const clone = () => JSON.parse(JSON.stringify(resource))
+const root = path.resolve(__dirname, '../..')
+
+test('24 knowledge cards render with the real renderer; one stage and a valid prerequisite order', () => {
+  const outfile = path.join(root, 'node_modules/.cache/probability-content.cjs')
+  esbuild.buildSync({ entryPoints: [path.join(root, 'app/modules/content/application/content.service.ts')],
+    bundle: true, platform: 'node', format: 'cjs', packages: 'external', outfile, tsconfig: path.join(root, 'tsconfig.json') })
+  const renderer = new (require(outfile).ContentService)()
+  const plan = prepare(resource)
+  assert.equal(plan.cards.length, 24)
+  assert.deepEqual(resource.topics.map(t => plan.cards.filter(c => c.topic === t.key).length), [4, 5, 3, 3, 4, 5])
+  const positions = new Map(plan.cards.map((c, i) => [c.id, i]))
+  for (const card of plan.cards) {
+    assert.equal(card.type, 'knowledge')
+    assert.deepEqual(card.tags.filter(t => t.scheme === 'education-stage').map(t => t.label), ['高中'])
+    assert(card.prerequisiteIds.every(id => positions.get(id) < positions.get(card.id)))
+    const rendered = renderer.preview({ front: card.front, back: card.back, contentFormat: 'markdown_math' })
+    assert.equal(rendered.valid, true, card.id + JSON.stringify(rendered.back.errors))
+  }
+  const shuffled = clone(); shuffled.cards.reverse()
+  assert.deepEqual(prepare(shuffled).cards.map(c => c.id), plan.cards.map(c => c.id))
+})
+
+test('duplicate, missing, self and cyclic prerequisites and broken formulas are refused', () => {
+  let bad = clone(); bad.cards.push(bad.cards[0]); assert.throws(() => prepare(bad), /Duplicate/)
+  bad = clone(); bad.cards[0].prerequisiteIds = ['missing']; assert.throws(() => prepare(bad), /Missing/)
+  bad = clone(); bad.cards[0].prerequisiteIds = [bad.cards[0].id]; assert.throws(() => prepare(bad), /self/)
+  bad = clone(); bad.cards[0].prerequisiteIds = [bad.cards[1].id]; assert.throws(() => prepare(bad), /Cyclic/)
+  bad = clone(); bad.cards[0].back = '\\(x'; assert.throws(() => prepare(bad), /Unclosed/)
+  bad = clone(); bad.cards[0].back = '\\(\\unknownFormula{x}\\)'; assert.throws(() => prepare(bad))
+  bad = clone(); bad.cards[0].type = 'exercise'; assert.throws(() => prepare(bad), /knowledge/)
+})
+
+test('preview/apply/repeat protect old rows, learning records, custom settings and edited cards', async () => {
+  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'flashnext-probability-test-'))
+  const db = path.join(temporary, 'test.db')
+  execFileSync(process.execPath, [path.join(root, 'node_modules/prisma/build/index.js'), 'db', 'push', '--skip-generate', '--schema', path.join(root, 'prisma/schema.prisma')],
+    { env: { ...process.env, DATABASE_URL: `file:${db}` }, stdio: 'pipe' })
+  const prisma = new PrismaClient({ datasources: { db: { url: `file:${db}` } } })
+  try {
+    const deck = await prisma.deck.create({ data: { name: 'existing English' } })
+    await ensureDeckConfig(prisma, deck.id)
+    const word = await prisma.word.create({ data: { headword: 'retained', lexicalKey: 'en:retained' } })
+    const old = await prisma.card.create({ data: { deckId: deck.id, wordId: word.id, front: 'old', back: 'custom note', state: 2, reps: 7 } })
+    await prisma.reviewLog.create({ data: { cardId: old.id, rating: 3 } })
+    const models = ['word', 'card', 'reviewLog', 'deck', 'appSetting', 'deckSetting', 'deckFsrsParam']
+    const baseline = Object.fromEntries(await Promise.all(models.map(async name => [name, await prisma[name].findMany({ orderBy: name === 'deckSetting' || name === 'deckFsrsParam' ? { deckId: 'asc' } : { id: 'asc' } })])))
+    const plan = prepare(resource)
+    const preview = await importPlan(prisma, plan)
+    assert.equal(preview.newCards, 24)
+    assert.equal(await prisma.card.count(), 1)
+    const result = await importPlan(prisma, plan, true)
+    assert.equal(result.newCards, 24)
+    assert.equal(await prisma.word.count(), 1)
+    assert.equal(await prisma.knowledgeTag.count(), 48)
+    for (const name of models) for (const row of baseline[name]) {
+      const key = name === 'deckSetting' || name === 'deckFsrsParam' ? { deckId: row.deckId } : { id: row.id }
+      assert.deepEqual(await prisma[name].findUnique({ where: key }), row, name)
+    }
+    const settings = await prisma.deckSetting.findUnique({ where: { deckId: result.deckId } })
+    assert.equal(settings.newPerDay, 3); assert.equal(settings.autoRevealAnswerSeconds, null)
+    await prisma.deckSetting.update({ where: { deckId: result.deckId }, data: { newPerDay: 1 } })
+    const first = await prisma.card.findUnique({ where: { id: result.cardIds[0] } })
+    await prisma.card.update({ where: { id: first.id }, data: { reps: 3, state: 2, stability: 7 } })
+    const learned = await prisma.card.findUnique({ where: { id: first.id } })
+    const repeat = await importPlan(prisma, plan, true)
+    assert.equal(repeat.newCards, 0); assert.equal(repeat.newEntities, 0)
+    assert.deepEqual(await prisma.card.findUnique({ where: { id: first.id } }), learned)
+    assert.equal((await prisma.deckSetting.findUnique({ where: { deckId: result.deckId } })).newPerDay, 1)
+    await prisma.card.update({ where: { id: first.id }, data: { back: 'my edited note' } })
+    await assert.rejects(() => importPlan(prisma, plan, true), /Changed card content/)
+    assert.equal(await prisma.card.count(), 25)
+    assert.equal((await prisma.card.findUnique({ where: { id: first.id } })).back, 'my edited note')
+    assert.equal(await prisma.reviewLog.count(), 1)
+  } finally { await prisma.$disconnect(); fs.rmSync(temporary, { recursive: true, force: true }) }
+})

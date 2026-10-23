@@ -16,6 +16,7 @@ def main():
     p.add_argument('--db',required=True)
     p.add_argument('--deck-id',type=int,required=True)
     p.add_argument('--days',type=int,default=7)
+    p.add_argument('--selection',choices=['today-and-upcoming-new-cards','recently-learned'],default='today-and-upcoming-new-cards')
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--env-file',type=Path,default=Path(__file__).resolve().parents[2]/'.env')
     p.add_argument('--generate',action='store_true')
@@ -28,16 +29,16 @@ def main():
     path=a.output/'plan.json'
     if path.exists():
         plan=json.loads(path.read_text());expected=plan.pop('planHash')
-        if plan['version']!=VERSION or digest(plan)!=expected or plan['deckId']!=a.deck_id or plan['days']!=a.days:
+        if plan['version']!=VERSION or digest(plan)!=expected or plan['deckId']!=a.deck_id or plan['days']!=a.days or plan['selection']!=a.selection:
             raise ValueError('Frozen plan differs; use a new batch directory')
         plan['planHash']=expected
         with sqlite3.connect(f'file:{Path(a.db).resolve()}?mode=ro',uri=True) as c:
             c.row_factory=sqlite3.Row
             for row in plan['rows']: check_identity(c,row)
     else:
-        plan=prepare_plan(a.db,a.deck_id,a.days);atomic_json(path,plan)
+        plan=prepare_plan(a.db,a.deck_id,a.days,selection=a.selection);atomic_json(path,plan)
     print(compact(dict(plan=str(path),selectedCards=plan['selectedCards'],words=plan['wordCount'],
-        firstStudyDate=plan['firstStudyDate'],lastStudyDate=plan['lastStudyDate'],generate=a.generate)),flush=True)
+        firstStudyDate=plan['firstStudyDate'],lastStudyDate=plan['lastStudyDate'],blockedCards=plan.get('blockedCards',0),generate=a.generate)),flush=True)
     if not a.generate:return 0
     config=plan['config'];gateway=EnglishGateway(config['gateway'],load_token(a.env_file))
     models={x['id'] for x in gateway.json('/v1/models')['data']}

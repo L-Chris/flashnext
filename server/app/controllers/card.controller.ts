@@ -29,10 +29,11 @@ export class DeckCardController {
     @QueryParam('page') page?: string,
     @QueryParam('pageSize') pageSize?: string,
     @QueryParam('q') q?: string,
+    @QueryParam('topic') topic?: string,
   ) {
     const data = await this.cardService.listCardsPaged(
       Number(deckId),
-      normalizeCardPageQuery({ sort, dir, page, pageSize, q }),
+      normalizeCardPageQuery({ sort, dir, page, pageSize, q, topic }),
     )
     return { data }
   }

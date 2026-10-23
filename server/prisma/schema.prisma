@@ -23,13 +23,29 @@ model KnowledgeEntity {
   canonicalKey String   @unique @map("canonical_key")
   title        String
   summary      String   @default("")
+  metadata     String   @default("{}")
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
   words        Word[]
+  cards        Card[]
+  tags         KnowledgeTag[]
   states       PersonalKnowledgeState[]
 
   @@index([kind])
   @@map("knowledge_entities")
+}
+
+model KnowledgeTag {
+  id       Int @id @default(autoincrement())
+  entityId Int @map("entity_id")
+  scheme   String
+  key      String
+  label    String
+  entity   KnowledgeEntity @relation(fields: [entityId], references: [id], onDelete: Cascade)
+
+  @@unique([entityId, scheme, key])
+  @@index([scheme, key])
+  @@map("knowledge_tags")
 }
 
 model PersonalKnowledgeState {
@@ -57,6 +73,7 @@ model Deck {
   name        String
   description String   @default("")
   language    String   @default("en")
+  subject     String   @default("")
   createdAt   DateTime @default(now()) @map("created_at")
   cards       Card[]
   settings    DeckSetting?
@@ -233,6 +250,8 @@ model Card {
   id            Int       @id @default(autoincrement())
   deckId        Int       @map("deck_id")
   wordId        Int?      @map("word_id")
+  knowledgeEntityId Int?  @map("knowledge_entity_id")
+  learningOrder Int?      @map("learning_order")
   front         String
   back          String
   contentFormat String   @default("plain") @map("content_format")
@@ -249,10 +268,13 @@ model Card {
   createdAt     DateTime  @default(now()) @map("created_at")
   deck          Deck      @relation(fields: [deckId], references: [id], onDelete: Cascade)
   word          Word?     @relation(fields: [wordId], references: [id], onDelete: SetNull)
+  knowledgeEntity KnowledgeEntity? @relation(fields: [knowledgeEntityId], references: [id], onDelete: SetNull)
 
   @@index([deckId])
   @@index([due])
   @@index([wordId])
+  @@index([deckId, learningOrder])
+  @@index([knowledgeEntityId])
   @@map("cards")
 }
 
@@ -293,8 +315,27 @@ model MediaAsset {
   originalName String   @map("original_name")
   createdAt    DateTime @default(now()) @map("created_at")
   cards        CardMedia[]
+  playbacks    MediaPlayback[]
 
   @@map("media_assets")
+}
+
+// Immutable derived audio; original assets and card attachments retain their identity.
+model MediaPlayback {
+  id           String   @id @default(uuid())
+  mediaId      String   @map("media_id")
+  profile      String
+  sourceSha256 String   @map("source_sha256")
+  storageKey   String   @unique @map("storage_key")
+  sha256       String
+  mimeType     String   @map("mime_type")
+  bytes        Int
+  metrics      String
+  createdAt    DateTime @default(now()) @map("created_at")
+  asset        MediaAsset @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+
+  @@unique([mediaId, profile])
+  @@map("media_playbacks")
 }
 
 model CardMedia {

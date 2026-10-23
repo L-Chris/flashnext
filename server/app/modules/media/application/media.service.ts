@@ -9,6 +9,7 @@ import { Transform } from 'node:stream'
 import { pipeline } from 'node:stream/promises'
 import busboy from 'busboy'
 import { prisma } from 'app/shared/prisma'
+import { playbackOf, type Playback } from './audio-playback'
 
 const maximum = Number(process.env.FLASHNEXT_MEDIA_MAX_BYTES || 20 * 1024 * 1024)
 if (!Number.isSafeInteger(maximum) || maximum < 1024 || maximum > 100 * 1024 * 1024) throw new Error('FLASHNEXT_MEDIA_MAX_BYTES 必须为 1024–104857600')
@@ -17,10 +18,14 @@ export const MEDIA_ROOT = path.resolve(process.env.FLASHNEXT_MEDIA_DIR || (datab
 const allowed = new Map([
   ['mp3', 'audio/mpeg'], ['m4a', 'audio/mp4'], ['wav', 'audio/wav'], ['ogg', 'audio/ogg'], ['opus', 'audio/ogg'],
 ])
-export const mediaView = (asset: { id: string; mimeType: string; bytes: number; originalName: string; createdAt: Date }) => ({
-  id: asset.id, mimeType: asset.mimeType, bytes: asset.bytes, originalName: asset.originalName,
-  createdAt: asset.createdAt, url: `/api/media/${asset.id}/content`,
-})
+export const mediaView = (asset: { id: string; sha256?: string; mimeType: string; bytes: number; originalName: string; createdAt: Date; playbacks?: Playback[] }) => {
+  const playback = playbackOf(asset)
+  return { id: asset.id, mimeType: playback?.mimeType || asset.mimeType, bytes: playback?.bytes ?? asset.bytes,
+    originalName: asset.originalName, createdAt: asset.createdAt,
+    url: `/api/media/${asset.id}/content${playback ? `?playback=${playback.id}` : ''}`,
+    ...(playback ? { playback: { id: playback.id, profile: playback.profile, sha256: playback.sha256 } } : {}),
+  }
+}
 
 @Service()
 export class MediaService {
@@ -106,7 +111,7 @@ export class MediaService {
   }
 
   async remove(id: string) {
-    const asset = await prisma.mediaAsset.findUnique({ where: { id } })
+    const asset = await prisma.mediaAsset.findUnique({ where: { id }, include: { playbacks: true } })
     if (!asset) throw new HttpError(404, '音频不存在')
     try {
       const deleted = await prisma.mediaAsset.deleteMany({ where: { id, cards: { none: {} } } })
@@ -116,34 +121,41 @@ export class MediaService {
       throw error
     }
     await fs.promises.unlink(path.join(MEDIA_ROOT, asset.storageKey)).catch(error => { if (error.code !== 'ENOENT') console.error('[media] remove file failed', asset.id, error.code) })
+    await Promise.all(asset.playbacks.map(p => fs.promises.unlink(path.join(MEDIA_ROOT, p.storageKey)).catch(error => {
+      if (error.code !== 'ENOENT') console.error('[media] remove playback failed', p.id, error.code)
+    })))
     return true
   }
 
   async content(id: string, ctx: Context) {
     const asset = await prisma.mediaAsset.findUnique({ where: { id } })
     if (!asset) throw new HttpError(404, '音频不存在')
-    const filename = path.join(MEDIA_ROOT, asset.storageKey)
+    const playbackId = ctx.query.playback
+    const playback = playbackId ? typeof playbackId === 'string' && await prisma.mediaPlayback.findUnique({ where: { id: playbackId } }) : null
+    if (playbackId && (!playback || playback.mediaId !== asset.id || playback.sourceSha256 !== asset.sha256)) throw new HttpError(404, '播放版本不存在')
+    const selected = playback || asset
+    const filename = path.join(MEDIA_ROOT, selected.storageKey)
     const stat = await fs.promises.stat(filename).catch(() => null)
-    if (!stat?.isFile() || stat.size !== asset.bytes) throw new HttpError(404, '音频文件不存在或不完整')
-    ctx.type = asset.mimeType
+    if (!stat?.isFile() || stat.size !== selected.bytes) throw new HttpError(404, '音频文件不存在或不完整')
+    ctx.type = selected.mimeType
     ctx.set('Accept-Ranges', 'bytes')
-    ctx.set('Cache-Control', 'public, max-age=86400')
+    ctx.set('Cache-Control', playback ? 'public, max-age=31536000, immutable' : 'public, max-age=86400')
     ctx.set('X-Content-Type-Options', 'nosniff')
-    ctx.set('ETag', `"${asset.sha256}"`)
+    ctx.set('ETag', `"${selected.sha256}"`)
     ctx.set('Access-Control-Expose-Headers', 'Accept-Ranges, Content-Length, Content-Range, ETag')
     ctx.status = 200
     if (ctx.fresh) { ctx.status = 304; ctx.body = null; return ctx }
     const range = ctx.get('Range')
-    const useRange = range && ctx.method !== 'HEAD' && (!ctx.get('If-Range') || ctx.get('If-Range') === `"${asset.sha256}"`)
-    let start = 0, end = asset.bytes - 1
+    const useRange = range && ctx.method !== 'HEAD' && (!ctx.get('If-Range') || ctx.get('If-Range') === `"${selected.sha256}"`)
+    let start = 0, end = selected.bytes - 1
     if (useRange) {
       const match = /^bytes=(\d*)-(\d*)$/.exec(range)
-      if (!match || (!match[1] && !match[2])) { ctx.set('Content-Range', `bytes */${asset.bytes}`); ctx.type = 'application/json'; throw new HttpError(416, '不支持的音频范围') }
+      if (!match || (!match[1] && !match[2])) { ctx.set('Content-Range', `bytes */${selected.bytes}`); ctx.type = 'application/json'; throw new HttpError(416, '不支持的音频范围') }
       if (match[1]) { start = Number(match[1]); if (match[2]) end = Math.min(Number(match[2]), end) }
-      else { const suffix = Number(match[2]); start = Math.max(0, asset.bytes - suffix); if (!suffix) start = asset.bytes }
-      if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end) || start < 0 || start > end || start >= asset.bytes) { ctx.set('Content-Range', `bytes */${asset.bytes}`); ctx.type = 'application/json'; throw new HttpError(416, '音频范围超出文件大小') }
+      else { const suffix = Number(match[2]); start = Math.max(0, selected.bytes - suffix); if (!suffix) start = selected.bytes }
+      if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end) || start < 0 || start > end || start >= selected.bytes) { ctx.set('Content-Range', `bytes */${selected.bytes}`); ctx.type = 'application/json'; throw new HttpError(416, '音频范围超出文件大小') }
       ctx.status = 206
-      ctx.set('Content-Range', `bytes ${start}-${end}/${asset.bytes}`)
+      ctx.set('Content-Range', `bytes ${start}-${end}/${selected.bytes}`)
     }
     ctx.set('Content-Length', String(end - start + 1))
     ctx.body = fs.createReadStream(filename, { start, end })

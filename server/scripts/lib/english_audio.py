@@ -10,6 +10,7 @@ import time
 import unicodedata
 import uuid
 from zoneinfo import ZoneInfo
+from .audio_loudness import STYLE as LOUDNESS_STYLE, check_wav as check_levels, normalize as normalize_audio, validate_processing
 
 from .japanese_audio import (Gateway, DailyQuotaExceeded, SPEECH_MODELS, atomic_json,
     compact, decode_speech_audio, digest, file_hash, split_word_group, validate_wav)
@@ -27,9 +28,11 @@ def fingerprint(row, config):
         ['wordId', 'lexicalKey', 'headword', 'phonetic', 'phoneticProfile', 'pos', 'translation', 'pronunciation']}))
 
 
-def prepare_plan(db, deck_id, days=7, now_ms=None):
+def prepare_plan(db, deck_id, days=7, now_ms=None, selection='today-and-upcoming-new-cards'):
     if not 1 <= days <= 30:
         raise ValueError('Select 1–30 study days')
+    if selection not in {'today-and-upcoming-new-cards', 'recently-learned'}:
+        raise ValueError('Unknown English study selection')
     c = sqlite3.connect(f'file:{Path(db).resolve()}?mode=ro', uri=True)
     c.row_factory = sqlite3.Row
     try:
@@ -55,17 +58,35 @@ def prepare_plan(db, deck_id, days=7, now_ms=None):
             ORDER BY c.id''', (deck_id,start,end)).fetchall()
         today_remaining = max(0, settings['new_per_day']-spent)
         capacity = today_remaining+(days-1)*settings['new_per_day']
-        if settings['new_per_day'] < 1:
+        if settings['new_per_day'] < 1 and selection != 'recently-learned':
             raise ValueError('Deck has no daily new-card allowance')
         fresh = c.execute('''SELECT c.*,w.headword FROM cards c JOIN words w ON w.id=c.word_id
             WHERE c.deck_id=? AND c.state=0 AND c.reps=0 AND w.language='en' ORDER BY c.id LIMIT ?''',
             (deck_id,capacity)).fetchall()
-        rows, selections = {}, []
-        for index, card in enumerate([*learned,*fresh]):
-            fresh_index = index-len(learned)
-            offset = 0 if fresh_index < today_remaining else 1+(fresh_index-today_remaining)//settings['new_per_day']
-            if index < len(learned): offset = 0
-            date = (cutoff+timedelta(days=offset)).date().isoformat()
+        records = [*learned, *fresh]
+        first_day = cutoff
+        if selection == 'recently-learned':
+            first_day = cutoff-timedelta(days=days-1)
+            # Filter only after finding the earliest review in the full history.
+            # Recent reviews of older words must not make them newly learned.
+            records = c.execute('''WITH first_reviews AS (
+                SELECT card_id,MIN(review_at) first_learned_at FROM review_logs GROUP BY card_id
+            ) SELECT c.*,w.headword,f.first_learned_at FROM cards c
+                JOIN words w ON w.id=c.word_id JOIN first_reviews f ON f.card_id=c.id
+                WHERE c.deck_id=? AND w.language='en' AND f.first_learned_at>=? AND f.first_learned_at<=?
+                ORDER BY f.first_learned_at DESC,c.id''',
+                (deck_id,int(first_day.timestamp()*1000),now_ms)).fetchall()
+        rows, selections, blocked = {}, [], []
+        for index, card in enumerate(records):
+            if selection == 'recently-learned':
+                first = datetime.fromtimestamp(card['first_learned_at']/1000, ZoneInfo(settings['timezone']))
+                day = first.replace(hour=settings['rollover_hour'],minute=0,second=0,microsecond=0)
+                date = (day-timedelta(days=1) if first < day else day).date().isoformat()
+            else:
+                fresh_index = index-len(learned)
+                offset = 0 if fresh_index < today_remaining else 1+(fresh_index-today_remaining)//settings['new_per_day']
+                if index < len(learned): offset = 0
+                date = (cutoff+timedelta(days=offset)).date().isoformat()
             selections.append(dict(cardId=card['id'], wordId=card['word_id'], headword=card['headword'], studyDate=date))
             if c.execute("SELECT 1 FROM card_media WHERE card_id=? AND side='back'", (card['id'],)).fetchone():
                 continue
@@ -74,17 +95,23 @@ def prepare_plan(db, deck_id, days=7, now_ms=None):
                 WHERE word_id=? AND status='accepted' AND accent='UK' AND display_ipa=? ORDER BY id LIMIT 1""",
                 (w['id'],w['phonetic'])).fetchone()
             if w['phonetic_profile'] != 'learner-ipa-uk-v1' or not w['phonetic'] or not p:
+                if selection == 'recently-learned':
+                    blocked.append(dict(cardId=card['id'],wordId=w['id'],headword=w['headword'],
+                        reason='Verify British pronunciation before generation',studyDate=date))
+                    continue
                 raise ValueError(f"Verify British pronunciation before generation: {w['headword']}")
             row = rows.setdefault(w['id'], dict(wordId=w['id'], lexicalKey=w['lexical_key'], headword=w['headword'],
                 reading=w['headword'], pos=w['pos'], translation=w['translation'], phonetic=w['phonetic'],
                 phoneticProfile=w['phonetic_profile'], pronunciation=dict(p), studyDate=date, cards=[]))
             row['cards'].append(dict(cardId=card['id'],deckId=deck_id,front=card['front'],back=card['back']))
         plan = dict(version=VERSION,deckId=deck_id,config=dict(CONFIG),createdAt=datetime.fromtimestamp(now_ms/1000,timezone.utc).isoformat(),
-            selection='today-and-upcoming-new-cards',days=days,timezone=settings['timezone'],rolloverHour=settings['rollover_hour'],
+            selection=selection,days=days,timezone=settings['timezone'],rolloverHour=settings['rollover_hour'],
             newPerDay=settings['new_per_day'],newSlotsUsedToday=spent,todayRemaining=today_remaining,
-            firstStudyDate=cutoff.date().isoformat(),lastStudyDate=(cutoff+timedelta(days=days-1)).date().isoformat(),
-            selectedCards=len(selections),existingAudioCards=len(selections)-sum(len(r['cards']) for r in rows.values()),
+            firstStudyDate=first_day.date().isoformat(),lastStudyDate=(cutoff if selection=='recently-learned' else cutoff+timedelta(days=days-1)).date().isoformat(),
+            selectedCards=len(selections),existingAudioCards=len(selections)-sum(len(r['cards']) for r in rows.values())-len(blocked),
             cardCount=sum(len(r['cards']) for r in rows.values()),wordCount=len(rows),selections=selections,rows=list(rows.values()))
+        if selection == 'recently-learned':
+            plan.update(blocked=blocked,blockedCards=len(blocked),windowStart=int(first_day.timestamp()*1000),windowEnd=now_ms)
         plan['planHash'] = digest(plan)
         return plan
     finally:
@@ -132,7 +159,7 @@ def style_for(row, attempt=1):
         f"Pronounce ONLY {row['headword']} once, without an article, spelling, examples or explanation. "
         f"Target British IPA: /{row['phonetic']}/; part of speech: {row['pronunciation']['pos']}; "
         f"usage: {row['pronunciation']['usage']}. Use the exact vowel quality and primary stress of this IPA. "
-        "Speak at a clear natural pace; no music, sound effects or exaggerated syllable breaks. "
+        "Speak at a clear natural pace; no music, sound effects or exaggerated syllable breaks. " + LOUDNESS_STYLE
         + ("Take particular care with word endings, British vowels and the indicated stress." if attempt>1 else ''))
     guidance=json.loads((Path(__file__).resolve().parents[1]/'resources/english-audio-pronunciation-guidance.json').read_text())
     for item in guidance:
@@ -213,13 +240,13 @@ def qa_passed(qa, row, config):
     compatible=(qa.get('model')==config['qaModel'] and qa.get('targetIpa')==row['phonetic'] and bool(qa.get('heardIpa'))
         and all(qa.get(k) is True for k in ['wordMatches','britishCompatible','stressMatches','singleWord']))
     if not compatible:return False
-    if qa.get('confidence')=='high':return True
+    if qa.get('confidence')=='high' and not qa.get('requiresBlindPhoneticCheck'):return True
     confirmation=qa.get('blindPhoneticCheck',{})
     def key(value):
         value=value.strip().strip('/[]').replace('(r)','').replace('ɹ','r').replace('ɛ','e').replace('g','ɡ').replace(':','ː')
         value=re.sub(r'[\s.ˌ]','',value)
         return value.replace('ˈ','') if 'ˈ' not in row['phonetic'] else value
-    return (qa.get('confidence')=='medium' and confirmation.get('model')==config['verifierModel']
+    return (qa.get('confidence') in {'medium','high'} and confirmation.get('model')==config['verifierModel']
         and key(confirmation.get('transcript',''))==key(row['phonetic'])==key(qa['heardIpa']))
 
 
@@ -230,10 +257,14 @@ def validate_result(row, config, root, value):
     path=(Path(root)/value['audioFile']).resolve()
     if not path.is_relative_to(Path(root).resolve()) or not path.is_file() or file_hash(path)!=value['sha256']:
         raise ValueError('Audio file is missing or changed')
+    if 'audioProcessing' in value:
+        validate_processing(value['audioProcessing'], value['sha256'])
     if not any(p.get('model') in [config['asrModel'],config['verifierModel']] and
         transcript_matches(row,p) for p in value.get('checks',[])):
         raise ValueError('No matching blind English transcription')
     if not qa_passed(value.get('pronunciationCheck',{}),row,config): raise ValueError('Pronunciation QA did not pass')
+    if any(p.get('homophoneEvidence',{}).get('requiresBlindPhoneticCheck') for p in value.get('checks',[])) and not value['pronunciationCheck'].get('requiresBlindPhoneticCheck'):
+        raise ValueError('Conditional homophone needs a blind phonetic check')
     return path
 
 
@@ -245,7 +276,8 @@ def audit_clip(data, row, config, gateway):
     qa={}
     if any(transcript_matches(row,c) for c in checks):
         qa=gateway.review(data,row,config['qaModel'])
-        if qa.get('confidence')=='medium' and all(qa.get(k) is True for k in ['wordMatches','britishCompatible','stressMatches','singleWord']):
+        if any(c.get('homophoneEvidence',{}).get('requiresBlindPhoneticCheck') for c in checks):qa['requiresBlindPhoneticCheck']=True
+        if (qa.get('confidence')=='medium' or qa.get('requiresBlindPhoneticCheck')) and all(qa.get(k) is True for k in ['wordMatches','britishCompatible','stressMatches','singleWord']):
             qa['blindPhoneticCheck']=gateway.phonetic_check(data,config['verifierModel'])
     return checks,qa
 
@@ -254,12 +286,13 @@ def persist(row, config, root, data, source, checks, qa, history):
     stem=f"{row['wordId']}-{uuid.uuid4().hex[:10]}"
     wav=Path(root)/'audio'/(stem+'.wav');wav.parent.mkdir(parents=True,exist_ok=True);wav.write_bytes(data)
     mp3=wav.with_suffix('.mp3')
-    subprocess.run(['ffmpeg','-nostdin','-y','-v','error','-i',str(wav),'-codec:a','libmp3lame','-b:a','64k',str(mp3)],check=True,capture_output=True)
+    processing=normalize_audio(wav,mp3)
     value=dict(version=VERSION,status='accepted',fingerprint=fingerprint(row,config),wordId=row['wordId'],
         lexicalKey=row['lexicalKey'],headword=row['headword'],reading=row['headword'],phonetic=row['phonetic'],
         generatedAt=datetime.now(timezone.utc).isoformat(),model=source['model'],voice=config['voice'],
         audioFile=str(mp3.relative_to(root)),sha256=file_hash(mp3),bytes=mp3.stat().st_size,audio=validate_wav(data),
-        checks=checks,pronunciationCheck=qa,generation=source,attempts=history,phoneticCertified=False)
+        checks=checks,pronunciationCheck=qa,generation=source,attempts=history,phoneticCertified=False,
+        audioProcessing=processing)
     atomic_json(Path(root)/'results'/f"{row['wordId']}.json",value)
     return value
 
@@ -272,9 +305,10 @@ def recheck_saved_attempt(row,config,root,gateway,old):
         if not any(transcript_matches(row,c) for c in checks):continue
         raw=(Path(root)/attempt['rawAudioFile']).resolve()
         if not raw.is_relative_to(Path(root).resolve()) or not raw.is_file() or file_hash(raw)!=attempt.get('rawSha256'):continue
-        data=raw.read_bytes();validate_wav(data)
+        data=raw.read_bytes();validate_wav(data);check_levels(data)
         qa=gateway.review(data,row,config['qaModel'])
-        if qa.get('confidence')=='medium' and all(qa.get(k) is True for k in ['wordMatches','britishCompatible','stressMatches','singleWord']):
+        if any(c.get('homophoneEvidence',{}).get('requiresBlindPhoneticCheck') for c in checks):qa['requiresBlindPhoneticCheck']=True
+        if (qa.get('confidence')=='medium' or qa.get('requiresBlindPhoneticCheck')) and all(qa.get(k) is True for k in ['wordMatches','britishCompatible','stressMatches','singleWord']):
             qa['blindPhoneticCheck']=gateway.phonetic_check(data,config['verifierModel'])
         if qa_passed(qa,row,config):
             return persist(row,config,root,data,dict(mode='single-word-rechecked',**attempt['source']),checks,qa,
@@ -303,6 +337,7 @@ def generate_word(row, config, root, gateway, attempts=3):
             raw=Path(root)/'attempts'/f"{row['wordId']}-{uuid.uuid4().hex[:10]}.wav"
             raw.parent.mkdir(parents=True,exist_ok=True);raw.write_bytes(data)
             item.update(rawAudioFile=str(raw.relative_to(root)),rawSha256=file_hash(raw))
+            item['audioLevels']=check_levels(data)
             checks,qa=audit_clip(data,row,config,gateway);item.update(checks=checks,pronunciationCheck=qa,source=source)
             if qa_passed(qa,row,config): return persist(row,config,root,data,dict(mode='single-word',**source),checks,qa,[*history,item])
             item['error']='Transcript or British pronunciation check did not pass'
@@ -330,6 +365,7 @@ def generate_group(rows, config, root, gateway, attempts=3):
     except Exception: return accepted+[generate_word(r,config,root,gateway,attempts) for r in pending]
     for row,(clip,boundary) in zip(pending,clips):
         try:
+            check_levels(clip)
             checks,qa=audit_clip(clip,row,config,gateway)
             if not qa_passed(qa,row,config): raise ValueError('Group clip failed pronunciation check')
             provenance=dict(mode='pause-separated-group',groupFile=str(path.relative_to(root)),groupSha256=file_hash(path),boundary=boundary,**source)

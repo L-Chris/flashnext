@@ -4,10 +4,12 @@ import CardContent from './CardContent'
 import CardAudio from './CardAudio'
 import IeltsUsages from './IeltsUsages'
 import SenseExamples from './SenseExamples'
+import KnowledgeLabels from './KnowledgeLabels'
 
 export default function CardDetails({ card }: { card: Card }) {
   const content = useContentPreview(card.front, card.back, card.contentFormat)
   return <div className="space-y-3">
+    <KnowledgeLabels knowledge={card.knowledge} details />
     <div className="grid gap-4 md:grid-cols-2">
       {(['front', 'back'] as const).map(side => <div key={side} className="min-w-0">
         <p className="mb-2 text-xs text-zinc-500">{side === 'front' ? '正面' : '背面'}{content.pending ? ' · 加载中…' : ''}</p>

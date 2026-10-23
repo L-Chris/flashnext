@@ -27,7 +27,7 @@ def audio_bytes():
     out = io.BytesIO()
     with wave.open(out, 'wb') as f:
         f.setnchannels(1); f.setsampwidth(2); f.setframerate(24000)
-        f.writeframes(b''.join(struct.pack('<h', int(math.sin(i * .12) * 500)) for i in range(12000)))
+        f.writeframes(b''.join(struct.pack('<h', int(math.sin(i * .12) * 5000)) for i in range(12000)))
     return out.getvalue()
 
 
@@ -82,6 +82,25 @@ class AudioTests(unittest.TestCase):
         with wave.open(nested, 'wb') as f:
             f.setnchannels(1); f.setsampwidth(2); f.setframerate(24000); f.writeframes(audio_bytes())
         with self.assertRaises(ValueError): validate_wav(nested.getvalue())
+
+    def test_quiet_japanese_generation_retries_before_recognition(self):
+        from lib.audio_loudness import measure, passed
+        class QuietFirst(GatewayFixture):
+            def speech(self, row, config, attempt):
+                data, usage = super().speech(row, config, attempt)
+                if self.calls == 1:
+                    out = io.BytesIO()
+                    with wave.open(out, 'wb') as f:
+                        f.setnchannels(1); f.setsampwidth(2); f.setframerate(24000); f.writeframes(b'\x01\x00' * 12000)
+                    data = out.getvalue()
+                return data, usage
+        with tempfile.TemporaryDirectory() as directory:
+            row = dict(wordId=1, lexicalKey='ja:fixture', headword='駅', reading='えき', pos='名词', translation='车站', pitchHints=[])
+            gateway = QuietFirst('えき')
+            result = generate_word(row, DEFAULT_CONFIG, Path(directory), gateway, attempts=2)
+            self.assertEqual(result['status'], 'accepted'); self.assertEqual(gateway.calls, 2)
+            self.assertIn('too quiet', result['attempts'][0]['error'])
+            self.assertTrue(passed(measure(Path(directory) / result['audioFile'])))
 
     def test_mismatch_never_accepted_cache_is_reusable_and_reading_change_invalidates_it(self):
         with tempfile.TemporaryDirectory() as d:

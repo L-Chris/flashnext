@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { api } from '../api/client'
-import type { Card, CardPage, CardSortKey, Deck } from '../types'
+import type { Card, CardPage, CardSortKey, Deck, KnowledgeTopic } from '../types'
 import CardForm from './CardForm'
 import CardTable, {
   ColumnConfigModal,
@@ -29,6 +29,7 @@ const DEFAULT_DIR: Record<CardSortKey, 'asc' | 'desc'> = {
   state: 'asc',
   interval: 'desc',
   headword: 'asc',
+  learningOrder: 'asc',
 }
 
 export default function DeckDetail({ deck, onBack, onReview }: Props) {
@@ -39,13 +40,22 @@ export default function DeckDetail({ deck, onBack, onReview }: Props) {
   const [columns, setColumns] = useState(loadColumnVisibility)
   const [page, setPage] = useState<CardPage | null>(null)
   const [loading, setLoading] = useState(true)
+  const [topics, setTopics] = useState<KnowledgeTopic[]>([])
   const [query, setQuery] = useState({
-    sort: 'difficulty' as CardSortKey,
-    dir: 'desc' as 'asc' | 'desc',
+    sort: (deck.subject ? 'learningOrder' : 'difficulty') as CardSortKey,
+    dir: (deck.subject ? 'asc' : 'desc') as 'asc' | 'desc',
     page: 1,
     pageSize: 50,
     q: '',
+    topic: '',
   })
+
+  useEffect(() => {
+    if (!deck.subject) { setTopics([]); return }
+    let active = true
+    api.listTopics(deck.id).then(rows => { if (active) setTopics(rows) }).catch(e => { if (active) setError(e.message || '主题加载失败') })
+    return () => { active = false }
+  }, [deck.id, deck.subject])
 
   const load = useCallback(async () => {
     setLoading(true)
@@ -95,7 +105,7 @@ export default function DeckDetail({ deck, onBack, onReview }: Props) {
           <input
             value={search}
             onChange={e => setSearch(e.target.value)}
-            placeholder="搜索词 / 释义"
+            placeholder={deck.subject ? '搜索知识点 / 内容' : '搜索词 / 释义'}
             className="min-w-0 flex-1 rounded-lg border border-zinc-300 bg-white px-3 py-1.5 text-sm outline-none focus:border-indigo-500 dark:border-zinc-700 dark:bg-zinc-900 md:w-56 md:flex-none"
           />
         </span>
@@ -123,6 +133,19 @@ export default function DeckDetail({ deck, onBack, onReview }: Props) {
         </span>
       </div>
 
+      {deck.subject && <div className="mb-4 flex flex-wrap items-center gap-3">
+        {deck.tags?.map(tag => <span key={`${tag.scheme}:${tag.key}`} className="rounded bg-indigo-50 px-2 py-1 text-xs text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300">{tag.label}</span>)}
+        <label className="text-sm text-zinc-500">主题
+          <select aria-label="筛选主题" value={query.topic} onChange={e => setQuery(q => ({ ...q, topic: e.target.value, page: 1 }))}
+            className="ml-2 rounded border border-zinc-300 bg-white px-2 py-1.5 dark:border-zinc-700 dark:bg-zinc-900">
+            <option value="">全部主题</option>
+            {topics.map(topic => <option key={topic.key} value={topic.key}>{topic.label}（{topic.cardCount}）</option>)}
+          </select>
+        </label>
+        <button onClick={() => setQuery(q => ({ ...q, sort: 'learningOrder', dir: 'asc', page: 1 }))}
+          className="rounded border border-zinc-300 px-2 py-1.5 text-xs text-zinc-600 dark:border-zinc-700 dark:text-zinc-400">按学习顺序</button>
+      </div>}
+
       {colOpen && (
         <ColumnConfigModal
           visible={columns}
@@ -147,6 +170,7 @@ export default function DeckDetail({ deck, onBack, onReview }: Props) {
           page={page}
           loading={loading}
           visible={columns}
+          knowledgeDeck={Boolean(deck.subject)}
           onEdit={setEditor}
           onSort={handleSort}
           onPage={p => setQuery(q => ({ ...q, page: p }))}

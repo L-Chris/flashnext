@@ -9,6 +9,7 @@ import CardContent from './CardContent'
 import CardAudio from './CardAudio'
 import SenseExamples from './SenseExamples'
 import IeltsUsages from './IeltsUsages'
+import KnowledgeLabels from './KnowledgeLabels'
 
 interface Props { deck: Deck; onExit: () => void }
 const RATING_BUTTONS: Array<{ rating: Rating; label: string; className: string }> = [
@@ -49,6 +50,7 @@ function ReviewCard({ card, language, grading, onGrade }: {
   const autoplay = Boolean(card.presentation?.audioAutoplay) && ready
   return <>
     <div data-testid="review-card" data-card-id={card.id} className="mb-4 flex min-h-52 min-w-0 flex-col items-center justify-center rounded-xl border border-zinc-200 bg-white p-5 text-center dark:border-zinc-800 dark:bg-zinc-900 md:p-8">
+      {card.knowledge && <div className="mb-4 w-full"><KnowledgeLabels knowledge={card.knowledge} /></div>}
       <div lang={card.word?.language || language} className="w-full min-w-0 text-2xl font-medium">
         {content.pending ? <p className="text-sm text-zinc-500">正在加载卡片…</p> : <CardContent text={card.front} rendered={content.preview?.front} />}
       </div>

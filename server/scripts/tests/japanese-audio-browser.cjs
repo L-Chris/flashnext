@@ -25,7 +25,7 @@ async function get(path) {
   const res = await fetch(base + audio.url)
   assert.equal(res.status, 200); assert.match(res.headers.get('content-type'), /audio\/mpeg/)
   const bytes = Buffer.from(await res.arrayBuffer())
-  assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'), record.sha256)
+  assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'), audio.playback?.sha256 || record.sha256)
   const ranged = await fetch(base + audio.url, { headers: { Range: 'bytes=0-127' } })
   assert.equal(ranged.status, 206); assert.equal((await ranged.arrayBuffer()).byteLength, 128)
   const originalQueue = await get(`/api/decks/${card.deckId}/cards/due`)

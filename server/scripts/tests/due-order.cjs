@@ -62,6 +62,24 @@ test('learning ahead is still available when it is the only remaining work', asy
   assert.deepEqual((await fixture.queue(1, now)).cards.map(c => c.id), [1])
 })
 
+test('authored learning order precedes IDs and is applied before the daily new-card limit', async () => {
+  const fixture = await service([
+    { ...card(1, 0), learningOrder: 30 }, { ...card(50, 0), learningOrder: 10 },
+    { ...card(2, 0), learningOrder: 20 }, card(3, 0),
+  ], { newPerDay: 2 })
+  const queue = await fixture.queue(1, now)
+  assert.deepEqual(queue.cards.map(c => c.id), [50, 2])
+  assert.equal(queue.counts.fresh, 4)
+  assert.equal(queue.counts.hiddenByLimit, 2)
+  assert.equal((await fixture.summary(1, now)).dueCount, 2)
+})
+
+test('unordered cards keep ID order; learning order never overrides review priority', async () => {
+  const review = { ...card(20, 2), learningOrder: 999 }
+  const queue = await (await service([card(3, 0), review, { ...card(50, 0), learningOrder: 10 }, card(1, 0)])).queue(1, now)
+  assert.deepEqual(queue.cards.map(c => c.id), [20, 50, 1, 3])
+})
+
 test('non-Easy first ratings schedule a delay instead of an immediate repeat', async () => {
   const { default_w } = await import('ts-fsrs')
   const fresh = { ...card(1, 0), stability: 0 }

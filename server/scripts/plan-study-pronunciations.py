@@ -3,7 +3,7 @@ import argparse
 import json
 import re
 from pathlib import Path
-from lib.study_pronunciations import atomic_json, word_poses, comparable_ipa
+from lib.study_pronunciations import atomic_json, word_poses, comparable_ipa, verified_alias_entries
 from lib.pronunciation import normalize
 
 p = argparse.ArgumentParser(description=__doc__)
@@ -27,7 +27,7 @@ for w in scope['words']:
         continue
     file = a.batch / 'lookups' / f"{w['id']}.json"
     result = json.loads(file.read_text()) if file.exists() else {'entries': []}
-    entries = result['entries']
+    entries = verified_alias_entries(result['entries'],w['headword'],kaikki)
     poses = word_poses(w['pos'])
     if file.exists() and (not entries or (poses and not any(e['pos'] in poses for e in entries))):
         candidates = []

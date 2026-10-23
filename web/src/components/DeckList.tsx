@@ -25,6 +25,7 @@ export default function DeckList({ decks, onOpen, onSettings }: Props) {
         >
           <div>
             <span className="font-medium">{deck.name}</span>
+            {deck.tags?.map(tag => <span key={`${tag.scheme}:${tag.key}`} className="ml-2 rounded bg-indigo-50 px-2 py-0.5 text-xs text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300">{tag.label}</span>)}
             {deck.description && (
               <span className="ml-2 text-sm text-zinc-500">{deck.description}</span>
             )}

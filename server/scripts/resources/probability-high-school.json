@@ -1,0 +1,463 @@
+{
+  "id": "probability-high-school",
+  "version": 1,
+  "language": "zh",
+  "name": "概率论",
+  "subject": "probability",
+  "description": "高中 · 概念、公式与适用条件",
+  "stage": {
+    "key": "high-school",
+    "label": "高中"
+  },
+  "notes": "原创知识卡；范围参考中国高中必修与选择性必修，结构参考 Math Academy，非官方课程分级或教材逐字转录。",
+  "topics": [
+    {
+      "key": "foundations",
+      "label": "基础概念"
+    },
+    {
+      "key": "events",
+      "label": "事件关系与概率运算"
+    },
+    {
+      "key": "counting",
+      "label": "计数基础"
+    },
+    {
+      "key": "conditional",
+      "label": "条件概率与全概率"
+    },
+    {
+      "key": "random-variables",
+      "label": "随机变量与数字特征"
+    },
+    {
+      "key": "distributions",
+      "label": "常见分布"
+    }
+  ],
+  "sources": [
+    {
+      "id": "curriculum",
+      "title": "高中课程标准与范围",
+      "url": "https://www.moe.gov.cn/srcsite/A26/s8001/202006/t20200603_462199.html"
+    },
+    {
+      "id": "revision-context",
+      "title": "2025 修订版课标解读（版本参考）",
+      "url": "https://xuanshu.hep.com.cn/front/h5Mobile/bookDetails?bookId=6a299900e119ac972940bbce"
+    },
+    {
+      "id": "openstax",
+      "title": "OpenStax 概率与统计（概念核对）",
+      "url": "https://openstax.org/details/books/introductory-statistics-2e"
+    },
+    {
+      "id": "math-academy",
+      "title": "Math Academy Precalculus（结构参考）",
+      "url": "https://www.mathacademy.com/courses/precalculus"
+    }
+  ],
+  "cards": [
+    {
+      "id": "sample-space",
+      "position": 1,
+      "topic": "foundations",
+      "title": "随机试验、样本空间与随机事件",
+      "front": "随机试验、样本空间与随机事件",
+      "back": "**定义**\n随机试验在相同条件下可重复进行，单次结果事先不能确定。\n样本点是一个可能结果；样本空间 \\(\\Omega\\) 是全部可能结果的集合。\n随机事件 \\(A\\) 是样本空间的子集：\\(A\\subseteq\\Omega\\)。\n\n**注意**\n描述样本点时，应明确试验过程、是否区分顺序以及记录哪些结果。",
+      "type": "knowledge",
+      "prerequisiteIds": [],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "probability-properties",
+      "position": 2,
+      "topic": "foundations",
+      "title": "概率的基本性质",
+      "front": "概率的基本性质",
+      "back": "**基本性质**\n\\[\n0\\le P(A)\\le1,\\qquad P(\\Omega)=1,\\qquad P(\\varnothing)=0.\n\\]\n若 \\(A\\subseteq B\\)，则 \\(P(A)\\le P(B)\\)。\n\n**注意**\n概率衡量事件发生的可能性，不表示下一次试验必然出现的结果。\n在连续型模型中，概率为零的事件未必不可能；不能把有限等可能模型的直觉无条件推广。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "sample-space"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "classical-probability",
+      "position": 3,
+      "topic": "foundations",
+      "title": "古典概型及其适用条件",
+      "front": "古典概型及其适用条件",
+      "back": "**适用条件**\n样本空间包含有限个样本点，而且每个样本点等可能发生。\n\n**公式**\n\\[\nP(A)=\\frac{|A|}{|\\Omega|}.\n\\]\n\\(|A|\\) 是事件所含样本点数，\\(|\\Omega|\\) 是全部样本点数。\n\n**易混点**\n“随机选择”不自动保证所列结果等可能；分子与分母必须采用一致的计数方式。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "sample-space",
+        "probability-properties"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "frequency",
+      "position": 4,
+      "topic": "foundations",
+      "title": "频率与概率的关系",
+      "front": "频率与概率的关系",
+      "back": "**定义**\n在 \\(n\\) 次试验中，事件 \\(A\\) 出现 \\(m\\) 次，其频率为\n\\[\nf_n(A)=\\frac{m}{n}.\n\\]\n频率随试验结果变化，概率是给定模型下描述事件可能性的数值。\n\n**关系**\n在适当的重复试验条件下，可用大量试验的频率估计概率；样本量大不意味着每次增加试验后误差都更小。\n\n**易混点**\n独立试验中，前面连续出现或未出现某结果，不会使下一次“必须补回来”。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "probability-properties"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "event-operations",
+      "position": 5,
+      "topic": "events",
+      "title": "事件的交、并与补",
+      "front": "事件的交、并与补",
+      "back": "**事件运算**\n- \\(A\\cap B\\)：\\(A\\) 与 \\(B\\) 都发生。\n- \\(A\\cup B\\)：\\(A\\)、\\(B\\) 中至少一个发生，包含同时发生。\n- \\(A^c=\\Omega\\setminus A\\)：\\(A\\) 不发生。\n\n**对立事件公式**\n\\[\nP(A^c)=1-P(A).\n\\]\n“至少一个”与“恰好一个”含义不同。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "sample-space",
+        "probability-properties"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "mutually-exclusive",
+      "position": 6,
+      "topic": "events",
+      "title": "互斥事件与对立事件",
+      "front": "互斥事件与对立事件",
+      "back": "**互斥**\n\\[\nA\\cap B=\\varnothing.\n\\]\n两个事件不能同时发生。\n\n**对立**\n除互斥外，还要求覆盖整个样本空间：\n\\[\nA\\cap B=\\varnothing,\\qquad A\\cup B=\\Omega.\n\\]\n\n**区别**\n对立事件一定互斥；互斥事件可能都不发生，因此未必对立。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "event-operations"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "addition-rule",
+      "position": 7,
+      "topic": "events",
+      "title": "概率加法公式",
+      "front": "概率加法公式",
+      "back": "**一般公式**\n\\[\nP(A\\cup B)=P(A)+P(B)-P(A\\cap B).\n\\]\n减去交集是为了消除重复计算。\n\n**互斥时**\n\\[\nP(A\\cup B)=P(A)+P(B).\n\\]\n\n**条件**\n直接相加要求事件互斥；一般加法公式不要求独立。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "event-operations",
+        "mutually-exclusive"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "independence",
+      "position": 8,
+      "topic": "events",
+      "title": "事件独立性的定义",
+      "front": "事件独立性的定义",
+      "back": "**定义**\n若\n\\[\nP(A\\cap B)=P(A)P(B),\n\\]\n则称事件 \\(A\\) 与 \\(B\\) 相互独立。\n\n**直观含义**\n一个事件是否发生，不改变另一个事件发生的概率。\n\n**易混点**\n互斥不等于独立。若 \\(P(A)>0\\)、\\(P(B)>0\\) 且两事件互斥，则它们不独立。零概率情形不能直接套用这一结论。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "mutually-exclusive",
+        "probability-properties"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "independent-product",
+      "position": 9,
+      "topic": "events",
+      "title": "独立事件的乘法与对立事件",
+      "front": "独立事件的乘法与对立事件",
+      "back": "**两个独立事件**\n\\[\nP(A\\cap B)=P(A)P(B).\n\\]\n若 \\(A\\)、\\(B\\) 独立，则它们的补事件也保持相应独立性。\n\n**多个相互独立事件**\n\\[\nP\\left(\\bigcap_{i=1}^{n}A_i\\right)=\\prod_{i=1}^{n}P(A_i),\n\\qquad\nP\\left(\\bigcup_{i=1}^{n}A_i\\right)=1-\\prod_{i=1}^{n}(1-P(A_i)).\n\\]\n后式通过“一个也不发生”的对立事件得到。\n\n**条件**\n多个事件的公式要求相互独立；仅两两独立通常不足以推出多个事件交集概率的乘法公式。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "independence",
+        "event-operations"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "counting-principles",
+      "position": 10,
+      "topic": "counting",
+      "title": "分类加法与分步乘法计数",
+      "front": "分类加法与分步乘法计数",
+      "back": "**分类加法**\n完成同一件事有若干互不重叠的类别，每一类都能独立完成这件事，则总方法数为各类方法数之和。\n\n**分步乘法**\n完成一件事必须依次完成若干步骤，且各步骤可选方法数固定为 \\(m_1,\\ldots,m_k\\)，则\n\\[\nN=m_1m_2\\cdots m_k.\n\\]\n\n**注意**\n分类应不重不漏；若后续可选数随前面选择改变，不能直接乘固定数，应进一步分类。\n计数中的乘法原理不等同于概率中的事件独立性。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "classical-probability",
+        "mutually-exclusive"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "permutations",
+      "position": 11,
+      "topic": "counting",
+      "title": "排列数：计数时考虑顺序",
+      "front": "排列数：计数时考虑顺序",
+      "back": "**定义**\n从 \\(n\\) 个不同元素中取 \\(m\\) 个，按一定顺序排成一列，不允许重复取用。\n\n**公式**\n\\[\nA_n^m=\\frac{n!}{(n-m)!},\\qquad 0\\le m\\le n.\n\\]\n\\(m,n\\) 为整数，约定 \\(0!=1\\)。全排列数为 \\(n!\\)。\n\n**适用判断**\n改变顺序会得到不同结果时，需要区分排列顺序。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "counting-principles"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "combinations",
+      "position": 12,
+      "topic": "counting",
+      "title": "组合数：计数时不考虑顺序",
+      "front": "组合数：计数时不考虑顺序",
+      "back": "**定义**\n从 \\(n\\) 个不同元素中取 \\(m\\) 个组成一组，不考虑组内顺序，不允许重复取用。\n\n**公式**\n\\[\nC_n^m=\\binom{n}{m}=\\frac{n!}{m!(n-m)!},\\qquad 0\\le m\\le n.\n\\]\n\\(m,n\\) 为整数。\n\n**性质**\n\\[\nC_n^0=C_n^n=1,\\qquad C_n^m=C_n^{n-m}.\n\\]\n计数口径必须与样本空间一致，不能在同一道概率表达式中混用有序与无序结果。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "permutations"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "conditional-probability",
+      "position": 13,
+      "topic": "conditional",
+      "title": "条件概率的定义与条件",
+      "front": "条件概率的定义与条件",
+      "back": "**定义**\n\\[\nP(A\\mid B)=\\frac{P(A\\cap B)}{P(B)},\\qquad P(B)>0.\n\\]\n表示在 \\(B\\) 已发生的条件下，\\(A\\) 发生的概率。\n\n**理解**\n在有限等可能模型中，条件把考虑范围缩小到 \\(B\\)，再计算其中满足 \\(A\\) 的比例。\n\n**易混点**\n\\(P(A\\mid B)\\) 与 \\(P(B\\mid A)\\) 的条件不同，一般不相等。\n当 \\(P(B)>0\\) 时，独立性可写成 \\(P(A\\mid B)=P(A)\\)。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "classical-probability",
+        "event-operations",
+        "independence"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "multiplication-rule",
+      "position": 14,
+      "topic": "conditional",
+      "title": "一般概率乘法公式",
+      "front": "一般概率乘法公式",
+      "back": "**公式**\n\\[\nP(A\\cap B)=P(B)P(A\\mid B),\\qquad P(B)>0.\n\\]\n同样，当 \\(P(A)>0\\) 时，\n\\[\nP(A\\cap B)=P(A)P(B\\mid A).\n\\]\n\n**关系**\n独立时，条件概率可以替换为对应事件的原概率，从而得到独立事件乘法公式。\n\n**注意**\n一般乘法公式不要求独立。分阶段试验中，后一步的概率必须对应前一步已经发生的条件。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "conditional-probability"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "total-probability",
+      "position": 15,
+      "topic": "conditional",
+      "title": "全概率公式及划分条件",
+      "front": "全概率公式及划分条件",
+      "back": "**条件**\n\\(B_1,\\ldots,B_n\\) 两两互斥、并集为 \\(\\Omega\\)，且各 \\(P(B_i)>0\\)。\n\n**公式**\n\\[\nP(A)=\\sum_{i=1}^{n}P(B_i)P(A\\mid B_i).\n\\]\n\n**含义**\n按不同情况分解事件发生的可能性，再把各部分加起来；各条件概率按对应情况的概率加权。\n\n**易混点**\n划分必须不重不漏。通常不能直接对条件概率作不加权的平均。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "multiplication-rule",
+        "addition-rule"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "random-variable",
+      "position": 16,
+      "topic": "random-variables",
+      "title": "离散型随机变量",
+      "front": "离散型随机变量",
+      "back": "**定义**\n随机变量 \\(X\\) 把每个样本点对应到一个实数，用数值描述随机试验的结果。\n离散型随机变量的可能取值有限或可数；高中阶段主要讨论有限取值情形。\n\n**记号**\n\\(X=x\\) 表示“随机变量取值为 \\(x\\)”这一事件；\\(P(X=x)\\) 是该事件的概率。\n\n**区别**\n随机变量 \\(X\\)、某个取值 \\(x\\) 与概率 \\(P(X=x)\\) 是不同的对象。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "sample-space",
+        "probability-properties"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "distribution-table",
+      "position": 17,
+      "topic": "random-variables",
+      "title": "离散型随机变量的分布列",
+      "front": "离散型随机变量的分布列",
+      "back": "**分布列**\n列出随机变量的全部可能取值 \\(x_i\\) 及对应概率 \\(p_i=P(X=x_i)\\)。\n\n**合法性条件**\n\\[\np_i\\ge0,\\qquad \\sum_i p_i=1.\n\\]\n同一取值对应的情况应合并，可能取值应完整列出。\n\n**事件概率**\n某个取值集合的概率等于该集合内各取值概率之和。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "random-variable",
+        "addition-rule"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "expectation",
+      "position": 18,
+      "topic": "random-variables",
+      "title": "数学期望：分布的加权平均",
+      "front": "数学期望：分布的加权平均",
+      "back": "**有限离散情形**\n\\[\nE(X)=\\sum_i x_i p_i.\n\\]\n期望描述分布的平均水平，权重是各取值的概率。\n\n**线性变换**\n\\[\nE(aX+b)=aE(X)+b.\n\\]\n\n**易混点**\n期望不是简单地对所有取值平均，也不一定是随机变量可能取得的某个值。\n期望不能单独反映取值的波动大小。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "distribution-table"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "variance",
+      "position": 19,
+      "topic": "random-variables",
+      "title": "方差与标准差",
+      "front": "方差与标准差",
+      "back": "**定义与计算式**\n\\[\nD(X)=\\operatorname{Var}(X)=\\sum_i (x_i-E(X))^2p_i\n=E(X^2)-[E(X)]^2.\n\\]\n标准差为 \\(\\sqrt{D(X)}\\)，与 \\(X\\) 具有相同的量纲。\n\n**线性变换**\n\\[\nD(aX+b)=a^2D(X).\n\\]\n\n**含义**\n方差衡量取值围绕期望的离散程度。整体平移不改变方差；缩放后的方差按倍数的平方变化。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "expectation"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "bernoulli",
+      "position": 20,
+      "topic": "distributions",
+      "title": "伯努利试验与两点分布",
+      "front": "伯努利试验与两点分布",
+      "back": "**伯努利试验**\n每次试验只区分“成功”和“失败”两类结果，成功概率记为 \\(p\\)。\n\n**两点分布**\n若用成功指标 \\(X\\) 记录结果，则\n\\[\nP(X=1)=p,\\qquad P(X=0)=1-p,\\qquad 0\\le p\\le1.\n\\]\n\\[\nE(X)=p,\\qquad D(X)=p(1-p).\n\\]\n“成功”是人为指定的类别，不一定意味着有利结果。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "variance",
+        "independence"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "binomial",
+      "position": 21,
+      "topic": "distributions",
+      "title": "二项分布及其适用条件",
+      "front": "二项分布及其适用条件",
+      "back": "**四个条件**\n试验次数 \\(n\\) 固定；每次只区分成功或失败；各次相互独立；成功概率始终为 \\(p\\)。\n\n**分布与数字特征**\n若 \\(X\\) 记录 \\(n\\) 次试验的成功次数，则 \\(X\\sim B(n,p)\\)，且\n\\[\nP(X=k)=C_n^k p^k(1-p)^{n-k},\\qquad k=0,1,\\ldots,n.\n\\]\n\\[\nE(X)=np,\\qquad D(X)=np(1-p).\n\\]\n当 \\(p=0\\) 或 \\(p=1\\) 时，分布集中在一个取值，应按确定结果理解。\n\n**注意**\n“反复试验”不自动满足独立、同概率的要求；单凭“有放回”也不足以判断全部条件成立。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "bernoulli",
+        "combinations",
+        "independent-product"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "hypergeometric",
+      "position": 22,
+      "topic": "distributions",
+      "title": "超几何分布：不放回抽样",
+      "front": "超几何分布：不放回抽样",
+      "back": "**模型**\n总体含 \\(N\\) 个对象，其中 \\(M\\) 个属于指定类别；等可能、不放回地抽取 \\(n\\) 个，\\(X\\) 记录指定类别的个数。\n\n**分布**\n\\[\nP(X=k)=\\frac{C_M^k C_{N-M}^{n-k}}{C_N^n}.\n\\]\n\\(N\\ge1\\)，\\(0\\le M,n\\le N\\)，参数均为整数；取值范围为\n\\[\n\\max(0,n-(N-M))\\le k\\le\\min(n,M).\n\\]\n\n**均值与区别**\n\\[\nE(X)=n\\frac{M}{N}.\n\\]\n不放回抽样会改变后续成功概率，不能直接套用独立同概率的二项模型。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "combinations",
+        "distribution-table",
+        "expectation",
+        "conditional-probability"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "normal-distribution",
+      "position": 23,
+      "topic": "distributions",
+      "title": "正态分布的参数与基本特征",
+      "front": "正态分布的参数与基本特征",
+      "back": "**记号**\n\\[\nX\\sim N(\\mu,\\sigma^2),\\qquad \\sigma>0.\n\\]\n\\(\\mu\\) 为均值，\\(\\sigma^2\\) 为方差，\\(\\sigma\\) 为标准差。\n\n**特征**\n正态曲线呈钟形，关于 \\(x=\\mu\\) 对称；\\(\\mu\\) 决定中心位置，\\(\\sigma\\) 决定分散程度。\n正态随机变量连续取值，区间概率由曲线下相应区域的面积表示。\n\n**注意**\n第二个参数是方差，不是标准差；单点概率 \\(P(X=x)=0\\)。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "variance",
+        "distribution-table"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    },
+    {
+      "id": "normal-properties",
+      "position": 24,
+      "topic": "distributions",
+      "title": "正态分布的对称性与常用区间",
+      "front": "正态分布的对称性与常用区间",
+      "back": "**对称性**\n若 \\(X\\sim N(\\mu,\\sigma^2)\\)，则\n\\[\nP(X\\le\\mu)=\\frac12,\\qquad\nP(X\\le\\mu-a)=P(X\\ge\\mu+a)\\quad(a\\ge0).\n\\]\n\n**常用区间概率（近似值）**\n\\[\n\\begin{aligned}\nP(|X-\\mu|\\le\\sigma)&\\approx0.6827,\\\\\nP(|X-\\mu|\\le2\\sigma)&\\approx0.9545,\\\\\nP(|X-\\mu|\\le3\\sigma)&\\approx0.9973.\n\\end{aligned}\n\\]\n\n**条件**\n这些比例适用于正态分布，不能直接用于任意分布；它们是近似概率，不表示区间外的结果不可能发生。",
+      "type": "knowledge",
+      "prerequisiteIds": [
+        "normal-distribution"
+      ],
+      "sourceIds": [
+        "curriculum",
+        "openstax"
+      ]
+    }
+  ]
+}

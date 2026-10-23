@@ -19,6 +19,7 @@ import uuid
 import wave
 
 from .japanese import kana, candidates
+from .audio_loudness import STYLE as LOUDNESS_STYLE, check_wav as check_levels, normalize as normalize_audio, validate_processing
 
 VERSION = 'ja-gemini-audio-v1'
 DEFAULT_CONFIG = dict(gateway='https://chat.rethinkos.com', model='gemini/tts-lite',
@@ -147,7 +148,7 @@ def style_for(row, attempt=1):
             f"The required reading is {row['reading']}, exactly {len(parts)} mora: {'・'.join(parts)}. "
             "Pronounce ONLY the transcript exactly once at a clear, natural pace. "
             "Do not read these directions, the gloss, or an alternative reading aloud. "
-            "Preserve small tsu, long vowels and all morae; do not add explanatory words.")
+            "Preserve small tsu, long vowels and all morae; do not add explanatory words. " + LOUDNESS_STYLE)
     hints = row.get('pitchHints', [])
     if len(hints) == 1 and hints[0] != 'Nakadaka':
         text += ' Dictionary pitch hint: ' + {
@@ -338,14 +339,14 @@ def split_word_group(data, count):
 
 def persist_accepted(row, config, root, wav, info, checks, history, generation=None):
     output = wav.with_suffix('.mp3')
-    subprocess.run(['ffmpeg', '-nostdin', '-y', '-v', 'error', '-i', str(wav),
-                    '-codec:a', 'libmp3lame', '-b:a', '64k', str(output)], check=True, capture_output=True)
+    processing = normalize_audio(wav, output)
     result = dict(version=VERSION, status='accepted', fingerprint=fingerprint(row, config),
                   wordId=row['wordId'], lexicalKey=row['lexicalKey'], headword=row['headword'], reading=row['reading'],
                   generatedAt=time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), model=(generation or {}).get('model', config['resolvedModel']),
                   voice=config['voice'], style=style_for(row), audioFile=str(output.relative_to(root)),
                   sha256=file_hash(output), bytes=output.stat().st_size, audio=info,
-                  checks=checks, attempts=history, generation=generation or {'mode': 'single-word'}, pitchAccentCertified=False)
+                  checks=checks, attempts=history, generation=generation or {'mode': 'single-word'}, pitchAccentCertified=False,
+                  audioProcessing=processing)
     atomic_json(root / 'results' / f"{row['wordId']}.json", result)
     return result
 
@@ -358,6 +359,8 @@ def validate_result(row, config, root, result):
     path = (Path(root) / result['audioFile']).resolve()
     if not path.is_relative_to(Path(root).resolve()) or not path.is_file() or file_hash(path) != result['sha256']:
         raise ValueError('Missing, changed or invalid audio artifact')
+    if 'audioProcessing' in result:
+        validate_processing(result['audioProcessing'], result['sha256'])
     checks = result.get('checks', [])
     if not checks or not any(normalized_transcript(c['transcript']) == normalized_transcript(row['reading']) for c in checks):
         raise ValueError('No matching blind ASR evidence')
@@ -391,6 +394,7 @@ def generate_word(row, config, root, gateway, attempts=3):
             wav.parent.mkdir(parents=True, exist_ok=True)
             wav.write_bytes(data)
             entry.update(wavFile=str(wav.relative_to(root)), audio=info, usage=usage)
+            entry['audioLevels'] = check_levels(data)
             first = gateway.transcribe(data, config['asrModel'])
             entry['checks'].append(first)
             if normalized_transcript(first['transcript']) != normalized_transcript(row['reading']):
@@ -450,6 +454,7 @@ def generate_group(rows, config, root, gateway, attempts=3):
         return accepted + [generate_word(row, config, root, gateway, attempts) for row in pending]
     for row, (data, boundary) in zip(pending, clips):
         try:
+            check_levels(data)
             checks = [gateway.transcribe(data, config['asrModel'])]
             if normalized_transcript(checks[0]['transcript']) != normalized_transcript(row['reading']):
                 checks.append(gateway.transcribe(data, config['verifierModel']))

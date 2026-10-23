@@ -81,5 +81,533 @@
     "condition": "British English, non-rhotic; not the distinct American rhotic larva",
     "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit reciprocal homophones on larva and lava",
     "reference": "https://en.wiktionary.org/wiki/larva#Pronunciation"
+  },
+  {
+    "word": "rite",
+    "targetIpa": "raɪt",
+    "transcript": "right",
+    "dictionaryIpa": "/ɹaɪt/",
+    "condition": "British English homophones; preserve the final /t/",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry",
+    "reference": "https://en.wiktionary.org/wiki/rite#Pronunciation"
+  },
+  {
+    "word": "rite",
+    "targetIpa": "raɪt",
+    "transcript": "write",
+    "dictionaryIpa": "/ɹaɪt/",
+    "condition": "British English homophones; preserve the final /t/",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry",
+    "reference": "https://en.wiktionary.org/wiki/rite#Pronunciation"
+  },
+  {
+    "word": "rite",
+    "targetIpa": "raɪt",
+    "transcript": "wright",
+    "dictionaryIpa": "/ɹaɪt/",
+    "condition": "British English homophones; preserve the final /t/",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry",
+    "reference": "https://en.wiktionary.org/wiki/rite#Pronunciation"
+  },
+  {
+    "word": "lettuce",
+    "targetIpa": "ˈletɪs",
+    "transcript": "Lettice",
+    "dictionaryIpa": "/ˈlɛt.ɪs/",
+    "condition": "British English isolated-word homophones; no dialectal merger or consonant substitution",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry and matching British IPA",
+    "reference": "https://en.wiktionary.org/wiki/lettuce#Pronunciation"
+  },
+  {
+    "word": "indict",
+    "targetIpa": "ɪnˈdaɪt",
+    "transcript": "indite",
+    "dictionaryIpa": "/ɪnˈdaɪt/",
+    "condition": "British English isolated-word homophones; no dialectal merger or consonant substitution",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry and matching British IPA",
+    "reference": "https://en.wiktionary.org/wiki/indict#Pronunciation"
+  },
+  {
+    "word": "roam",
+    "targetIpa": "rəʊm",
+    "transcript": "Rome",
+    "dictionaryIpa": "/ɹəʊm/",
+    "condition": "British English isolated-word homophones; no dialectal merger or consonant substitution",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry and matching British IPA",
+    "reference": "https://en.wiktionary.org/wiki/roam#Pronunciation"
+  },
+  {
+    "word": "Britain",
+    "targetIpa": "ˈbrɪtn",
+    "transcript": "Briton",
+    "dictionaryIpa": "/ˈbɹɪt.ən/",
+    "condition": "British English isolated-word homophones; no dialectal merger or consonant substitution",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry and matching British IPA",
+    "reference": "https://en.wiktionary.org/wiki/Britain#Pronunciation"
+  },
+  {
+    "word": "eaves",
+    "targetIpa": "iːvz",
+    "transcript": "eves",
+    "dictionaryIpa": "/iːvz/",
+    "condition": "British English isolated-word homophones; no dialectal merger or consonant substitution",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry and matching British IPA",
+    "reference": "https://en.wiktionary.org/wiki/eaves#Pronunciation"
+  },
+  {
+    "word": "storey",
+    "targetIpa": "ˈstɔːri",
+    "transcript": "story",
+    "dictionaryIpa": "/ˈstɔː.ɹi/",
+    "condition": "British English isolated-word homophones; no dialectal merger or consonant substitution",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry and matching British IPA",
+    "reference": "https://en.wiktionary.org/wiki/storey#Pronunciation"
+  },
+  {
+    "word": "programme",
+    "targetIpa": "ˈprəʊɡræm",
+    "transcript": "program",
+    "dictionaryIpa": "/ˈpɹəʊɡɹæm/",
+    "condition": "British English isolated-word homophones; no dialectal merger or consonant substitution",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry and matching British IPA",
+    "reference": "https://en.wiktionary.org/wiki/programme#Pronunciation"
+  },
+  {
+    "word": "knight",
+    "targetIpa": "naɪt",
+    "transcript": "night",
+    "dictionaryIpa": "/ˈnaɪ̯t/",
+    "condition": "British English isolated-word homophones; no dialectal merger or consonant substitution",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry and matching British IPA",
+    "reference": "https://en.wiktionary.org/wiki/knight#Pronunciation"
+  },
+  {
+    "word": "knight",
+    "targetIpa": "naɪt",
+    "transcript": "nite",
+    "dictionaryIpa": "/ˈnaɪ̯t/",
+    "condition": "British English isolated-word homophones; no dialectal merger or consonant substitution",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry and matching British IPA",
+    "reference": "https://en.wiktionary.org/wiki/knight#Pronunciation"
+  },
+  {
+    "word": "chord",
+    "targetIpa": "kɔːd",
+    "transcript": "cord",
+    "dictionaryIpa": "/kɔːd/",
+    "condition": "British English isolated-word homophones; no dialectal merger or consonant substitution",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry and matching British IPA",
+    "reference": "https://en.wiktionary.org/wiki/chord#Pronunciation"
+  },
+  {
+    "word": "arc",
+    "targetIpa": "ɑːk",
+    "transcript": "ark",
+    "dictionaryIpa": "/ɑːk/",
+    "condition": "British English isolated-word homophones; no dialectal merger or consonant substitution",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry and matching British IPA",
+    "reference": "https://en.wiktionary.org/wiki/arc#Pronunciation"
+  },
+  {
+    "word": "mister",
+    "targetIpa": "ˈmɪstə(r)",
+    "transcript": "Mr.",
+    "dictionaryIpa": "/ˈmɪstə/",
+    "condition": "British English isolated-word homophones; no dialectal merger or consonant substitution",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry and matching British IPA",
+    "reference": "https://en.wiktionary.org/wiki/mister#Pronunciation"
+  },
+  {
+    "word": "hare",
+    "targetIpa": "heə(r)",
+    "transcript": "hair",
+    "dictionaryIpa": "/hɛə/",
+    "condition": "British English isolated-word homophones; no dialectal merger or consonant substitution",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry and matching British IPA",
+    "reference": "https://en.wiktionary.org/wiki/hare#Pronunciation"
+  },
+  {
+    "word": "pail",
+    "targetIpa": "peɪl",
+    "transcript": "pale",
+    "dictionaryIpa": "/peɪl/",
+    "condition": "British English isolated-word homophones; no dialectal merger or consonant substitution",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry and matching British IPA",
+    "reference": "https://en.wiktionary.org/wiki/pail#Pronunciation"
+  },
+  {
+    "word": "pane",
+    "targetIpa": "peɪn",
+    "transcript": "pain",
+    "dictionaryIpa": "/ˈpeɪ̯n/",
+    "condition": "British English isolated-word homophones; no dialectal merger or consonant substitution",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry and matching British IPA",
+    "reference": "https://en.wiktionary.org/wiki/pane#Pronunciation"
+  },
+  {
+    "word": "lessen",
+    "targetIpa": "ˈlesn",
+    "transcript": "lesson",
+    "dictionaryIpa": "/ˈlɛsən/",
+    "condition": "British English isolated-word homophones; no dialectal merger or consonant substitution",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry and matching British IPA",
+    "reference": "https://en.wiktionary.org/wiki/lessen#Pronunciation"
+  },
+  {
+    "word": "liar",
+    "targetIpa": "ˈlaɪə(r)",
+    "transcript": "lyre",
+    "dictionaryIpa": "/ˈlaɪ.ə/",
+    "condition": "British English isolated-word homophones; no dialectal merger or consonant substitution",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry and matching British IPA",
+    "reference": "https://en.wiktionary.org/wiki/liar#Pronunciation"
+  },
+  {
+    "word": "liar",
+    "targetIpa": "ˈlaɪə(r)",
+    "transcript": "lier",
+    "dictionaryIpa": "/ˈlaɪ.ə/",
+    "condition": "British English isolated-word homophones; no dialectal merger or consonant substitution",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry and matching British IPA",
+    "reference": "https://en.wiktionary.org/wiki/liar#Pronunciation"
+  },
+  {
+    "word": "berry",
+    "targetIpa": "ˈberi",
+    "transcript": "bury",
+    "dictionaryIpa": "/ˈbɛɹi/",
+    "condition": "British English isolated-word homophones; no dialectal merger or consonant substitution",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; explicit homophone entry and matching British IPA",
+    "reference": "https://en.wiktionary.org/wiki/berry#Pronunciation"
+  },
+  {
+    "word": "health care",
+    "targetIpa": "ˈhelθkeə(r)",
+    "transcript": "healthcare",
+    "dictionaryIpa": "/ˈhelθkeə(r)/",
+    "kind": "dictionary-word-boundary",
+    "condition": "Oxford explicitly records health care as a spelling variant of healthcare; same noun and British pronunciation",
+    "source": "Pinned local Oxford lookup for health care; explicit healthcare headword, health care variant and phons_br IPA",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/healthcare"
+  },
+  {
+    "word": "wan",
+    "targetIpa": "wɒn",
+    "transcript": "one",
+    "dictionaryIpa": "/wɒn/",
+    "requiresBlindPhoneticCheck": true,
+    "condition": "Kaikki explicitly limits this homophone to the /wɒn/ variant of one; target-free IPA must independently confirm /wɒn/, never /wʌn/",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25; wan RP /wɒn/, homophone one (for speakers who pronounce that word as /wɒn/)",
+    "reference": "https://en.wiktionary.org/wiki/wan#Pronunciation"
+  },
+  {
+    "word": "apologise",
+    "targetIpa": "əˈpɒlədʒaɪz",
+    "transcript": "apologize",
+    "dictionaryIpa": "/əˈpɒlədʒaɪz/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/apologize?q=apologise"
+  },
+  {
+    "word": "mesmerise",
+    "targetIpa": "ˈmezməraɪz",
+    "transcript": "mesmerize",
+    "dictionaryIpa": "/ˈmezməraɪz/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/mesmerize?q=mesmerise"
+  },
+  {
+    "word": "baptise",
+    "targetIpa": "bæpˈtaɪz",
+    "transcript": "baptize",
+    "dictionaryIpa": "/bæpˈtaɪz/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/baptize?q=baptise"
+  },
+  {
+    "word": "organisation",
+    "targetIpa": "ˌɔːɡənaɪˈzeɪʃn",
+    "transcript": "organization",
+    "dictionaryIpa": "/ˌɔːɡənaɪˈzeɪʃn/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/organization?q=organisation"
+  },
+  {
+    "word": "appetiser",
+    "targetIpa": "ˈæpɪtaɪzə(r)",
+    "transcript": "appetizer",
+    "dictionaryIpa": "/ˈæpɪtaɪzə(r)/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/appetizer?q=appetiser"
+  },
+  {
+    "word": "civilisation",
+    "targetIpa": "ˌsɪvəlaɪˈzeɪʃn",
+    "transcript": "civilization",
+    "dictionaryIpa": "/ˌsɪvəlaɪˈzeɪʃn/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/civilization?q=civilisation"
+  },
+  {
+    "word": "utilise",
+    "targetIpa": "ˈjuːtəlaɪz",
+    "transcript": "utilize",
+    "dictionaryIpa": "/ˈjuːtəlaɪz/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/utilize?q=utilise"
+  },
+  {
+    "word": "specialise",
+    "targetIpa": "ˈspeʃəlaɪz",
+    "transcript": "specialize",
+    "dictionaryIpa": "/ˈspeʃəlaɪz/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/specialize?q=specialise"
+  },
+  {
+    "word": "recognise",
+    "targetIpa": "ˈrekəɡnaɪz",
+    "transcript": "recognize",
+    "dictionaryIpa": "/ˈrekəɡnaɪz/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/recognize?q=recognise"
+  },
+  {
+    "word": "plagiarise",
+    "targetIpa": "ˈpleɪdʒəraɪz",
+    "transcript": "plagiarize",
+    "dictionaryIpa": "/ˈpleɪdʒəraɪz/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/plagiarize?q=plagiarise"
+  },
+  {
+    "word": "scrutinise",
+    "targetIpa": "ˈskruːtənaɪz",
+    "transcript": "scrutinize",
+    "dictionaryIpa": "/ˈskruːtənaɪz/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/scrutinize?q=scrutinise"
+  },
+  {
+    "word": "emphasise",
+    "targetIpa": "ˈemfəsaɪz",
+    "transcript": "emphasize",
+    "dictionaryIpa": "/ˈemfəsaɪz/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/emphasize?q=emphasise"
+  },
+  {
+    "word": "synthesise",
+    "targetIpa": "ˈsɪnθəsaɪz",
+    "transcript": "synthesize",
+    "dictionaryIpa": "/ˈsɪnθəsaɪz/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/synthesize?q=synthesise"
+  },
+  {
+    "word": "hybridise",
+    "targetIpa": "ˈhaɪbrɪdaɪz",
+    "transcript": "hybridize",
+    "dictionaryIpa": "/ˈhaɪbrɪdaɪz/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/hybridize?q=hybridise"
+  },
+  {
+    "word": "hybridisation",
+    "targetIpa": "ˌhaɪbrɪdaɪˈzeɪʃn",
+    "transcript": "hybridization",
+    "dictionaryIpa": "/ˌhaɪbrɪdaɪˈzeɪʃn/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/hybridization?q=hybridisation"
+  },
+  {
+    "word": "fertilise",
+    "targetIpa": "ˈfɜːtəlaɪz",
+    "transcript": "fertilize",
+    "dictionaryIpa": "/ˈfɜːtəlaɪz/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/fertilize?q=fertilise"
+  },
+  {
+    "word": "jeopardise",
+    "targetIpa": "ˈdʒepədaɪz",
+    "transcript": "jeopardize",
+    "dictionaryIpa": "/ˈdʒepədaɪz/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/jeopardize?q=jeopardise"
+  },
+  {
+    "word": "paralyze",
+    "targetIpa": "ˈpærəlaɪz",
+    "transcript": "paralyse",
+    "dictionaryIpa": "/ˈpærəlaɪz/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/paralyse?q=paralyze"
+  },
+  {
+    "word": "armor",
+    "targetIpa": "ˈɑːmə(r)",
+    "transcript": "armour",
+    "dictionaryIpa": "/ˈɑːmə(r)/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/armour?q=armor"
+  },
+  {
+    "word": "ax",
+    "targetIpa": "æks",
+    "transcript": "axe",
+    "dictionaryIpa": "/æks/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/axe_1?q=ax"
+  },
+  {
+    "word": "honour",
+    "targetIpa": "ˈɒnə(r)",
+    "transcript": "honor",
+    "dictionaryIpa": "/ˈɒnə(r)/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/honour_1"
+  },
+  {
+    "word": "neighbourhood",
+    "targetIpa": "ˈneɪbəhʊd",
+    "transcript": "neighborhood",
+    "dictionaryIpa": "/ˈneɪbəhʊd/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/neighbourhood"
+  },
+  {
+    "word": "labour",
+    "targetIpa": "ˈleɪbə(r)",
+    "transcript": "labor",
+    "dictionaryIpa": "/ˈleɪbə(r)/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/labour_1"
+  },
+  {
+    "word": "flavour",
+    "targetIpa": "ˈfleɪvə(r)",
+    "transcript": "flavor",
+    "dictionaryIpa": "/ˈfleɪvə(r)/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/flavour_1"
+  },
+  {
+    "word": "favour",
+    "targetIpa": "ˈfeɪvə(r)",
+    "transcript": "favor",
+    "dictionaryIpa": "/ˈfeɪvə(r)/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/favour_1"
+  },
+  {
+    "word": "behaviour",
+    "targetIpa": "bɪˈheɪvjə(r)",
+    "transcript": "behavior",
+    "dictionaryIpa": "/bɪˈheɪvjə(r)/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/behaviour"
+  },
+  {
+    "word": "harbour",
+    "targetIpa": "ˈhɑːbə(r)",
+    "transcript": "harbor",
+    "dictionaryIpa": "/ˈhɑːbə(r)/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/harbour_1"
+  },
+  {
+    "word": "fibre",
+    "targetIpa": "ˈfaɪbə(r)",
+    "transcript": "fiber",
+    "dictionaryIpa": "/ˈfaɪbə(r)/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/fibre"
+  },
+  {
+    "word": "jewellery",
+    "targetIpa": "ˈdʒuːəlri",
+    "transcript": "jewelry",
+    "dictionaryIpa": "/ˈdʒuːəlri/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/jewellery"
+  },
+  {
+    "word": "instalment",
+    "targetIpa": "ɪnˈstɔːlmənt",
+    "transcript": "installment",
+    "dictionaryIpa": "/ɪnˈstɔːlmənt/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/instalment"
+  },
+  {
+    "word": "tyre",
+    "targetIpa": "ˈtaɪə(r)",
+    "transcript": "tire",
+    "dictionaryIpa": "/ˈtaɪə(r)/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/tyre"
+  },
+  {
+    "word": "manoeuvre",
+    "targetIpa": "məˈnuːvə(r)",
+    "transcript": "maneuver",
+    "dictionaryIpa": "/məˈnuːvə(r)/",
+    "condition": "Explicit British/American spelling variants; keep the selected British pronunciation, word form and POS",
+    "source": "Pinned local Oxford lookup: explicit spelling variant and matching phons_br pronunciation",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/manoeuvre_1"
+  },
+  {
+    "word": "lay-off",
+    "targetIpa": "ˈleɪ ɒf",
+    "transcript": "layoff",
+    "dictionaryIpa": "/ˈleɪ ɒf/",
+    "kind": "dictionary-word-boundary",
+    "condition": "Noun spelling/word-boundary variation only; retain first-syllable stress, never the verb phrase lay OFF",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25 explicitly marks lay-off as an alternative spelling of layoff; pinned Oxford lay-off_2 noun UK IPA",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/lay-off_2",
+    "variantReference": "https://en.wiktionary.org/wiki/lay-off#English"
+  },
+  {
+    "word": "lay-off",
+    "targetIpa": "ˈleɪ ɒf",
+    "transcript": "lay off",
+    "dictionaryIpa": "/ˈleɪ ɒf/",
+    "kind": "dictionary-word-boundary",
+    "condition": "Noun spelling/word-boundary variation only; retain first-syllable stress, never the verb phrase lay OFF",
+    "source": "local Kaikki English e38fe0e9b53e3387673fe46429a02b3dcecfd3e5bf5771d7766c5afa6fd41f25 explicitly marks lay-off as an alternative spelling of layoff; pinned Oxford lay-off_2 noun UK IPA",
+    "reference": "https://www.oxfordlearnersdictionaries.com/definition/english/lay-off_2",
+    "variantReference": "https://en.wiktionary.org/wiki/lay-off#English"
   }
 ]

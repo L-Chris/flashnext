@@ -13,6 +13,8 @@ from lib.japanese_audio import (VERSION, atomic_json, digest, file_hash, validat
 
 
 def audio_only_authorizer(action, table, column, database, trigger):
+    if action == sqlite3.SQLITE_DELETE and table == 'media_playbacks':
+        return sqlite3.SQLITE_OK  # Cascading cleanup of derivatives of an unused asset.
     if action in {sqlite3.SQLITE_INSERT, sqlite3.SQLITE_UPDATE, sqlite3.SQLITE_DELETE} and table not in {'media_assets', 'card_media', 'sqlite_sequence'}:
         return sqlite3.SQLITE_DENY
     return sqlite3.SQLITE_OK
@@ -192,6 +194,7 @@ def rollback_batch(db, media_dir, journal_path, apply=False):
     expected_hashes = {item['mediaId']: record['sha256'] for record in manifest['records']
                        for item in record['cards'] if item['status'] == 'attached'}
     try:
+        has_playbacks = c.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='media_playbacks'").fetchone()
         c.set_authorizer(audio_only_authorizer)
         c.execute('begin immediate' if apply else 'begin')
         for record in manifest['records']:
@@ -217,6 +220,14 @@ def rollback_batch(db, media_dir, journal_path, apply=False):
                 if path.is_file() and file_hash(path) != asset['sha256']:
                     raise ValueError('Audio bytes changed after import; refusing rollback')
                 if apply:
+                    if has_playbacks:
+                        for playback in c.execute('SELECT * FROM media_playbacks WHERE media_id=?', (media_id,)):
+                            derived = Path(media_dir) / playback['storage_key']
+                            if (playback['source_sha256'] != asset['sha256'] or
+                                    not derived.resolve().is_relative_to(Path(media_dir).resolve()) or
+                                    (derived.is_file() and file_hash(derived) != playback['sha256'])):
+                                raise ValueError('Playback changed after import; refusing rollback')
+                            files.append(derived)
                     c.execute('DELETE FROM media_assets WHERE id=?', (media_id,))
                     files.append(path)
         if apply:

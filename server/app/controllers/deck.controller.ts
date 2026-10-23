@@ -1,6 +1,7 @@
 import { Get, Post, Delete, JsonController, Body, Param } from 'routing-controllers'
 import { Service } from 'typedi'
 import { DeckService } from 'app/modules/decks/application/deck.service'
+import { deckIdOf } from 'app/shared/deck-id'
 
 class CreateDeckBody {
   name: string
@@ -22,6 +23,11 @@ export class DeckController {
   async create(@Body() body: CreateDeckBody) {
     const data = await this.deckService.createDeck(body.name, body.description || '')
     return { data }
+  }
+
+  @Get('/:id/topics')
+  async topics(@Param('id') id: string) {
+    return { data: await this.deckService.listTopics(deckIdOf(id)) }
   }
 
   @Delete('/:id')

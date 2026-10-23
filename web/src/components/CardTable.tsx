@@ -1,6 +1,7 @@
 import { reviewWordBack } from '../utils/word-card'
 import Pronunciations from './Pronunciations'
 import CardDetails from './CardDetails'
+import KnowledgeLabels from './KnowledgeLabels'
 import { Fragment, useState } from 'react'
 import type { Card, CardPage, CardSortKey } from '../types'
 
@@ -75,6 +76,7 @@ export const TABLE_COLUMNS: TableColumn[] = [
     defaultVisible: true,
     render: c => (
       <>
+        <KnowledgeLabels knowledge={c.knowledge} />
         {c.word?.tags.map(tag => (
           <span
             key={`${tag.scheme}-${tag.level}`}
@@ -228,6 +230,7 @@ interface Props {
   onSort: (key: CardSortKey) => void
   onPage: (page: number) => void
   onPageSize: (size: number) => void
+  knowledgeDeck?: boolean
 }
 
 const Th = ({
@@ -255,9 +258,11 @@ const Th = ({
   </th>
 )
 
-export default function CardTable({ page, loading, visible, onEdit, onSort, onPage, onPageSize }: Props) {
+export default function CardTable({ page, loading, visible, onEdit, onSort, onPage, onPageSize, knowledgeDeck = false }: Props) {
   const [expanded, setExpanded] = useState<Set<number>>(new Set())
-  const columns = TABLE_COLUMNS.filter(c => c.fixed || visible[c.key])
+  const columns = TABLE_COLUMNS.filter(c => (c.fixed || visible[c.key]) && !(knowledgeDeck && ['rank', 'phonetic'].includes(c.key)))
+    .map(c => knowledgeDeck && c.key === 'front' ? { ...c, label: '知识点', sortKey: 'learningOrder' as CardSortKey }
+      : knowledgeDeck && c.key === 'translation' ? { ...c, label: '内容' } : c)
 
   const toggle = (id: number) => {
     setExpanded(prev => {
@@ -271,7 +276,7 @@ export default function CardTable({ page, loading, visible, onEdit, onSort, onPa
   if (!page.cards.length) {
     return (
       <p className="rounded-lg border border-dashed border-zinc-300 p-6 text-center text-zinc-500 dark:border-zinc-800">
-        这个牌组还没有卡片
+        没有符合条件的卡片
       </p>
     )
   }

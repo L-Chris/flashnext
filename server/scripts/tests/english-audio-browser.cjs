@@ -37,7 +37,12 @@ async function get(path) {
       const response = await fetch(base + audio.url)
       assert.equal(response.status, 200); assert.match(response.headers.get('content-type'), /audio\/mpeg/)
       const bytes = Buffer.from(await response.arrayBuffer())
-      assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'), record.sha256)
+      assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'), audio.playback?.sha256 || record.sha256)
+      if (audio.playback) {
+        const original = await fetch(`${base}/api/media/${target.mediaId}/content`)
+        assert.equal(original.status, 200)
+        assert.equal(crypto.createHash('sha256').update(Buffer.from(await original.arrayBuffer())).digest('hex'), record.sha256)
+      }
       const range = await fetch(base + audio.url, { headers: { Range: 'bytes=0-127' } })
       assert.equal(range.status, 206); assert.equal((await range.arrayBuffer()).byteLength, 128)
       for (const width of [1200, 390]) {

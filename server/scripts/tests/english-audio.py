@@ -1,5 +1,6 @@
 import importlib.util
 import base64
+import io
 import json
 from pathlib import Path
 import sqlite3
@@ -7,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+import wave
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
@@ -33,6 +35,22 @@ class FixtureGateway:
     def review(self,audio,row,model):
         return dict(model=model,targetIpa=row['phonetic'],confidence='high',heardIpa=row['phonetic'],
             wordMatches=True,britishCompatible=self.correct,stressMatches=True,singleWord=True)
+
+
+class QuietGateway(FixtureGateway):
+    def __init__(self, word, always=False):
+        super().__init__(word); self.always=always; self.transcriptions=0
+    def speech_rows(self, rows, config, attempt=1):
+        audio, info=super().speech_rows(rows,config,attempt)
+        if self.always or self.calls==1:
+            out=io.BytesIO()
+            with wave.open(out,'wb') as f:
+                f.setnchannels(1);f.setsampwidth(2);f.setframerate(24000);f.writeframes(b'\x01\x00'*12000)
+            audio=out.getvalue()
+        return audio,info
+    def transcribe(self,audio,model):
+        self.transcriptions+=1
+        return super().transcribe(audio,model)
 
 
 class EnglishAudioTests(unittest.TestCase):
@@ -77,6 +95,49 @@ class EnglishAudioTests(unittest.TestCase):
                 value=generate_word(r,CONFIG,batch,g,attempts=1)
                 self.assertEqual(value['status'],'needs_review')
                 with self.assertRaises(ValueError):validate_result(r,CONFIG,batch,value)
+
+    def test_quiet_recording_retries_before_paid_recognition_and_final_mp3_passes_levels(self):
+        from lib.audio_loudness import measure,passed,validate_processing
+        with tempfile.TemporaryDirectory() as d:
+            db,batch,media,p=self.fixture(Path(d));row=p['rows'][0];gateway=QuietGateway(row['headword'])
+            value=generate_word(row,CONFIG,batch,gateway,attempts=2)
+            self.assertEqual(value['status'],'accepted');self.assertEqual(gateway.calls,2)
+            self.assertEqual(gateway.transcriptions,1)
+            self.assertIn('too quiet',value['attempts'][0]['error'])
+            validate_processing(value['audioProcessing'],value['sha256'])
+            self.assertTrue(passed(measure(batch/value['audioFile'])))
+
+    def test_permanently_quiet_recording_stops_at_retry_limit(self):
+        with tempfile.TemporaryDirectory() as d:
+            db,batch,media,p=self.fixture(Path(d));row=p['rows'][0];gateway=QuietGateway(row['headword'],always=True)
+            value=generate_word(row,CONFIG,batch,gateway,attempts=2)
+            self.assertEqual(value['status'],'needs_review');self.assertEqual(gateway.calls,2)
+            self.assertEqual(gateway.transcriptions,0)
+
+    def test_recent_learning_uses_first_review_and_freezes_30_learning_days(self):
+        from datetime import datetime
+        from zoneinfo import ZoneInfo
+        with tempfile.TemporaryDirectory() as d:
+            db,batch,media,p=self.fixture(Path(d));c=sqlite3.connect(db)
+            start=int(datetime(2026,9,22,4,tzinfo=ZoneInfo('Asia/Shanghai')).timestamp()*1000)
+            cards=[r[0] for r in c.execute('SELECT id FROM cards ORDER BY id')]
+            def review(card,at,state=0):
+                c.execute('INSERT INTO review_logs(card_id,rating,review_at,state,interval,stability,difficulty) VALUES (?,3,?,?,1,1,1)',(card,at,state))
+            review(cards[1],start-1);review(cards[1],NOW-20,2)  # old word, recent review
+            review(cards[2],start);review(cards[2],NOW-10,2)  # inclusive lower boundary
+            review(cards[3],NOW+1)  # future record
+            review(cards[4],start+1000)
+            c.execute("UPDATE words SET phonetic='' WHERE id=(SELECT word_id FROM cards WHERE id=?)",(cards[4],))
+            c.execute('UPDATE deck_settings SET new_per_day=0')  # history is independent of allowance
+            c.commit();c.close()
+            recent=prepare_plan(db,p['deckId'],30,NOW,selection='recently-learned')
+            self.assertEqual([r['headword'] for r in recent['selections']],['elusive','read','plaque'])
+            self.assertEqual([r['headword'] for r in recent['rows']],['elusive','plaque'])
+            self.assertEqual(recent['firstStudyDate'],'2026-09-22')
+            self.assertEqual(recent['lastStudyDate'],'2026-10-21')
+            self.assertEqual(recent['blockedCards'],1);self.assertEqual(recent['existingAudioCards'],0)
+            # Missing pronunciation remains visible; it is never counted as existing audio.
+            self.assertEqual(recent['blocked'][0]['headword'],'read')
 
     def test_cache_reused_but_pronunciation_change_invalidates_it(self):
         with tempfile.TemporaryDirectory() as d:
@@ -164,6 +225,19 @@ class EnglishAudioTests(unittest.TestCase):
             self.assertEqual(g.calls,1,'Retry should reuse the unchanged saved WAV rather than call TTS again')
             value['pronunciationCheck'].pop('blindPhoneticCheck')
             with self.assertRaises(ValueError):validate_result(r,CONFIG,batch,value)
+
+    def test_conditional_homophone_always_needs_independent_target_vowel(self):
+        with tempfile.TemporaryDirectory() as d:
+            db,batch,media,p=self.fixture(Path(d));r=dict(p['rows'][0],headword='wan',phonetic='wɒn')
+            g=FixtureGateway('wan',transcript='one')
+            g.phonetic_check=lambda audio,model:dict(model=model,transcript='/wʌn/')
+            self.assertEqual(generate_word(r,CONFIG,batch,g,1)['status'],'needs_review')
+            g.phonetic_check=lambda audio,model:dict(model=model,transcript='/wɒn/')
+            accepted=generate_word(r,CONFIG,batch,g,1)
+            self.assertEqual(accepted['status'],'accepted');validate_result(r,CONFIG,batch,accepted)
+            forged=json.loads(json.dumps(accepted))
+            forged['pronunciationCheck'].pop('requiresBlindPhoneticCheck')
+            with self.assertRaises(ValueError):validate_result(r,CONFIG,batch,forged)
 
     def test_word_boundary_exception_still_requires_target_noun_stress(self):
         with tempfile.TemporaryDirectory() as d:

@@ -8,7 +8,7 @@ import unittest
 
 S = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(S))
-from lib.study_pronunciations import parse_oxford, display_ipa, matches_word, system_back, word_poses, scope, comparable_ipa
+from lib.study_pronunciations import parse_oxford, display_ipa, matches_word, system_back, word_poses, scope, comparable_ipa, verified_alias_entries
 spec = importlib.util.spec_from_file_location('scoped_import', S / 'import-study-pronunciations.py')
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
@@ -51,6 +51,21 @@ class Parsing(unittest.TestCase):
         self.assertNotEqual(comparable_ipa('/kənˈvɜːs/'), comparable_ipa('/kənˈvɝs/'))
         self.assertIsNone(comparable_ipa('/rɪ-/'))
         self.assertIsNone(comparable_ipa('[rɪpl]'))
+
+    def test_alias_cannot_inherit_synonym_or_shorter_word_pronunciation(self):
+        for target,head,wrong,correct,pos in [
+            ('bookstore','bookshop','ˈbʊkʃɒp','ˈbʊkstɔː','noun'),
+            ('amongst','among','əˈmʌŋ','əˈmʌŋst','prep')]:
+            entry=dict(headword=head,aliases=[target],pos=pos,sounds=[dict(ipa=wrong)])
+            local=dict(revision='test',entries={target:[dict(pos=pos,sounds=[dict(ipa='/'+correct+'/',tags=['Received-Pronunciation'])])]})
+            self.assertEqual(verified_alias_entries([entry],target,local),[])
+            # The exact headword's own IPA is unaffected.
+            self.assertEqual(verified_alias_entries([entry],head,local),[entry])
+        entry=dict(headword='colour',aliases=['color'],pos='noun',sounds=[dict(ipa='ˈkʌlə(r)')])
+        local=dict(revision='test',entries={'color':[dict(pos='noun',sounds=[dict(ipa='/ˈkʌlə/',tags=['Received-Pronunciation'])])]})
+        result=verified_alias_entries([entry],'color',local)
+        self.assertEqual(result[0]['sounds'],entry['sounds']);self.assertIn('evidence',result[0])
+        self.assertEqual(verified_alias_entries([entry],'color',dict(entries={})),[])
 
 
 class ScopedImport(unittest.TestCase):
