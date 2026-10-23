@@ -21,6 +21,7 @@ const allowed = new Map([
 export const mediaView = (asset: { id: string; sha256?: string; mimeType: string; bytes: number; originalName: string; createdAt: Date; playbacks?: Playback[] }) => {
   const playback = playbackOf(asset)
   return { id: asset.id, mimeType: playback?.mimeType || asset.mimeType, bytes: playback?.bytes ?? asset.bytes,
+    sha256: playback?.sha256 ?? asset.sha256,
     originalName: asset.originalName, createdAt: asset.createdAt,
     url: `/api/media/${asset.id}/content${playback ? `?playback=${playback.id}` : ''}`,
     ...(playback ? { playback: { id: playback.id, profile: playback.profile, sha256: playback.sha256 } } : {}),

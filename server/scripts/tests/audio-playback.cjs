@@ -5,6 +5,7 @@ const os = require('node:os')
 const path = require('node:path')
 const { execFileSync } = require('node:child_process')
 const http = require('node:http')
+const { DatabaseSync } = require('node:sqlite')
 const esbuild = require('../../node_modules/esbuild')
 const Koa = require('../../node_modules/koa')
 require('reflect-metadata')
@@ -13,7 +14,8 @@ process.env.DATABASE_URL = `file:${root}/test.db`
 process.env.FLASHNEXT_MEDIA_DIR = root
 const sql = execFileSync(process.execPath, [path.resolve(__dirname, '../../node_modules/prisma/build/index.js'),
   'migrate', 'diff', '--from-empty', '--to-schema-datamodel', path.resolve(__dirname, '../../prisma/schema.prisma'), '--script'], { encoding: 'utf8' })
-execFileSync('python3', ['-c', 'import sqlite3,sys; c=sqlite3.connect(sys.argv[1]);c.executescript(sys.stdin.read());c.close()', root + '/test.db'], { input: sql })
+const database = new DatabaseSync(root + '/test.db')
+database.exec(sql);database.close()
 const outfile = path.resolve(__dirname, '../../node_modules/.cache/playback-tests.cjs')
 esbuild.buildSync({ stdin: { contents: `export {MediaService, mediaView} from './app/modules/media/application/media.service';export {prisma} from './app/shared/prisma';`, resolveDir: path.resolve(__dirname, '../..') },
   bundle: true, platform: 'node', format: 'cjs', packages: 'external', outfile, tsconfig: path.resolve(__dirname, '../../tsconfig.json') })
@@ -43,6 +45,9 @@ test('card media uses a versioned playback URL while original identity is stable
   assert.equal(dto.id, asset.id);assert.equal(dto.bytes, processed.length)
   assert.equal(dto.url, `/api/media/${asset.id}/content?playback=${playback.id}`)
   assert.equal(dto.playback.sha256, playback.sha256)
+  assert.equal(dto.sha256, playback.sha256)
+  assert.equal(mediaView(asset).sha256, asset.sha256)
+  assert.equal(mediaView({ ...asset, playbacks: [{ ...playback, sourceSha256: 'changed' }] }).sha256, asset.sha256)
   assert.equal(mediaView({ ...asset, playbacks: [{ ...playback, sourceSha256: 'changed' }] }).url, `/api/media/${asset.id}/content`)
 })
 test('original and processed HTTP bytes, ranges, HEAD and conditional caching remain independent', async () => {

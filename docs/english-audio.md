@@ -107,6 +107,8 @@ node server/scripts/tests/english-audio-browser.cjs \
 
 历史录音采用新增 `media_playbacks` 表和独立 `.playback/` 文件，`media_assets`、`card_media`、原文件、学习记录和评分均不改写。卡片接口保留 `mediaId`，返回带 `?playback=<版本ID>` 的新地址及有效文件长度。原地址继续返回原文件；版本地址有独立哈希、ETag、Range、HEAD 和缓存键，避免手机复用一天前的旧内容。已安装客户端可直接使用该地址，无需为响度文件更新 APK；需重新进入应用以获取新队列。
 
+媒体信息同时返回顶层 `sha256`，与实际选中的原文件或播放版本一致，供 App 构造内容版本缓存键；已有 `playback.sha256` 保留。此字段只增加响应信息，不涉及数据库迁移或录音重新生成。媒体接口测试使用 Node.js 内置 `node:sqlite` 创建临时数据库，可在支持该模块的 Node.js 环境运行，无需 Python 建库。
+
 ```sh
 # 准备阶段只读数据库与原文件，输出在本地批次目录。
 python3 server/scripts/prepare-audio-playback.py --db /absolute/db \
